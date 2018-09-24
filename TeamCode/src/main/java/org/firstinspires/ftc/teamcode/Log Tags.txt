@@ -1,0 +1,9 @@
+VuforiaCamera - stuff that has to do with the camera
+DavidClass - analysis of pictures
+cameraReturn - result of FTCTakePicture
+PIDOUTPUT - the output of pid of every class
+AVGDIST - the value of average distance of all encoders
+FTCThreads - the output of all threads etc. interrupts
+AutoPID - Output of AutoPID Tester
+joystickInput - Joystick input for gamepad
+RGBCal - Tuning for AllignWithBeacon

@@ -1,0 +1,54 @@
+//
+// build.gradle in TeamCode
+//
+// Most of the definitions for building your module reside in a common, shared
+// file 'build.common.gradle'. Being factored in this way makes it easier to
+// integrate updates to the FTC into your code. If you really need to customize
+// the build definitions, you can place those customizations in this file, but
+// please think carefully as to whether such customizations are really necessary
+// before doing so.
+
+
+// Custom definitions may go here
+
+// Include common definitions from above.
+apply from: '../build.common.gradle'
+
+def getIP() {
+    InetAddress result = null;
+    Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+    while (interfaces.hasMoreElements()) {
+        Enumeration<InetAddress> addresses = interfaces.nextElement().getInetAddresses();
+        while (addresses.hasMoreElements()) {
+            InetAddress address = addresses.nextElement();
+            if (!address.isLoopbackAddress()) {
+                if (address.isSiteLocalAddress()) {
+//                    System.out.println(address.getHostAddress());
+                    return address.getHostAddress();
+                } else if (result == null) {
+                    result = address;
+                }
+            }
+        }
+    }
+//    System.out.println(result);
+    return (result != null ? result : InetAddress.getLocalHost()).getHostAddress();
+}
+
+android {
+    buildTypes {
+        debug {
+            buildConfigField 'String', 'CTELEM_SERVER_IP', "\"http://${getIP()}:8080\""
+        }
+        release {
+            buildConfigField 'String', 'CTELEM_SERVER_IP', "\"http://${getIP()}:8080\""
+        }
+    }
+}
+
+dependencies {
+    api files('../libs/opencv-android.jar')
+    api 'com.squareup.retrofit2:retrofit:2.3.0'
+    api 'com.squareup.okhttp3:okhttp:3.9.0'
+    api 'com.squareup.okio:okio:1.13.0'
+}
