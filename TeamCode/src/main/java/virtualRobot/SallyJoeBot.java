@@ -48,32 +48,6 @@ public class SallyJoeBot {
     private Motor RFMotor;
     @UpdateMotor(name = "rightBack")
     private Motor RBMotor;
-    @UpdateMotor(name = "rollerLeft", enabled = true)
-    private Motor rollerLeft;
-    @UpdateMotor(name = "rollerRight", direction = DcMotorSimple.Direction.REVERSE, enabled = true)
-    private Motor rollerRight;
-    @UpdateMotor(name = "lift", enabled = true)
-    private Motor lift;
-    @UpdateServo(name = "flipper", initpos = 0.65, enabled = true)
-    private Servo flipper;
-    @UpdateServo(name = "rollerLiftLeft",initpos = 0, enabled = true)
-    private Servo rollerLiftLeft;
-    @UpdateServo(name = "rollerLiftRight",initpos = 1, enabled = true)
-    private Servo rollerLiftRight;
-    @UpdateMotor(name = "relicArmWinch", direction = DcMotorSimple.Direction.REVERSE, enabled = true)
-    private Motor relicArmWinch;
-    @UpdateServo(name = "relicArmWrist", initpos = 1, enabled = true)
-    private Servo relicArmWrist;
-    @UpdateServo(name = "relicArmClaw", enabled = true)
-    private Servo relicArmClaw;
-    @UpdateColorSensor(name = "jewelColorSensor", enabled = true)
-    private DumbColorSensor colorSensor;
-    @UpdateServo(name = "jewelArm", initpos = 0.90, enabled = true)
-    private Servo jewelServo;
-    @UpdateServo(name = "jewelHitter", initpos = 0.5, enabled = true)
-    private Servo jewelHitter;
-    @UpdateServo(name = "phoneServo", initpos = 0.95, enabled = true)
-    private Servo phoneServo;
     //Sensors
     private IMU imu;
     private Sensor voltageSensor;
@@ -106,25 +80,6 @@ public class SallyJoeBot {
         RFMotor = new Motor();
         RBMotor = new Motor();
 
-        lift = new Motor();
-        flipper = new Servo();
-        rollerLiftLeft = new Servo();
-        rollerLiftRight = new Servo();
-
-        rollerLeft = new Motor();
-        rollerRight = new Motor();
-
-        relicArmWinch = new Motor();
-        relicArmWrist = new Servo();
-        relicArmClaw = new Servo();
-
-        jewelServo = new Servo();
-        jewelHitter = new Servo();
-        colorSensor = new DumbColorSensor();
-
-        phoneServo = new Servo();
-        //capLift = new SyncedMotors(LiftLeftMotor, LiftRightMotor, LiftLeftEncoder, LiftRightEncoder, KP, KI, KD, SyncedMotors.SyncAlgo.POSITION);
-        //capLift.setRatio(1);
 
     }
     public synchronized void updateValues() {
@@ -136,9 +91,6 @@ public class SallyJoeBot {
     }
     //All of Autonomous and TeleopRobot's functions are created e.g. (public synchronized Motor getMotor() {return Motor;}
 
-    public synchronized DumbColorSensor getColorSensor() {
-        return colorSensor;
-    }
 
     public synchronized Sensor getVoltageSensor() {
         return voltageSensor;
@@ -162,35 +114,6 @@ public class SallyJoeBot {
 
     public synchronized Motor getRBMotor() {
         return RBMotor;
-    }
-
-    public synchronized Motor getRelicArmWinch() {
-        return relicArmWinch;
-    }
-
-    public synchronized Servo getRelicArmWrist() {
-        return relicArmWrist;
-    }
-
-    public synchronized Servo getRelicArmClaw() {
-        return relicArmClaw;
-    }
-
-    public synchronized Servo getJewelServo() {
-        return jewelServo;
-    }
-
-    public synchronized void moveJewelServo(boolean isOpen) {
-        jewelServo.setPosition(isOpen ? 0.42 : 0.90);
-    }
-
-    public synchronized void moveJewelRotater(int dir) {
-        if (dir < 0)
-            jewelHitter.setPosition(0.75);
-        else if (dir > 0)
-            jewelHitter.setPosition(0.25);
-        else
-            jewelHitter.setPosition(0.5);
     }
 
     public synchronized StateSensor getStateSensor() {
@@ -328,42 +251,6 @@ public class SallyJoeBot {
 
     public synchronized CTelemetry getCTelemetry() {
         return ctel;
-    }
-
-    public Servo getJewelHitter() {
-        return jewelHitter;
-    }
-
-    public Motor getRollerRight() {
-        return rollerRight;
-    }
-
-    public Motor getRollerLeft() {
-        return rollerLeft;
-    }
-
-    public Motor getLift() {
-        return lift;
-    }
-
-    public Servo getFlipper() {
-        return flipper;
-    }
-
-    public synchronized void moveFlipper(boolean isOpen) {
-        flipper.setPosition(isOpen ? 1 : 0.65);
-    }
-
-    public Servo getRollerLiftLeft() {
-        return rollerLiftLeft;
-    }
-
-    public Servo getRollerLiftRight() {
-        return rollerLiftRight;
-    }
-
-    public Servo getPhoneServo() {
-        return phoneServo;
     }
 
     public enum Team {
