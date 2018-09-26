@@ -26,8 +26,6 @@ public class TeleOpCustomLogic extends LogicThread {
 
     @Override
     protected void realRun() throws InterruptedException {
-        robot.getJewelServo().setPosition(0.85);
-//        robot.getJewelHitter().setPosition(0.5);
         JoystickController controller1;
         JoystickController controller2;
         controller1 = robot.getJoystickController1();
@@ -153,59 +151,6 @@ if (controller2.isDown(JoystickController.BUTTON_LT)) {
     }
     runCommand(new Translate(offset.get() * 10, Translate.Direction.LEFT, 0, 0.9));
 }
-
-            if (controller2.isPressed(JoystickController.BUTTON_X)) {
-                //Grasp Relic
-                robot.getRelicArmClaw().setPosition(0);
-            } else if (controller2.isPressed(JoystickController.BUTTON_Y)) {
-                //Release Relic
-                robot.getRelicArmClaw().setPosition(1);
-            }
-
-            if (controller2.isDpadRight()) {
-                //Extend arm
-                robot.getRelicArmWinch().setPower(relicArmSpeed);
-            } else if (controller2.isDpadLeft()) {
-                //Retract arm
-                robot.getRelicArmWinch().setPower(-relicArmSpeed);
-            } else {
-                robot.getRelicArmWinch().setPower(0);
-            }
-
-            if (controller2.isDown(JoystickController.BUTTON_A)) {
-                robot.getRelicArmWrist().setPosition(robot.getRelicArmWrist().getPosition() + 0.005);
-            } else if (controller2.isDown(JoystickController.BUTTON_B)) {
-                //Lower wrist
-                robot.getRelicArmWrist().setPosition(robot.getRelicArmWrist().getPosition() - 0.005);
-            }
-
-            if (controller1.isDpadUp()) {
-                robot.getLift().setPower(liftSpeed);
-            } else if (controller1.isDpadDown()) {
-                robot.getLift().setPower(-liftSpeed);
-            } else {
-                robot.getLift().setPower(0);
-            }
-
-            if (controller1.isDown(JoystickController.BUTTON_A)) {
-                robot.setRollerPower(1);
-//                robot.moveFlipper(false);
-            } else if (controller1.isDown(JoystickController.BUTTON_B)) {
-                robot.setRollerPower(-1);
-                robot.moveFlipper(false);
-            } else {
-                robot.setRollerPower(0);
-            }
-
-//            robot.getRollerLeft().setPower(controller2.getValue(JoystickController.Y_1));
-//            robot.getRollerRight().setPower(controller2.getValue(JoystickController.Y_2));
-
-            if (controller1.isDown(JoystickController.BUTTON_X)) {
-                robot.moveFlipper(true);
-            } else if (controller1.isDown(JoystickController.BUTTON_Y)) {
-                robot.moveFlipper(false);
-            }
-
             if (Thread.currentThread().isInterrupted())
                 throw new InterruptedException();
             Thread.sleep(5);

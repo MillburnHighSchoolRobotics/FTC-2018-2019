@@ -23,7 +23,7 @@ import virtualRobot.telemetry.NonInterferingCallback;
 import virtualRobot.utils.GlobalUtils;
 
 
-@SuppressWarnings("unchecked") //lmao
+@SuppressWarnings("unchecked") //lmaooooooooooooooo
 /**
  * Created by DOSullivan on 9/14/16.
  * All of our our virtual hardware and there getters are housed in SallyJoeBot
@@ -172,11 +172,6 @@ public class SallyJoeBot {
         //  sleep(250);   // optional pause after each move
     }
 
-    public synchronized void moveRollerLifts(boolean isOpen) {
-        rollerLiftLeft.setPosition(isOpen ? 0 : 1);
-        rollerLiftRight.setPosition(isOpen ? 1 : 0);
-    }
-
     public synchronized JoystickController getJoystickController1() {
         return joystickController1;
     }
@@ -191,11 +186,6 @@ public class SallyJoeBot {
 
     public synchronized ArrayList<String> getProgress() {
         return robotProgress;
-    }
-
-    public synchronized void setRollerPower(double power) {
-        rollerLeft.setPower(power);
-        rollerRight.setPower(power);
     }
 
     public synchronized void addToTelemetry(String s, Object arg) {

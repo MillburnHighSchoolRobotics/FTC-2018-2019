@@ -30,25 +30,7 @@ public class BlueNearBasicAutoLogic extends AutonomousLogicThread {
 
         robot.addToTelemetry("Current VuMark: ", currentVuMark);
 
-        robot.moveJewelServo(true);
-        Thread.sleep(1000);
 
-        int red = robot.getColorSensor().getRed();
-        int blue = robot.getColorSensor().getBlue();
-        if ((red != 0 || blue != 0)) {
-            double rat = red / (double) blue;
-            robot.addToTelemetry("CS", red + " " + blue + " " + rat);
-            if (rat <= 0.6) {
-                robot.moveJewelRotater(1);
-                Thread.sleep(500);
-                robot.moveJewelRotater(0);
-            } else if (rat >= 1.5) {
-                robot.moveJewelRotater(-1);
-                Thread.sleep(500);
-                robot.moveJewelRotater(0);
-            }
-        }
-        robot.moveJewelServo(false);
         Thread.sleep(500);
 
         dist = 0;
@@ -69,21 +51,16 @@ public class BlueNearBasicAutoLogic extends AutonomousLogicThread {
 
         runCommand(new Translate(dist, Translate.Direction.BACKWARD,0,power));
         runCommand(new RotateEncoder(-90,power));
-        robot.moveFlipper(true);
         Thread.sleep(300);
         runCommand(new Translate(700, Translate.Direction.BACKWARD, 0, power));
 //        runCommand(new Translate(300, Translate.Direction.FORWARD, 0, power));
 // MULTIGLYPH
-        robot.getPhoneServo().setPosition(0.45);
-        robot.moveRollerLifts(false);
-        robot.moveFlipper(false);
+
         Thread.sleep(500);
         RelicRecoveryVuMark mark = currentVuMark == RelicRecoveryVuMark.CENTER ? RelicRecoveryVuMark.RIGHT : RelicRecoveryVuMark.CENTER;
         Thread.sleep(2000);
-        robot.setRollerPower(-1);
         runCommand(new Translate(1400, Translate.Direction.FORWARD,0,0.5f));
         Thread.sleep(3000);
-        robot.setRollerPower(0);
         Thread.sleep(500);
         runCommand(new RotateEncoder(-90,1));
         Thread.sleep(500);
@@ -104,9 +81,7 @@ public class BlueNearBasicAutoLogic extends AutonomousLogicThread {
             runCommand(new RotateEncoder(-90,0.9));
         }
         runCommand(new Translate(1000, Translate.Direction.BACKWARD, 0, 0.5f));
-        robot.getFlipper().setPosition(0.9);
         Thread.sleep(3000);
-        robot.moveFlipper(true);
         runCommand(new Translate(500, Translate.Direction.BACKWARD, 0, 0.5f));
         Thread.sleep(1000);
         runCommand(new Translate(500, Translate.Direction.FORWARD, 0, 0.5f));

@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode;
 
 import android.app.Activity;
 import android.os.Environment;
-import android.provider.Settings;
 import android.util.Log;
 import android.util.Pair;
 
@@ -11,31 +10,25 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.exception.RobotCoreException;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Hardware;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.robotcore.external.navigation.Position;
-import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 import org.opencv.android.OpenCVLoader;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -53,7 +46,6 @@ import virtualRobot.VuforiaLocalizerImplSubclass;
 import virtualRobot.commands.Command;
 import virtualRobot.commands.Rotate;
 import virtualRobot.commands.Translate;
-import virtualRobot.hardware.ColorSensor;
 import virtualRobot.hardware.ContinuousRotationServo;
 import virtualRobot.hardware.DumbColorSensor;
 import virtualRobot.hardware.IMU;
@@ -65,10 +57,8 @@ import virtualRobot.logicThreads.competition.TeleOpCustomLogicRewrite;
 import virtualRobot.logicThreads.competition.TeleOpLogic;
 import virtualRobot.logicThreads.testing.PIDTesterLogic;
 import virtualRobot.logicThreads.testing.RotateAutoPIDLogic;
-import virtualRobot.logicThreads.testing.SensorTestLogic;
 import virtualRobot.logicThreads.testing.TestBackendLogic;
 import virtualRobot.utils.GlobalUtils;
-import virtualRobot.utils.Vector3f;
 
 
 /*
@@ -107,7 +97,6 @@ public abstract class ReflectionUpdateThread extends OpMode {
         exceptions.add(TeleOpLogic.class);
         exceptions.add(TeleOpCustomLogicRewrite.class);
         exceptions.add(PIDTesterLogic.class);
-        exceptions.add(SensorTestLogic.class);
         exceptions.add(RotateAutoPIDLogic.class);
 
         if (OpenCVLoader.initDebug()) {
