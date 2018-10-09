@@ -16,7 +16,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
  */
 @Disabled
 @Autonomous(name="Blue Far Jewel Park", group="DumbComp")
-public class BlueFarAuton extends LinearOpMode {
+public class
+BlueFarAuton extends LinearOpMode {
     private DcMotor leftFront,rightFront,leftBack,rightBack;
     private Servo glyphLiftLeft, glyphLiftRight, clawLeft, clawRight, jewelArm;
     private ColorSensor jewel;
