@@ -20,6 +20,16 @@ public class BlueAuton extends LinearOpMode {
             initializeMotor(new DcMotor[]{lf, lb, rf, rb});
         }
         translate(0.7,1);
+        int num = 1; //which mineral is the gold mineral one
+        if (num == 1) {
+            rotate(0.5,1);
+            translate(0.7,1);
+        } else if (num == 2) {
+            translate(0.7,1);
+        } else if (num == 3) {
+            rotate(-0.5,-1);
+            translate(0.7,1);
+        }
     }
 
     public void initializeMotor(DcMotor[] motors) {
