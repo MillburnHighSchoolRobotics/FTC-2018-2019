@@ -34,12 +34,12 @@ public class BlueAuton extends LinearOpMode {
             case 3:
                 rotate(0.5,1);
                 translate(0.7,1);
-
+                break;
         }
 
 
         //claiming
-        int position = 1;
+        int position = 1; //which blue
         switch (position) {
             case 1:
                 rotate(-0.5,-1);
@@ -70,12 +70,10 @@ public class BlueAuton extends LinearOpMode {
             motors[x].setPower(power[x]);
             motors[x].setTargetPosition(position[x]);
         }
-        boolean busy = true;
         while (motors[0].isBusy() || motors[1].isBusy() || motors[2].isBusy() || motors[3].isBusy()) {
             try {
                 Thread.sleep(10);
-            } catch (InterruptedException ex) {
-            }
+            } catch (InterruptedException ex) {}
         }
     }
 
