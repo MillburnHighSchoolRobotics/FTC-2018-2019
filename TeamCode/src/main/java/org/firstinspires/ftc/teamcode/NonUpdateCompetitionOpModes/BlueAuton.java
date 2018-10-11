@@ -19,19 +19,44 @@ public class BlueAuton extends LinearOpMode {
         for (int x = 0; x < 4; x++) {
             initializeMotor(new DcMotor[]{lf, lb, rf, rb});
         }
+
+        //sampling
         translate(0.7,1);
         int num = 1; //which mineral is the gold mineral one
-        if (num == 1) {
-            rotate(0.5,1);
-            translate(0.7,1);
-        } else if (num == 2) {
-            translate(0.7,1);
-        } else if (num == 3) {
-            rotate(-0.5,-1);
-            translate(0.7,1);
-        }
-    }
+        switch (num) {
+            case 1:
+                rotate(-0.5,-1);
+                translate(0.7,1);
+                break;
+            case 2:
+                translate(0.7,1);
+                break;
+            case 3:
+                rotate(0.5,1);
+                translate(0.7,1);
 
+        }
+
+
+        //claiming
+        int position = 1;
+        switch (position) {
+            case 1:
+                rotate(-0.5,-1);
+                translate(0.7,1);
+                break;
+            case 2:
+                translate(0.9,1);
+                break;
+        }
+        //place marker
+        rotate(-0.5,-1);
+        translate(0.7,1);
+
+        //park
+        rotate(0.5,1);
+        translate(0.9,1);
+    }
     public void initializeMotor(DcMotor[] motors) {
         for (DcMotor motor : motors) {
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
