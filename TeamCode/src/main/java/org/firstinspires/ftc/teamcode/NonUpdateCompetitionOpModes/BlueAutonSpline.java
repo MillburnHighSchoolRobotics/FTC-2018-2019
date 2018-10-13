@@ -37,9 +37,10 @@ public class BlueAutonSpline extends LinearOpMode {
         while (!((currentPosition[0]+(buffer/2) < samplingPosition[0]) || (currentPosition[0]-(buffer/2) > samplingPosition[0]) &&
                 (currentPosition[1]+(buffer/2) < samplingPosition[1]) || (currentPosition[1]-(buffer/2) > samplingPosition[1]))) {
             double movement = 1.0;
-            double angle = Spline.getAngle(new double[]{0.5, Spline.getY(0.5)}, movement);
-            double distance = Spline.getDistance(new double[]{0.5, Spline.getY(0.5)}, movement);
+            double angle = Spline.getAngle(currentPosition, movement);
+            double distance = Spline.getDistance(currentPosition, movement);
             //move according to angle and distance
+            //update currentPosition
         }
     }
     public void initializeMotor(DcMotor[] motors) {
