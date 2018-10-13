@@ -21,24 +21,26 @@ public class BlueAutonSpline extends LinearOpMode {
             initializeMotor(new DcMotor[]{lf, lb, rf, rb});
         }
 
+        Spline auton = new Spline();
+
         double[] currentPosition = {58.75,82.25};
         double[] samplingPosition = {47,94};
         double[] claimingPosition = {11.75,23.5};
         double[] parkingPosition = {8.8125,99.875};
-        Spline.addPoint(currentPosition);
-        Spline.addPoint(samplingPosition);
-        Spline.addPoint(claimingPosition);
-        Spline.addPoint(parkingPosition);
+        auton.addPoint(currentPosition);
+        auton.addPoint(samplingPosition);
+        auton.addPoint(claimingPosition);
+        auton.addPoint(parkingPosition);
 
-        Spline.interpolate();
+        auton.interpolate();
 
         //moving to sampling position
         double buffer = 10;
         while (!((currentPosition[0]+(buffer/2) < samplingPosition[0]) || (currentPosition[0]-(buffer/2) > samplingPosition[0]) &&
                 (currentPosition[1]+(buffer/2) < samplingPosition[1]) || (currentPosition[1]-(buffer/2) > samplingPosition[1]))) {
             double movement = 1.0;
-            double angle = Spline.getAngle(currentPosition, movement);
-            double distance = Spline.getDistance(currentPosition, movement);
+            double angle = auton.getAngle(currentPosition, movement);
+            double distance = auton.getDistance(currentPosition, movement);
             //move according to angle and distance
             //update currentPosition
         }

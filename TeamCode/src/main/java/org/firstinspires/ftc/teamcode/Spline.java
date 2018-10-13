@@ -1,27 +1,29 @@
 package org.firstinspires.ftc.teamcode;
 
 import java.util.*;
-import java.lang.Math.*;
 
 
 public class Spline {
-    private static LinkedList<double[]> path = new LinkedList<>();
-    private static double[][] ranges;
-    private static double[][] coefficients;
+    private LinkedList<double[]> path;
+    private double[][] ranges;
+    private double[][] coefficients;
 
-    public static LinkedList getPath() {
+    public Spline() {
+        path = new LinkedList<>();
+    }
+    public LinkedList getPath() {
         return path;
     }
-    public static void addPoint(double[] point) {
+    public void addPoint(double[] point) {
         path.add(point);
     }
-    public static double[][] getRanges() {
+    public double[][] getRanges() {
         return ranges;
     }
-    public static double[][] getCoefficients() {
+    public double[][] getCoefficients() {
         return coefficients;
     }
-    public static void interpolate() {
+    public void interpolate() {
         //setup
         double[][] matrix = new double[(path.size()-1)*4][(path.size()-1)*4];
         for (int x = 0; x < matrix.length; x++) {
@@ -82,7 +84,7 @@ public class Spline {
         //Gaussian Elimination
         coefficients = GaussianElimination(matrix, matrixY);
     }
-    public static double[][] GaussianElimination(double[][] matrix, double[] matrixY) {
+    public double[][] GaussianElimination(double[][] matrix, double[] matrixY) {
         //Row Echelon Form
         for (int x = 0; x < matrixY.length; x++) {
             int f = x;
@@ -129,7 +131,7 @@ public class Spline {
         }
         return coeff;
     }
-    public static double getY(double x) {
+    public double getY(double x) {
         //find range
         int range = -1;
         for (int r = 0; r < ranges.length; r++) {
@@ -147,14 +149,14 @@ public class Spline {
         double y = evaluate(x, coefficients[range]);
         return y;
     }
-    public static double evaluate(double x, double[] coeff) {
+    public double evaluate(double x, double[] coeff) {
         double sum = 0.0;
         for (int s = 0; s < coeff.length; s++) {
             sum += (coeff[s]*Math.pow(x,3-s));
         }
         return sum;
     }
-    public static double[] Vector(double[] currentPosition, double movement) {
+    public double[] Vector(double[] currentPosition, double movement) {
         //gets displacement vector
         double currentX = currentPosition[0];
         double currentY = currentPosition[1];
@@ -165,13 +167,13 @@ public class Spline {
         return displacement;
 
     }
-    public static double getAngle(double[] currentPosition, double movement) {
+    public double getAngle(double[] currentPosition, double movement) {
         double[] displacement = Vector(currentPosition, movement);
         //finds inverse tangent and gets angle
         double gamma = Math.toDegrees(Math.atan(displacement[1]/displacement[0]));
         return gamma;
     }
-    public static double getDistance(double[] currentPosition, double movement) {
+    public double getDistance(double[] currentPosition, double movement) {
         double[] displacement = Vector(currentPosition, movement);
         //finds distance between positions
         double delta = Math.sqrt(Math.abs(Math.pow(displacement[1],2) - Math.pow(displacement[0],2)));
