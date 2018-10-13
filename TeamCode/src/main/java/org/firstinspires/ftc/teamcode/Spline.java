@@ -173,7 +173,7 @@ public class Spline {
     }
     public static double getDistance(double[] currentPosition, double movement) {
         double[] displacement = Vector(currentPosition, movement);
-        //finds direct distance
+        //finds distance between positions
         double delta = Math.sqrt(Math.abs(Math.pow(displacement[1],2) - Math.pow(displacement[0],2)));
         return delta;
     }
