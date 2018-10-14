@@ -4,26 +4,11 @@ import java.util.*;
 
 
 public class Spline {
-    private LinkedList<double[]> path;
-    private double[][] ranges;
-    private double[][] coefficients;
-
-    public Spline() {
-        path = new LinkedList<>();
-    }
-    public LinkedList getPath() {
-        return path;
-    }
-    public void addPoint(double[] point) {
-        path.add(point);
-    }
-    public double[][] getRanges() {
-        return ranges;
-    }
-    public double[][] getCoefficients() {
-        return coefficients;
-    }
-    public void interpolate() {
+    public static double[][] interpolate(double[] xArr, double[] yArr) {
+        LinkedList<double[]> path = new LinkedList<>();
+        for (int a = 0; a < xArr.length; a++) {
+            path.add(new double[] {xArr[a],yArr[a]});
+        }
         //setup
         double[][] matrix = new double[(path.size()-1)*4][(path.size()-1)*4];
         for (int x = 0; x < matrix.length; x++) {
@@ -35,7 +20,7 @@ public class Spline {
         for (int x = 0; x < matrix.length; x++) {
             matrixY[x] = 0;
         }
-        ranges = new double[path.size()-1][2];
+        double[][] ranges = new double[path.size()-1][2];
         int row = 0;
 
 
@@ -82,9 +67,10 @@ public class Spline {
 
 
         //Gaussian Elimination
-        coefficients = GaussianElimination(matrix, matrixY);
+        double[][] coefficients = GaussianElimination(matrix, matrixY, path);
+        return coefficients;
     }
-    public double[][] GaussianElimination(double[][] matrix, double[] matrixY) {
+    public static double[][] GaussianElimination(double[][] matrix, double[] matrixY, LinkedList<double[]> path) {
         //Row Echelon Form
         for (int x = 0; x < matrixY.length; x++) {
             int f = x;
@@ -131,7 +117,54 @@ public class Spline {
         }
         return coeff;
     }
-    public double getY(double x) {
+    public static void TwoDimensionalSpline(double[] x, double[] y) {
+        ArrayList<Double> time = new ArrayList<>();
+        time.add(0.0);
+        for (int i = 0; i < x.length-1; i++) {
+            double t = time.get(time.size()-1) + Math.sqrt(Math.pow((x[i + 1] - x[i]),2) + Math.pow((y[i + 1] - y[i]),2));
+            time.add(t);
+        }
+        time.add(time.get(time.size()-1) + Math.sqrt(Math.pow((x[x.length-1] - x[0]),2) + Math.pow((y[y.length-1] - y[0]),2)));
+        double maxTime = time.get(time.size()-1);
+        double[] timeArray = new double[time.size()];
+        for (int t = 0; t < time.size(); t++) {
+            timeArray[t] = t/maxTime;
+        }
+        System.out.println(Arrays.toString(timeArray));
+
+
+        double[] xArray = new double[x.length+1];
+        for (int a = 0; a < xArray.length-1; a++) {
+            xArray[a] = x[a];
+        }
+        xArray[xArray.length-1] = x[0];
+
+        double[] yArray = new double[y.length+1];
+        for (int a = 0; a < xArray.length-1; a++) {
+            yArray[a] = y[a];
+        }
+        yArray[yArray.length-1] = y[0];
+
+        double[][] x_interpolant = interpolate(timeArray, xArray);
+        double[][] y_interpolant = interpolate(timeArray, yArray);
+
+        for (int a = 0; a < x_interpolant.length; a++) {
+            for (int b = 0; b < x_interpolant[a].length; b++) {
+                System.out.print(x_interpolant[a][b]);
+            }
+            System.out.println();
+        }
+        System.out.println("\n");
+        System.out.println("\n");
+
+        for (int a = 0; a < y_interpolant.length; a++) {
+            for (int b = 0; b < y_interpolant[a].length; b++) {
+                System.out.print(y_interpolant[a][b]);
+            }
+            System.out.println();
+        }
+    }
+    /*public static double getY(double x) {
         //find range
         int range = -1;
         for (int r = 0; r < ranges.length; r++) {
@@ -142,21 +175,21 @@ public class Spline {
 
         //throw exception if the value is outside the range
         if (range == -1) {
-            throw new ArrayIndexOutOfBoundsException("vValue is not within the range of the spline");
+            throw new ArrayIndexOutOfBoundsException("Value is not within the range of the spline");
         }
 
         //evaluate expression
         double y = evaluate(x, coefficients[range]);
         return y;
     }
-    public double evaluate(double x, double[] coeff) {
+    public static double evaluate(double x, double[] coeff) {
         double sum = 0.0;
         for (int s = 0; s < coeff.length; s++) {
             sum += (coeff[s]*Math.pow(x,3-s));
         }
         return sum;
     }
-    public double[] Vector(double[] currentPosition, double movement) {
+    public static double[] Vector(double[] currentPosition, double movement) {
         //gets displacement vector
         double currentX = currentPosition[0];
         double currentY = currentPosition[1];
@@ -167,16 +200,16 @@ public class Spline {
         return displacement;
 
     }
-    public double getAngle(double[] currentPosition, double movement) {
+    public static double getAngle(double[] currentPosition, double movement) {
         double[] displacement = Vector(currentPosition, movement);
         //finds inverse tangent and gets angle
         double gamma = Math.toDegrees(Math.atan(displacement[1]/displacement[0]));
         return gamma;
     }
-    public double getDistance(double[] currentPosition, double movement) {
+    public static double getDistance(double[] currentPosition, double movement) {
         double[] displacement = Vector(currentPosition, movement);
-        //finds distance between positions
+        //finds direct distance
         double delta = Math.sqrt(Math.abs(Math.pow(displacement[1],2) - Math.pow(displacement[0],2)));
         return delta;
-    }
+    }*/
 }
