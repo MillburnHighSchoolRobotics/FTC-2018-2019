@@ -1,8 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import java.util.*;
-import java.lang.Math.*;
-
 
 public class Spline {
     private static double[][] x_interpolant;
@@ -143,6 +141,22 @@ public class Spline {
             domain[x][0] = time[x];
             domain[x][1] = time[x+1];
         }
+    }
+    public static double getAngle(double time) {
+        int d = -1;
+        for (int t = 0; t < domain.length; t++) {
+            if (time >= domain[t][0] && time < domain[t][1]) {
+                d = t;
+            }
+        }
+        if (d == -1) {
+            throw new ArrayIndexOutOfBoundsException("Time is not in bounds");
+        }
+        double xDerivative = 3*x_interpolant[d][0]*Math.pow(time,2) + 2*x_interpolant[d][1]*time + x_interpolant[d][2];
+        double yDerivative = 3*y_interpolant[d][0]*Math.pow(time,2) + 2*y_interpolant[d][1]*time + y_interpolant[d][2];
+
+        double angle = Math.toDegrees(Math.atan2(yDerivative,xDerivative));
+        return angle;
     }
     public static double[][] getDomain() {
         return domain;

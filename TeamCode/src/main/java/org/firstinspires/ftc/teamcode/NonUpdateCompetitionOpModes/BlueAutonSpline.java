@@ -27,6 +27,8 @@ public class BlueAutonSpline extends LinearOpMode {
         Spline.TwoDimensionalSpline(xValues,yValues);
         double[][] x_interpolant = Spline.getInterpolantX();
         double[][] y_interpolant = Spline.getInterpolantY();
+        double[][] domain = Spline.getDomain();
+        double angleMeasurement = Spline.getAngle(10);
     }
     public void initializeMotor(DcMotor[] motors) {
         for (DcMotor motor : motors) {
