@@ -75,7 +75,7 @@ public class TeleOpCustomLogic extends LogicThread {
                 robot.getRBMotor().setPower(-rotateX * gearCoefficient * rotateCoefficient);
                 robot.getLFMotor().setPower(rotateX * gearCoefficient * rotateCoefficient);
                 robot.getLBMotor().setPower(rotateX * gearCoefficient * rotateCoefficient);
-//                robot.addToTelemetry("TeleOp if statement lvl", 0);
+//                robot.addToTelemetry("NewNewNewTeleOp if statement lvl", 0);
             } else if (!MathUtils.equals(translateMag, 0, 0.05)) {
                 double translatePower = translateMag * 0.666;
                 if (translateTheta >= 0 && translateTheta <= 90) { //quadrant 1
@@ -126,7 +126,7 @@ public class TeleOpCustomLogic extends LogicThread {
                 robot.getRFMotor().setPower(RF * gearCoefficient);
 
             } else {
-//                robot.addToTelemetry("TeleOp if statement lvl", 2);
+//                robot.addToTelemetry("NewNewNewTeleOp if statement lvl", 2);
                 robot.stopMotors();
             }
 

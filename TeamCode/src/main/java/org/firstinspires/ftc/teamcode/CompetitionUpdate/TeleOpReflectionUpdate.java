@@ -10,7 +10,7 @@ import virtualRobot.logicThreads.competition.TeleOpCustomLogic;
  * Created by david on 1/18/18.
  */
 
-@TeleOp(name = "TeleOp: Run TeleOp (RUT)", group = "Competition")
+@TeleOp(name = "NewNewNewTeleOp: Run NewNewNewTeleOp (RUT)", group = "Competition")
 public class TeleOpReflectionUpdate extends ReflectionUpdateThread {
     @Override
     public void setLogicThread() {

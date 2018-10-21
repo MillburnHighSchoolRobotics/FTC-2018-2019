@@ -43,7 +43,7 @@ public class TeleOpCustomLogicRewrite extends LogicThread {
         };
 
         while (true) {
-//            robot.addToTelemetry("TeleOp timestamp: ", System.currentTimeMillis());
+//            robot.addToTelemetry("NewNewNewTeleOp timestamp: ", System.currentTimeMillis());
             controller1.logicalRefresh();
             controller2.logicalRefresh();
             double translateTheta = Math.toDegrees(controller1.getValue(JoystickController.THETA_1));
@@ -64,7 +64,7 @@ public class TeleOpCustomLogicRewrite extends LogicThread {
                 robot.getRBMotor().setPower(-rotateX * gearCoefficient);
                 robot.getLFMotor().setPower(rotateX * gearCoefficient);
                 robot.getLBMotor().setPower(rotateX * gearCoefficient);
-//                robot.addToTelemetry("TeleOp if statement lvl", 0);
+//                robot.addToTelemetry("NewNewNewTeleOp if statement lvl", 0);
             } else if (!MathUtils.equals(translateMag, 0, 0.05)) {
                 double translatePower = translateMag * 0.666;
                 if (translateTheta >= 0 && translateTheta <= 90) { //quadrant 1
@@ -103,7 +103,7 @@ public class TeleOpCustomLogicRewrite extends LogicThread {
                 robot.getRFMotor().setPower(RF * gearCoefficient);
 
             } else {
-//                robot.addToTelemetry("TeleOp if statement lvl", 2);
+//                robot.addToTelemetry("NewNewNewTeleOp if statement lvl", 2);
                 robot.stopMotors();
             }
 

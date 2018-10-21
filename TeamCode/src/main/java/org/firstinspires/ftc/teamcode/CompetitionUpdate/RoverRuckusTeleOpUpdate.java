@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.ReflectionUpdateThread;
 
 import virtualRobot.logicThreads.competition.RoverRuckusTeleOpLogic;
 
-@TeleOp(name = "Rover Ruckus TeleOp", group = "competition")
+@TeleOp(name = "Rover Ruckus NewNewNewTeleOp", group = "competition")
 public class RoverRuckusTeleOpUpdate extends ReflectionUpdateThread {
     @Override
     public void setLogicThread() {
