@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.NonUpdateCompetitionOpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -10,10 +11,10 @@ import virtualRobot.utils.MathUtils;
 
 @TeleOp(name = "New New New TeleOp", group = "competition")
 public class NewNewNewTeleOp extends OpMode {
-    private DcMotor lf;
-    private DcMotor lb;
-    private DcMotor rf;
-    private DcMotor rb;
+    private DcMotorEx lf;
+    private DcMotorEx lb;
+    private DcMotorEx rf;
+    private DcMotorEx rb;
 //    private DcMotor reaper;
 //    private Servo reaperLift;
 //    private DcMotor reaperFold;
@@ -21,12 +22,14 @@ public class NewNewNewTeleOp extends OpMode {
 //    private Servo deposit;
     float threshold = 0.1f;
     double power = 0.9;
+
+
     @Override
     public void init() {
-        lf = hardwareMap.dcMotor.get("leftFront");
-        lb = hardwareMap.dcMotor.get("leftBack");
-        rf = hardwareMap.dcMotor.get("rightFront");
-        rb = hardwareMap.dcMotor.get("rightBack");
+        lf = (DcMotorEx)hardwareMap.dcMotor.get("leftFront");
+        lb = (DcMotorEx)hardwareMap.dcMotor.get("leftBack");
+        rf = (DcMotorEx)hardwareMap.dcMotor.get("rightFront");
+        rb = (DcMotorEx)hardwareMap.dcMotor.get("rightBack");
 
         lf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         lb.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
