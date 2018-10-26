@@ -18,7 +18,7 @@ public class NewNewNewTeleOp extends OpMode {
 //    private DcMotor reaper;
 //    private Servo reaperLift;
 //    private DcMotor reaperFold;
-//    private DcMotor lift;
+    private DcMotor lift;
 //    private Servo deposit;
     float threshold = 0.1f;
     double power = 0.9;
@@ -30,6 +30,7 @@ public class NewNewNewTeleOp extends OpMode {
         lb = (DcMotorEx)hardwareMap.dcMotor.get("leftBack");
         rf = (DcMotorEx)hardwareMap.dcMotor.get("rightFront");
         rb = (DcMotorEx)hardwareMap.dcMotor.get("rightBack");
+        lift = (DcMotorEx)hardwareMap.dcMotor.get("lift");
 
         lf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         lb.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -46,6 +47,7 @@ public class NewNewNewTeleOp extends OpMode {
         lb.setPower(0);
         rf.setPower(0);
         rb.setPower(0);
+        lift.setPower(0);
 //        reaper = hardwareMap.dcMotor.get("reaper");
 //        reaperLift = hardwareMap.servo.get("reaperLift");
 //        reaperFold = hardwareMap.dcMotor.get("reaperFold");
@@ -77,15 +79,24 @@ public class NewNewNewTeleOp extends OpMode {
             rb.setPower(0);
         }
 
+        if(gamepad1.dpad_up) {
+            lift.setPower(power);
+        } else if (gamepad1.dpad_down) {
+            lift.setPower(-1 * power);
+        } else {
+            lift.setPower(0);
+        }
+
         telemetry.addData("LF", lf.getCurrentPosition() + "");
         telemetry.addData("LB", lb.getCurrentPosition() + "");
         telemetry.addData("RF", rf.getCurrentPosition() + "");
         telemetry.addData("RB", rb.getCurrentPosition() + "");
+        telemetry.addData("LIFT", lift.getCurrentPosition() + "");
 
-        if (gamepad1.dpad_up) {
-//            reaper.setPower(power);
+/*        if (gamepad1.dpad_up) {
+            reaper.setPower(power);
         } else if (gamepad1.dpad_down) {
-//            reaper.setPower(-1 * power)
-        }
+            reaper.setPower(-1 * power)
+        }*/
     }
 }
