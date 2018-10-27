@@ -52,27 +52,19 @@ public class BlueAuton2 extends LinearOpMode {
 //        for (int x = 0; x < 4; x++) {
             initializeMotor(new DcMotor[]{lf, lb, rf, rb});
 //        }
-        liftR.setDirection(DcMotorSimple.Direction.REVERSE);
+        liftL.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        liftL.setPower(1);
-        liftR.setPower(1);
-        liftL.setTargetPosition(4796+1067-initL);
-        liftR.setTargetPosition(4796+1067-initR);
-        liftL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        liftR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        while (liftR.isBusy() || liftL.isBusy()) {
-            Thread.sleep(10);
-        };
+        moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {1, 1}, new int[] {4796+1067-initL, 4796+1067-initR});
+        Thread.sleep(100);
         translate(-0.5, -104);
+        Thread.sleep(100);
 
-        liftL.setTargetPosition(8418+1067-initL);
-        liftR.setTargetPosition(8418+1067-initR);
-        while (liftR.isBusy() || liftL.isBusy()) {
-            Thread.sleep(10);
-        }
+        moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {1, 1}, new int[] {8418+1067-initL, 8418+1067-initR});
+        Thread.sleep(100);
 
         //sampling
         translate(0.7,distToEncoder(18));
+        Thread.sleep(100);
         int num = 0;//TODO:Fix //which mineral is the gold mineral one
         switch (num) {
             case 1:
@@ -91,10 +83,15 @@ public class BlueAuton2 extends LinearOpMode {
             default:
                 break;
         }
+        Thread.sleep(100);
         rotate(-0.5, rotateToEncoder(Math.toRadians(-90)));//TODO:Add global variable for speed
+        Thread.sleep(100);
         translate(0.7, distToEncoder(48));//TODO:See above immortal TODO
+        Thread.sleep(100);
         rotate(0.5, rotateToEncoder(-45));
+        Thread.sleep(100);
         translate(0.7, distToEncoder(39));
+        Thread.sleep(100);
 //        marker.setPosition(0);
 //        rotate(-0.5,-1);
         translate(-0.7,distToEncoder(-110));
@@ -114,12 +111,20 @@ public class BlueAuton2 extends LinearOpMode {
             motors[x].setTargetPosition(position[x]);
             motors[x].setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
-        while (motors[0].isBusy() || motors[1].isBusy() || motors[2].isBusy() || motors[3].isBusy()) {
+        boolean isBusy = false;
+        while (!isBusy) {
+            for (DcMotor motor : motors) {
+                if (motor.isBusy()) {
+                    isBusy = true;
+                    break;
+                }
+            }
             try {
                 Thread.sleep(10);
             } catch (InterruptedException ex) {}
         }
         for (DcMotor motor : motors) {
+            motor.setPower(0);
             motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
     }
