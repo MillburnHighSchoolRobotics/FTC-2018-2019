@@ -3,16 +3,19 @@ package org.firstinspires.ftc.teamcode.NonUpdateCompetitionOpModes;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @Autonomous(name = "Blue Auton Depot", group = "competition")
 public class BlueAuton1 extends LinearOpMode {
-    DcMotor lf = hardwareMap.dcMotor.get("lf");
-    DcMotor lb = hardwareMap.dcMotor.get("lb");
-    DcMotor rf = hardwareMap.dcMotor.get("rf");
-    DcMotor rb = hardwareMap.dcMotor.get("rb");
-    Servo marker = hardwareMap.servo.get("marker");
+    DcMotor lf;
+    DcMotor lb;
+    DcMotor rf;
+    DcMotor rb;
+    DcMotor liftR;
+    DcMotor liftL;
+    //Servo marker = hardwareMap.servo.get("marker");
 
     final float botWidth = 16.5f; //inches
     final float botRadius = botWidth/2; //in
@@ -34,6 +37,13 @@ public class BlueAuton1 extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+        lf = hardwareMap.dcMotor.get("leftFront");
+        lb = hardwareMap.dcMotor.get("leftBack");
+        rf = hardwareMap.dcMotor.get("rightFront");
+        rb = hardwareMap.dcMotor.get("rightBack");
+        liftL = hardwareMap.dcMotor.get("liftL");
+        liftR = hardwareMap.dcMotor.get("liftR");
+        waitForStart();
         lf.setDirection(DcMotorSimple.Direction.FORWARD);
         lb.setDirection(DcMotorSimple.Direction.FORWARD);
         rf.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -41,6 +51,26 @@ public class BlueAuton1 extends LinearOpMode {
 //        for (int x = 0; x < 4; x++) {
             initializeMotor(new DcMotor[]{lf, lb, rf, rb});
 //        }
+        liftL.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        int initL = liftL.getCurrentPosition();
+        int initR = liftR.getCurrentPosition();
+        liftL.setPower(1);
+        liftR.setPower(1);
+        liftL.setTargetPosition(4796+1067-initL);
+        liftR.setTargetPosition(4796+1067-initR);
+        liftL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        liftR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        while (liftR.isBusy() || liftL.isBusy()) {
+            Thread.sleep(10);
+        };
+        translate(-0.5, -104);
+
+        liftL.setTargetPosition(8418+1067);
+        liftR.setTargetPosition(8418+1067);
+        while (liftR.isBusy() || liftL.isBusy()) {
+            Thread.sleep(10);
+        };
 
         //sampling
         translate(0.7,distToEncoder(15));
@@ -65,7 +95,7 @@ public class BlueAuton1 extends LinearOpMode {
 
 
         //place marker
-        marker.setPosition(0);
+    //    marker.setPosition(0);
         rotate(0.5,rotateToEncoder(Math.toRadians(45)));
         translate(0.7,distToEncoder(115));
     }
