@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode.NonUpdateCompetitionOpModes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
+@Autonomous(name = "Blue Auton Depot", group = "competition")
 public class BlueAuton1 extends LinearOpMode {
     DcMotor lf = hardwareMap.dcMotor.get("lf");
     DcMotor lb = hardwareMap.dcMotor.get("lb");
