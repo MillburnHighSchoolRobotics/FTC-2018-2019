@@ -3,16 +3,10 @@ package org.firstinspires.ftc.teamcode.NonUpdateCompetitionOpModes;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
 
-import virtualRobot.utils.MathUtils;
-
-import static virtualRobot.utils.MathUtils.sgn;
-
-@Autonomous(name = "Blue Auton Depot", group = "competition")
-public class BlueAuton1 extends LinearOpMode {
+@Autonomous(name = "dumb dumb dumb")
+public class DumbDumbAutonPit extends LinearOpMode {
     DcMotor lf;
     DcMotor lb;
     DcMotor rf;
@@ -22,23 +16,25 @@ public class BlueAuton1 extends LinearOpMode {
     //Servo marker = hardwareMap.servo.get("marker");
 
     final float botWidth = 16.5f; //inches
-    final float botRadius = botWidth/2; //in
+    final float botRadius = botWidth / 2; //in
     final float wheelWidth = 3; //in
-    final float wheelRadius = wheelWidth/2; //in
+    final float wheelRadius = wheelWidth / 2; //in
     final int ticksPerRev = 680; //ticks per rev
 //    final float targetRadius = 10+c; //inches
 //    final double targetSpeed =4; //inches/sec
 //    final double encoderSpeed = (targetSpeed/(2*Math.PI*wheelRadius)) * ticksPerRev; //encoders per sec
 
     public int distToEncoder(double dist) { //inches
-        return (int)(dist/(2*Math.PI*wheelRadius) * ticksPerRev);
+        return (int) (dist / (2 * Math.PI * wheelRadius) * ticksPerRev);
     }
 
     public int rotateToEncoder(double rad) {
-        double dist = botRadius*rad;
+        double dist = botRadius * rad;
         return distToEncoder(dist);
     }
+
     int meme = 0;
+
     @Override
     public void runOpMode() throws InterruptedException {
         lf = hardwareMap.dcMotor.get("leftFront");
@@ -53,7 +49,7 @@ public class BlueAuton1 extends LinearOpMode {
         rf.setDirection(DcMotorSimple.Direction.REVERSE);
         rb.setDirection(DcMotorSimple.Direction.REVERSE);
 //        for (int x = 0; x < 4; x++) {
-            initializeMotor(new DcMotor[]{lf, lb, rf, rb});
+        initializeMotor(new DcMotor[]{lf, lb, rf, rb});
 //        }
         liftL.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -69,67 +65,14 @@ public class BlueAuton1 extends LinearOpMode {
 //        Thread.sleep(100);
 
         //sampling
-        translate(0.7,distToEncoder(15));
-        Thread.sleep(100);
-        int num = 2; //which mineral is the gold mineral one
-        switch (num) { //TODO: actually put values
-            case 1:
-                rotate(-0.5,-1);
-                translate(0.7,1);
-                rotate(0.5, 1);
-                translate(0.7,1);
-                break;
-            case 2:
-                translate(0.7,distToEncoder(48));
-                break;
-            case 3:
-                rotate(0.5,1);
-                translate(0.7,1);
-                rotate(-0.5, -1);
-                translate(0.7,1);
-                break;
-        }
-        Thread.sleep(100);
-
-
-        //place marker
-        //    marker.setPosition(0);
-        rotate(0.5,rotateToEncoder(Math.toRadians(45)));
-        Thread.sleep(100);
-        translate(0.7,distToEncoder(115));
+        translate(0.7, distToEncoder(30));
     }
+
     public void initializeMotor(DcMotor[] motors) {
         for (DcMotor motor : motors) {
             motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 //            motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 //            motor.setTargetPosition(0);
-        }
-    }
-
-    public void moveToPosition(DcMotor[] motors, double[] power, int[] position) {
-        for (int x = 0; x < motors.length; x++) {
-            motors[x].setPower(power[x]);
-            motors[x].setTargetPosition(position[x]);
-            motors[x].setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        }
-
-        while (true) {
-            boolean flag = false;
-            for (DcMotor motor : motors) {
-//                if (motor.isBusy()) {
-                    flag = flag || motor.isBusy();
-//                }
-            }
-            if (!flag) {
-                break;
-            }
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException ex) {}
-        }
-        for (DcMotor motor : motors) {
-            motor.setPower(0);
-            motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
     }
 
@@ -180,12 +123,6 @@ public class BlueAuton1 extends LinearOpMode {
             telemetry.update();
             Thread.sleep(10);
         }
-//        telemetry.addData("meme", meme);
-//        meme++;
-//        lf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        lb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        rf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        rb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        moveToPosition(new DcMotor[] {lf,lb,rf,rb}, new double[] {power,power,-power,-power},  new int[] {(positionChange),(positionChange),(positionChange),(positionChange)});
+
     }
 }
