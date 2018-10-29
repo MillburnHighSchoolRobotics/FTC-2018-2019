@@ -36,10 +36,10 @@ public class BlueAuton2 extends LinearOpMode {
         int initL = liftL.getCurrentPosition();
         int initR = liftR.getCurrentPosition();
         waitForStart();
-        lf.setDirection(DcMotorSimple.Direction.FORWARD);
-        lb.setDirection(DcMotorSimple.Direction.FORWARD);
-        rf.setDirection(DcMotorSimple.Direction.REVERSE);
-        rb.setDirection(DcMotorSimple.Direction.REVERSE);
+        lf.setDirection(DcMotorSimple.Direction.REVERSE);
+        lb.setDirection(DcMotorSimple.Direction.REVERSE);
+        rf.setDirection(DcMotorSimple.Direction.FORWARD);
+        rb.setDirection(DcMotorSimple.Direction.FORWARD);
 //        for (int x = 0; x < 4; x++) {
             initializeMotor(new DcMotor[]{lf, lb, rf, rb});
 //        }
@@ -57,7 +57,7 @@ public class BlueAuton2 extends LinearOpMode {
         //sampling
         Movement mv = new Movement(lf, lb, rf, rb);
 
-        mv.translateDistance(0.7,10);
+        mv.translateDistance(0.7,18);
         Thread.sleep(100);
 
         mv.rotateDegrees(0.7, 90);

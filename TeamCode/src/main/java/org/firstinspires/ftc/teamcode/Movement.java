@@ -41,7 +41,7 @@ public class Movement {
         lb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        moveToPosition(new DcMotor[] {lf,lb,rf,rb}, new double[] {power,power,power,power}, new int[] {(positionChange),(positionChange),(positionChange),(positionChange)});
+        moveToPosition(new DcMotor[] {lf,lb,rf,rb}, new double[] {power,power,-power,-power}, new int[] {(positionChange),(positionChange),(positionChange),(positionChange)});
     }
 
     public void translateDistance(double power, double dist) throws InterruptedException {
@@ -72,7 +72,7 @@ public class Movement {
         lb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        moveToPosition(new DcMotor[] {lf,lb,rf,rb}, new double[] {power,power,power,power},  new int[] {(positionChange),(positionChange),(-positionChange),(-positionChange)});
+        moveToPosition(new DcMotor[] {lf,lb,rf,rb}, new double[] {power,power,-power,-power},  new int[] {(-positionChange),(-positionChange),(positionChange),(positionChange)});
     }
 
     public void rotateDegrees(double power, double degrees) throws InterruptedException {
