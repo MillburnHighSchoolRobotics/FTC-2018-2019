@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+import org.firstinspires.ftc.teamcode.Movement;
 
 @Autonomous(name = "Blue Auton Pit", group = "competition")
 public class BlueAuton2 extends LinearOpMode {
@@ -14,25 +15,13 @@ public class BlueAuton2 extends LinearOpMode {
     DcMotor rf;
     DcMotor rb;
     Servo marker;
-    final float botWidth = 16.5f; //inches
-    final float botRadius = botWidth/2; //in
-    final float wheelWidth = 3; //in
-    final float wheelRadius = wheelWidth/2; //in
-    final int ticksPerRev = 680; //ticks per rev
+
 
 
     DcMotor liftR;
     DcMotor liftL;
 
     int meme = 0;
-    public int distToEncoder(double dist) { //inches
-        return (int)(dist/(2*Math.PI*wheelRadius) * ticksPerRev);
-    }
-
-    public int rotateToEncoder(double rad) {
-        double dist = botRadius*rad;
-        return distToEncoder(dist);
-    }
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -54,7 +43,8 @@ public class BlueAuton2 extends LinearOpMode {
 //        for (int x = 0; x < 4; x++) {
             initializeMotor(new DcMotor[]{lf, lb, rf, rb});
 //        }
-        liftL.setDirection(DcMotorSimple.Direction.REVERSE);
+
+//        liftL.setDirection(DcMotorSimple.Direction.REVERSE);
 
 //        moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {1, 1}, new int[] {4796+1067-initL, 4796+1067-initR});
 //        Thread.sleep(100);
@@ -65,38 +55,43 @@ public class BlueAuton2 extends LinearOpMode {
 //        Thread.sleep(100);
 
         //sampling
-        translate(0.7,distToEncoder(18));
+        Movement mv = new Movement(lf, lb, rf, rb);
+
+        mv.translateDistance(0.7,10);
         Thread.sleep(100);
-        int num = 0;//TODO:Fix //which mineral is the gold mineral one
-        switch (num) {
-            case 1:
-                rotate(-0.5,-1);
-                translate(0.7,1);
-                rotate(0.5, 1);
-                break;
-            case 2:
-                translate(0.7,1);
-                break;
-            case 3:
-                rotate(0.5,1);
-                translate(0.7,1);
-                rotate(-0.5, -1);
-                break;
-            default:
-                break;
-        }
+
+        mv.rotateDegrees(0.7, 90);
         Thread.sleep(100);
-        rotate(-0.5, rotateToEncoder(Math.toRadians(-90)));//TODO:Add global variable for speed
-        Thread.sleep(100);
-        translate(0.7, distToEncoder(48));//TODO:See above immortal TODO
-        Thread.sleep(100);
-        rotate(0.5, rotateToEncoder(-45));
-        Thread.sleep(100);
-        translate(0.7, distToEncoder(39));
-        Thread.sleep(100);
-        marker.setPosition(0);
-//        rotate(-0.5,-1);
-        translate(-0.7,distToEncoder(-110));
+//        int num = 0;//TODO:Fix //which mineral is the gold mineral one
+//        switch (num) {
+//            case 1:
+//                rotate(-0.5,-1);
+//                translate(0.7,1);
+//                rotate(0.5, 1);
+//                break;
+//            case 2:
+//                translate(0.7,1);
+//                break;
+//            case 3:
+//                rotate(0.5,1);
+//                translate(0.7,1);
+//                rotate(-0.5, -1);
+//                break;
+//            default:
+//                break;
+//        }
+//        Thread.sleep(100);
+//        rotate(-0.5, rotateToEncoder(Math.toRadians(-90)));//TODO:Add global variable for speed
+//        Thread.sleep(100);
+//        translate(0.7, distToEncoder(48));//TODO:See above immortal TODO
+//        Thread.sleep(100);
+//        rotate(0.5, rotateToEncoder(-45));
+//        Thread.sleep(100);
+//        translate(0.7, distToEncoder(39));
+//        Thread.sleep(100);
+//        marker.setPosition(0);
+////        rotate(-0.5,-1);
+//        translate(-0.7,distToEncoder(-110));
     }
     public void initializeMotor(DcMotor[] motors) {
         for (DcMotor motor : motors) {
@@ -107,32 +102,7 @@ public class BlueAuton2 extends LinearOpMode {
         }
     }
 
-    public void moveToPosition(DcMotor[] motors, double[] power, int[] position) {
-        for (int x = 0; x < motors.length; x++) {
-            motors[x].setPower(power[x]);
-            motors[x].setTargetPosition(position[x]);
-            motors[x].setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        }
-        boolean isBusy = false;
-        while (true) {
-            boolean flag = false;
-            for (DcMotor motor : motors) {
-//                if (motor.isBusy()) {
-                flag = flag || motor.isBusy();
-//                }
-            }
-            if (!flag) {
-                break;
-            }
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException ex) {}
-        }
-        for (DcMotor motor : motors) {
-            motor.setPower(0);
-            motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        }
-    }
+
 
 //    public void translate(double power, int positionChange) {
 //        telemetry.addData("meme", meme);
@@ -156,59 +126,5 @@ public class BlueAuton2 extends LinearOpMode {
 //}
 
 
-    public void translate(double power, int positionChange) throws InterruptedException {
-        lf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        lb.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rb.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        lf.setPower(power);
-        lb.setPower(power);
-        rf.setPower(power);
-        rb.setPower(power);
-        while (Math.abs(lf.getCurrentPosition()) < Math.abs(positionChange) && Math.abs(lb.getCurrentPosition()) < Math.abs(positionChange) && Math.abs(rf.getCurrentPosition()) < Math.abs(positionChange) && Math.abs(rb.getCurrentPosition()) < Math.abs(positionChange)) {
-            telemetry.addData("meme", lf.getCurrentPosition() + " " + lb.getCurrentPosition() + " " + rf.getCurrentPosition() + " " + rb.getCurrentPosition());
-            telemetry.update();
-            Thread.sleep(10);
-        }
 
-//        telemetry.addData("meme", meme);
-//        meme++;
-//        lf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        lb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        rf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        rb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        moveToPosition(new DcMotor[] {lf,lb,rf,rb}, new double[] {power,power,power,power}, new int[] {(positionChange),(positionChange),(-positionChange),(-positionChange)});
-    }
-
-    public void rotate(double power, int positionChange) throws InterruptedException {
-
-        lf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        lb.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rb.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        lf.setPower(power);
-        lb.setPower(power);
-        rf.setPower(-power);
-        rb.setPower(-power);
-        while (Math.abs(lf.getCurrentPosition()) < Math.abs(positionChange) && Math.abs(lb.getCurrentPosition()) < Math.abs(positionChange) && Math.abs(rf.getCurrentPosition()) < Math.abs(positionChange) && Math.abs(rb.getCurrentPosition()) < Math.abs(positionChange)) {
-            telemetry.addData("meme", lf.getCurrentPosition() + " " + lb.getCurrentPosition() + " " + rf.getCurrentPosition() + " " + rb.getCurrentPosition());
-            telemetry.update();
-            Thread.sleep(10);
-        }
-//        telemetry.addData("meme", meme);
-//        meme++;
-//        lf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        lb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        rf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        rb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        moveToPosition(new DcMotor[] {lf,lb,rf,rb}, new double[] {power,power,-power,-power},  new int[] {(positionChange),(positionChange),(positionChange),(positionChange)});
-    }
 }
