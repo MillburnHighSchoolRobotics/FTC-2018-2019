@@ -41,14 +41,15 @@ public class BlueAuton1 extends LinearOpMode {
         liftL = hardwareMap.dcMotor.get("liftL");
         liftR = hardwareMap.dcMotor.get("liftR");
         marker = hardwareMap.servo.get("marker");
-        marker.setPosition(1);
+        marker.setPosition(0);
         waitForStart();
-        lf.setDirection(DcMotorSimple.Direction.FORWARD);
-        lb.setDirection(DcMotorSimple.Direction.FORWARD);
-        rf.setDirection(DcMotorSimple.Direction.REVERSE);
-        rb.setDirection(DcMotorSimple.Direction.REVERSE);
+        lf.setDirection(DcMotorSimple.Direction.REVERSE);
+        lb.setDirection(DcMotorSimple.Direction.REVERSE);
+        rf.setDirection(DcMotorSimple.Direction.FORWARD);
+        rb.setDirection(DcMotorSimple.Direction.FORWARD);
+        initializeMotor(new DcMotor[]{lf, lb, rf, rb});
 //        for (int x = 0; x < 4; x++) {
-            initializeMotor(new DcMotor[]{lf, lb, rf, rb});
+
 //        }
         liftL.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -65,40 +66,44 @@ public class BlueAuton1 extends LinearOpMode {
 
         //sampling
         Movement mv = new Movement(lf, lb, rf, rb);
-       mv.translate(0.7,distToEncoder(15));
+        mv.translateDistance(0.7,50);
         Thread.sleep(100);
-        int num = 0; //which mineral is the gold mineral one
-        switch (num) { //TODO: actually put values
-            case 1:
-               mv.rotate(-0.5,-1);
-               mv.translate(0.7,1);
-               mv.rotate(0.5, 1);
-               mv.translate(0.7,1);
-                break;
-            case 2:
-               mv.translate(0.7,distToEncoder(48));
-                break;
-            case 3:
-               mv.rotate(0.5,1);
-               mv.translate(0.7,1);
-               mv.rotate(-0.5, -1);
-               mv.translate(0.7,1);
-                break;
-            default:
-                break;
-        }
-        Thread.sleep(100);
+//        telemetry.addData("Here", "I said here");
+//        telemetry.update();
+//        int num = 0; //which mineral is the gold mineral one
+//        switch (num) { //TODO: actually put values
+//            case 1:
+//               mv.rotate(-0.5,-1);
+//               mv.translate(0.7,1);
+//               mv.rotate(0.5, 1);
+//               mv.translate(0.7,1);
+//                break;
+//            case 2:
+//               mv.translate(0.7,distToEncoder(48));
+//                break;
+//            case 3:
+//               mv.rotate(0.5,1);
+//               mv.translate(0.7,1);
+//               mv.rotate(-0.5, -1);
+//               mv.translate(0.7,1);
+//                break;
+//            default:
+//                break;
+//        }
+//        Thread.sleep(100);
 
 
         //place marker
-            marker.setPosition(0);
-       mv.rotate(0.5, rotateToEncoder(Math.toRadians(45)));
+        marker.setPosition(1);
         Thread.sleep(100);
-       mv.translate(0.7,distToEncoder(115));
+        mv.rotateDegrees(0.5, -135);
+        marker.setPosition(0);
+        mv.translateDistance(0.7,75);
     }
     public void initializeMotor(DcMotor[] motors) {
         for (DcMotor motor : motors) {
             motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            motor.setPower(0);
 //            motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 //            motor.setTargetPosition(0);
         }
