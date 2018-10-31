@@ -1,6 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.util.Log;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
+
+import virtualRobot.utils.MathUtils;
+
+import static virtualRobot.utils.MathUtils.sgn;
 
 public class Movement {
     DcMotor lf;
@@ -11,7 +17,7 @@ public class Movement {
     final static float botRadius = botWidth/2; //in
     final static float wheelWidth = 3; //in
     final static float wheelRadius = wheelWidth/2; //in
-    final static int ticksPerRev = 680; //ticks per rev
+    final static int ticksPerRev = 710; //ticks per rev
     public Movement(DcMotor lf, DcMotor lb, DcMotor rf, DcMotor rb) {
         this.lf = lf;
         this.lb = lb;
@@ -72,22 +78,28 @@ public class Movement {
         lb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        moveToPosition(new DcMotor[] {lf,lb,rf,rb}, new double[] {power,power,-power,-power},  new int[] {(-positionChange),(-positionChange),(positionChange),(positionChange)});
+        moveToPosition(new DcMotor[] {lf,lb,rf,rb}, new double[] {power,power,-power,-power},  new int[] {(positionChange),(positionChange),(-positionChange),(-positionChange)});
     }
 
     public void rotateDegrees(double power, double degrees) throws InterruptedException {
-        rotate(power, rotateToEncoder(Math.toRadians(degrees)));
+        rotate(power, rotateToEncoder(MathUtils.sgn(degrees) * Math.toRadians(Math.abs(degrees))));
     }
-    public void moveToPosition(DcMotor[] motors, double[] power, int[] position) {
+    public void moveToPosition(DcMotor[] motors, double[] power, int[] position) throws InterruptedException {
         for (int x = 0; x < motors.length; x++) {
             motors[x].setPower(power[x]);
             motors[x].setTargetPosition(position[x]);
             motors[x].setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
         while (true) {
+            if (Thread.currentThread().isInterrupted()) {
+                throw new InterruptedException();
+            }
             boolean flag = false;
             for (DcMotor motor : motors) {
                 flag = flag || motor.isBusy();
+            }
+            for (int i = 0; i < motors.length; i++) {
+                Log.d("bigmeme", motors[i].isBusy() + " " + i);
             }
             if (!flag) {
                 break;

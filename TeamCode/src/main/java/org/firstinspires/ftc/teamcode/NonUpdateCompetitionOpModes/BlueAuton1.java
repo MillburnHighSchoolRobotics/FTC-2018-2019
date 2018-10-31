@@ -10,6 +10,8 @@ import org.firstinspires.ftc.teamcode.Movement;
 
 import virtualRobot.utils.MathUtils;
 
+import static org.firstinspires.ftc.teamcode.Movement.distToEncoder;
+import static org.firstinspires.ftc.teamcode.Movement.rotateToEncoder;
 import static virtualRobot.utils.MathUtils.sgn;
 
 @Autonomous(name = "Blue Auton Depot", group = "competition")
@@ -20,7 +22,7 @@ public class BlueAuton1 extends LinearOpMode {
     DcMotor rb;
     DcMotor liftR;
     DcMotor liftL;
-    //Servo marker = hardwareMap.servo.get("marker");
+    Servo marker;
 
     final float botWidth = 16.5f; //inches
     final float botRadius = botWidth/2; //in
@@ -38,6 +40,8 @@ public class BlueAuton1 extends LinearOpMode {
         rb = hardwareMap.dcMotor.get("rightBack");
         liftL = hardwareMap.dcMotor.get("liftL");
         liftR = hardwareMap.dcMotor.get("liftR");
+        marker = hardwareMap.servo.get("marker");
+        marker.setPosition(1);
         waitForStart();
         lf.setDirection(DcMotorSimple.Direction.FORWARD);
         lb.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -63,7 +67,7 @@ public class BlueAuton1 extends LinearOpMode {
         Movement mv = new Movement(lf, lb, rf, rb);
        mv.translate(0.7,distToEncoder(15));
         Thread.sleep(100);
-        int num = 2; //which mineral is the gold mineral one
+        int num = 0; //which mineral is the gold mineral one
         switch (num) { //TODO: actually put values
             case 1:
                mv.rotate(-0.5,-1);
@@ -80,13 +84,15 @@ public class BlueAuton1 extends LinearOpMode {
                mv.rotate(-0.5, -1);
                mv.translate(0.7,1);
                 break;
+            default:
+                break;
         }
         Thread.sleep(100);
 
 
         //place marker
-        //    marker.setPosition(0);
-       mv.rotate(0.5mv.rotateToEncoder(Math.toRadians(45)));
+            marker.setPosition(0);
+       mv.rotate(0.5, rotateToEncoder(Math.toRadians(45)));
         Thread.sleep(100);
        mv.translate(0.7,distToEncoder(115));
     }

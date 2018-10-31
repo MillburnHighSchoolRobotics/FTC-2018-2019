@@ -11,18 +11,18 @@ import com.qualcomm.robotcore.hardware.Servo;
 @Autonomous(name = "Testing: Servo Test", group = "Testing")
 public class ServoTest extends OpMode {
     Servo left;
-    Servo right;
+//    Servo right;
     @Override
     public void init() {
-        left = hardwareMap.servo.get("rollerLiftLeft");
-        right = hardwareMap.servo.get("rollerLiftRight");
+        left = hardwareMap.servo.get("marker");
+//        right = hardwareMap.servo.get("rollerLiftRight");
         left.setPosition(0);
-        right.setPosition(1);
+//        right.setPosition(1);
     }
 
     @Override
     public void loop() {
         left.setPosition(1);
-        right.setPosition(0);
+//        right.setPosition(0);
     }
 }
