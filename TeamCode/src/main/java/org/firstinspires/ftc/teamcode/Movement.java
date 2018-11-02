@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import android.util.Log;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import virtualRobot.utils.MathUtils;
 
@@ -95,8 +96,8 @@ public class Movement {
                 throw new InterruptedException();
             }
             boolean flag = false;
-            for (DcMotor motor : motors) {
-                flag = flag || motor.isBusy();
+            for (int i = 0; i < motors.length; i++) {
+                flag = flag || (motors[i].isBusy() && !MathUtils.equals(motors[i].getCurrentPosition(), position[i], 50));
             }
             for (int i = 0; i < motors.length; i++) {
                 Log.d("bigmeme", motors[i].isBusy() + " " + i);
@@ -107,6 +108,23 @@ public class Movement {
             try {
                 Thread.sleep(10);
             } catch (InterruptedException ex) {}
+        }
+        boolean flag = false;
+        for (DcMotor motor : motors) {
+            flag = flag || motor.isBusy();
+        }
+        if (flag) {
+            ElapsedTime et = new ElapsedTime();
+            while (et.milliseconds() < 100) {
+                boolean flag2 = false;
+                for (DcMotor motor : motors) {
+                    flag2 = flag2 || motor.isBusy();
+                }
+                if (!flag2) {
+                    break;
+                }
+                Thread.sleep(10);
+            }
         }
         for (DcMotor motor : motors) {
             motor.setPower(0);
