@@ -36,6 +36,9 @@ def getIP() {
 }
 
 android {
+    aaptOptions {
+        noCompress 'tflite'
+    }
     buildTypes {
         debug {
             buildConfigField 'String', 'CTELEM_SERVER_IP', "\"http://${getIP()}:8080\""

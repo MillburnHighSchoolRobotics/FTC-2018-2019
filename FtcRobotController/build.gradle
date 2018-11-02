@@ -4,7 +4,9 @@
 apply plugin: 'com.android.library'
 
 android {
-
+    aaptOptions {
+        noCompress 'tflite'
+    }
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 19
