@@ -69,27 +69,26 @@ public class BlueAuton1 extends LinearOpMode {
         mv.translateDistance(0.7,50);
         Thread.sleep(100);
 //        telemetry.addData("Here", "I said here");
-//        telemetry.update();
-//        int num = 0; //which mineral is the gold mineral one
-//        switch (num) { //TODO: actually put values
-//            case 1:
-//               mv.rotate(-0.5,-1);
-//               mv.translate(0.7,1);
-//               mv.rotate(0.5, 1);
-//               mv.translate(0.7,1);
-//                break;
-//            case 2:
-//               mv.translate(0.7,distToEncoder(48));
-//                break;
-//            case 3:
-//               mv.rotate(0.5,1);
-//               mv.translate(0.7,1);
-//               mv.rotate(-0.5, -1);
-//               mv.translate(0.7,1);
-//                break;
-//            default:
-//                break;
-//        }
+        telemetry.update();
+
+        int num = 0;//TODO:Fix //which mineral is the gold mineral one
+        switch (num) {
+            case 1:
+                mv.rotateDegrees(0.5,60);
+                mv.translateDistance(0.7,24);
+                mv.rotateDegrees(0.5, -60);
+                break;
+            case 2:
+                mv.translateDistance(0.7,35);
+                break;
+            case 3:
+                mv.rotateDegrees(0.5,-60);
+                mv.translateDistance(0.7,24);
+                mv.rotateDegrees(0.5, 60);
+                break;
+            default:
+                break;
+        }
 //        Thread.sleep(100);
 
 
