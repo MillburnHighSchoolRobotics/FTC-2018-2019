@@ -49,6 +49,9 @@ public class NewNewNewTeleOp extends OpMode {
         lb.setDirection(REVERSE);
         liftL.setDirection(REVERSE);
 
+        liftL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        liftR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         lf.setPower(0);
         lb.setPower(0);
         rf.setPower(0);
@@ -87,14 +90,29 @@ public class NewNewNewTeleOp extends OpMode {
         }
 
         if(gamepad1.dpad_up) {
-            liftL.setPower(1);
-            liftR.setPower(1);
+            liftL.setPower(1 * gearing);
+            liftR.setPower(1 * gearing);
         } else if (gamepad1.dpad_down) {
-            liftL.setPower(-1 * 1);
-            liftR.setPower(-1 * 1);
+            liftL.setPower(-1 * gearing);
+            liftR.setPower(-1 * gearing);
         } else {
             liftL.setPower(0);
             liftR.setPower(0);
+        }
+
+        if (gamepad1.a) {
+            lf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            lb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            liftR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            lf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            lb.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            rf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            rb.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            liftL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            liftR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
 
         if (gamepad1.dpad_left) {

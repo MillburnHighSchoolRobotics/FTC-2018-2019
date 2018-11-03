@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Movement;
+import org.firstinspires.ftc.teamcode.TestingOpModes.TFODTest;
 
 import static org.firstinspires.ftc.teamcode.Movement.distToEncoder;
 import static org.firstinspires.ftc.teamcode.Movement.rotateToEncoder;
@@ -65,11 +66,32 @@ public class BlueAuton2 extends LinearOpMode {
         //sampling
         int meme = 0;
         Movement mv = new Movement(lf, lb, rf, rb);
+        TFODTest tfod = new TFODTest(hardwareMap);
+        liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        liftR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {-0.8, 0.8}, new int[] {10700+100, 10700+100});
+//        Thread.sleep(100);
+//
+//       mv.translate(0.5, 104);
+//        Thread.sleep(100);
+//
+//        moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {1, 1}, new int[] {8418+1067-initL, 8418+1067-initR});
+//        Thread.sleep(100);
+
+        //sampling
+        mv.translateDistance(0.7,15);
+
+//        mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {-0.8, 0.8}, new int[] {600, 600});
+        liftL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        liftR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        liftL.setPower(0.8);
+        liftR.setPower(-0.8);
+        liftL.setTargetPosition(600);
+        liftR.setTargetPosition(600);
 
 
         Log.d("fuckkkk", "" + meme++); //0
 
-        mv.translateDistance(0.7,15);
         Log.d("fuckkkk", "" + meme++); //1
         Thread.sleep(100);
 
@@ -105,7 +127,7 @@ public class BlueAuton2 extends LinearOpMode {
        mv.translateDistance(0.7, 41);//TODO:See above immortal TODO
         Log.d("fuckkkk", "" + meme++); //4
         Thread.sleep(100);
-       mv.rotateDegrees(0.5,60);
+       mv.rotateDegrees(0.5,45);
         Log.d("fuckkkk", "" + meme++); //5
         Thread.sleep(100);
        mv.translateDistance(0.7, 39);
@@ -122,7 +144,7 @@ public class BlueAuton2 extends LinearOpMode {
 //        mv.rotateDegrees(0.7, 60);
 //        Thread.sleep(100);
 //       mv.rotate(-0.5,-1);
-       mv.translateDistance(0.7,-80);
+       mv.translateDistance(0.9,-80);
     }
     public void initializeMotor(DcMotor[] motors) {
         for (DcMotor motor : motors) {

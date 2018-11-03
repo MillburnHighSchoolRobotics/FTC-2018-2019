@@ -18,7 +18,7 @@ public class Movement {
     final static float botRadius = botWidth/2; //in
     final static float wheelWidth = 3; //in
     final static float wheelRadius = wheelWidth/2; //in
-    final static int ticksPerRev = 710; //ticks per rev
+    final static int ticksPerRev = 730; //ticks per rev
     public Movement(DcMotor lf, DcMotor lb, DcMotor rf, DcMotor rb) {
         this.lf = lf;
         this.lb = lb;
@@ -97,7 +97,7 @@ public class Movement {
             }
             boolean flag = false;
             for (int i = 0; i < motors.length; i++) {
-                flag = flag || (motors[i].isBusy() && !MathUtils.equals(motors[i].getCurrentPosition(), position[i], 50));
+                flag = flag || motors[i].isBusy();// (motors[i].isBusy() && !MathUtils.equals(motors[i].getCurrentPosition(), position[i], 50));
             }
             for (int i = 0; i < motors.length; i++) {
                 Log.d("bigmeme", motors[i].isBusy() + " " + i);

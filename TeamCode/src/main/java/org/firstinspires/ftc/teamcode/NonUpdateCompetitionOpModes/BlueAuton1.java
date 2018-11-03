@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.Movement;
+import org.firstinspires.ftc.teamcode.TestingOpModes.TFODTest;
 
 import virtualRobot.utils.MathUtils;
 
@@ -55,7 +56,11 @@ public class BlueAuton1 extends LinearOpMode {
 
         int initL = liftL.getCurrentPosition();
         int initR = liftR.getCurrentPosition();
-//        moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {1, 1}, new int[] {4796+1067-initL, 4796+1067-initR});
+        Movement mv = new Movement(lf, lb, rf, rb);
+        TFODTest tfod = new TFODTest(hardwareMap);
+        liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        liftR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {-0.8, 0.8}, new int[] {10700+100, 10700+100});
 //        Thread.sleep(100);
 //
 //       mv.translate(0.5, 104);
@@ -65,28 +70,39 @@ public class BlueAuton1 extends LinearOpMode {
 //        Thread.sleep(100);
 
         //sampling
-        Movement mv = new Movement(lf, lb, rf, rb);
-        mv.translateDistance(0.7,50);
-        Thread.sleep(100);
+        mv.translateDistance(0.7,15);
+
+//        mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {-0.8, 0.8}, new int[] {600, 600});
+        liftL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        liftR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        liftL.setPower(0.8);
+        liftR.setPower(-0.8);
+        liftL.setTargetPosition(600);
+        liftR.setTargetPosition(600);
+//        Thread.sleep(100);
 //        telemetry.addData("Here", "I said here");
         telemetry.update();
 
-        int num = 0;//TODO:Fix //which mineral is the gold mineral one
+        tfod.initStuff();
+        int num = -1;//tfod.getGoldPos();//TODO:Fix //which mineral is the gold mineral one
+        tfod.clean();
+        String name[] = new String[] {"LEFT", "CENTER", "RIGHT"};
+        telemetry.addData("Mineral", num > -1 && num < 4 ? name[num] : "UNKNOWN");
+        telemetry.update();
         switch (num) {
-            case 1:
+            case 0:
                 mv.rotateDegrees(0.5,60);
                 mv.translateDistance(0.7,24);
                 mv.rotateDegrees(0.5, -60);
                 break;
             case 2:
-                mv.translateDistance(0.7,35);
-                break;
-            case 3:
                 mv.rotateDegrees(0.5,-60);
                 mv.translateDistance(0.7,24);
                 mv.rotateDegrees(0.5, 60);
                 break;
             default:
+            case 1:
+                mv.translateDistance(0.7,35);
                 break;
         }
 //        Thread.sleep(100);
