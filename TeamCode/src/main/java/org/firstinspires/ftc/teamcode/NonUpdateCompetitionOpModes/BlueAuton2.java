@@ -90,57 +90,48 @@ public class BlueAuton2 extends LinearOpMode {
         liftR.setTargetPosition(600);
 
 
-        Log.d("fuckkkk", "" + meme++); //0
+//        Thread.sleep(100);
 
-        Log.d("fuckkkk", "" + meme++); //1
-        Thread.sleep(100);
-
-        int num = 0;//TODO:Fix //which mineral is the gold mineral one
+        int num = -1;//TODO:Fix //which mineral is the gold mineral one
         switch (num) {
-            case 1:
+            case 0:
                mv.rotateDegrees(0.5,60);
                mv.translateDistance(0.7,24);
                mv.translateDistance(0.7,-24);
                mv.rotateDegrees(0.5, -60);
                 break;
             case 2:
-               mv.translateDistance(0.7,16);
-                mv.translateDistance(0.7,-16);
-                break;
-            case 3:
                mv.rotateDegrees(0.5,-60);
                mv.translateDistance(0.7,24);
                mv.translateDistance(0.7,-24);
                mv.rotateDegrees(0.5, 60);
                 break;
             default:
+            case 1:
+                mv.translateDistance(0.7,16);
+                mv.translateDistance(0.7,-16);
                 break;
         }
-        Thread.sleep(100);
+//        Thread.sleep(100);
 //       mv.rotateDegrees(0.5,90);//TODO:Add global variable for speed
-        Log.d("fuckkkk", "" + meme++); //3
 
         mv.rotateDegrees(0.7, 90);
-        Log.d("fuckkkk", "" + meme++); //2
-        Thread.sleep(100);
+//        Thread.sleep(100);
 //        Thread.sleep(100);
        mv.translateDistance(0.7, 41);//TODO:See above immortal TODO
-        Log.d("fuckkkk", "" + meme++); //4
-        Thread.sleep(100);
+//        Thread.sleep(100);
        mv.rotateDegrees(0.5,45);
-        Log.d("fuckkkk", "" + meme++); //5
-        Thread.sleep(100);
+//        Thread.sleep(100);
        mv.translateDistance(0.7, 39);
-        Log.d("fuckkkk", "" + meme++); //6
 //        Thread.sleep(100);
 //        mv.rotateDegrees(0.7, -60);
 //        Thread.sleep(100);
         marker.setPosition(1);
         ElapsedTime time = new ElapsedTime();
-        while (time.seconds() < 1.0f) {
+        while (time.seconds() < 0.5f) {
             Thread.sleep(10);
         }
-        Thread.sleep(100);
+//        Thread.sleep(100);
 //        mv.rotateDegrees(0.7, 60);
 //        Thread.sleep(100);
 //       mv.rotate(-0.5,-1);
