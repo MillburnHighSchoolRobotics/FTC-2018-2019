@@ -70,7 +70,7 @@ public class BlueAuton1 extends LinearOpMode {
 //        Thread.sleep(100);
 
         //sampling
-        mv.translateDistance(0.7,15);
+        mv.translateDistance(0.7,50);
 
 //        mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {-0.8, 0.8}, new int[] {600, 600});
         liftL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -81,37 +81,16 @@ public class BlueAuton1 extends LinearOpMode {
         liftR.setTargetPosition(600);
 //        Thread.sleep(100);
 //        telemetry.addData("Here", "I said here");
-        telemetry.update();
+//        telemetry.update();
 
-        tfod.initStuff();
-        int num = -1;//tfod.getGoldPos();//TODO:Fix //which mineral is the gold mineral one
-        tfod.clean();
-        String name[] = new String[] {"LEFT", "CENTER", "RIGHT"};
-        telemetry.addData("Mineral", num > -1 && num < 4 ? name[num] : "UNKNOWN");
-        telemetry.update();
-        switch (num) {
-            case 0:
-                mv.rotateDegrees(0.5,60);
-                mv.translateDistance(0.7,24);
-                mv.rotateDegrees(0.5, -60);
-                break;
-            case 2:
-                mv.rotateDegrees(0.5,-60);
-                mv.translateDistance(0.7,24);
-                mv.rotateDegrees(0.5, 60);
-                break;
-            default:
-            case 1:
-                mv.translateDistance(0.7,35);
-                break;
-        }
-//        Thread.sleep(100);
+//        sampleThisShit(mv, tfod);
+        Thread.sleep(100);
 
 
         //place marker
         marker.setPosition(1);
         Thread.sleep(100);
-        mv.rotateDegrees(0.5, -135);
+        mv.rotateDegrees(0.5, -150);
         marker.setPosition(0);
         mv.translateDistance(0.7,75);
     }
@@ -122,5 +101,30 @@ public class BlueAuton1 extends LinearOpMode {
 //            motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 //            motor.setTargetPosition(0);
         }
+    }
+    public void sampleThisShit(Movement mv, TFODTest tfod) {
+
+//        tfod.initStuff();
+//        int num = -1;//tfod.getGoldPos();//TODO:Fix //which mineral is the gold mineral one
+//        tfod.clean();
+//        String name[] = new String[] {"LEFT", "CENTER", "RIGHT"};
+//        telemetry.addData("Mineral", num > -1 && num < 4 ? name[num] : "UNKNOWN");
+//        telemetry.update();
+//        switch (num) {
+//            case 0:
+//                mv.rotateDegrees(0.5,60);
+//                mv.translateDistance(0.7,24);
+//                mv.rotateDegrees(0.5, -60);
+//                break;
+//            case 2:
+//                mv.rotateDegrees(0.5,-60);
+//                mv.translateDistance(0.7,24);
+//                mv.rotateDegrees(0.5, 60);
+//                break;
+//            default:
+//            case 1:
+//                mv.translateDistance(0.7,35);
+//                break;
+//        }
     }
 }

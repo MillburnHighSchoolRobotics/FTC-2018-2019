@@ -42,8 +42,7 @@ public class BlueAuton2 extends LinearOpMode {
         liftR = hardwareMap.dcMotor.get("liftR");
         marker = hardwareMap.servo.get("marker");
         marker.setPosition(0);
-        int initL = liftL.getCurrentPosition();
-        int initR = liftR.getCurrentPosition();
+
         waitForStart();
         lf.setDirection(DcMotorSimple.Direction.REVERSE);
         lb.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -53,7 +52,9 @@ public class BlueAuton2 extends LinearOpMode {
 //        for (int x = 0; x < 4; x++) {
 //        }
 
-//        liftL.setDirection(DcMotorSimple.Direction.REVERSE);
+        liftL.setDirection(DcMotorSimple.Direction.REVERSE);
+        int initL = liftL.getCurrentPosition();
+        int initR = liftR.getCurrentPosition();
 
 //        moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {1, 1}, new int[] {4796+1067-initL, 4796+1067-initR});
 //        Thread.sleep(100);
@@ -64,13 +65,14 @@ public class BlueAuton2 extends LinearOpMode {
 //        Thread.sleep(100);
 
         //sampling
-        int meme = 0;
+     //   int meme = 0;
         Movement mv = new Movement(lf, lb, rf, rb);
         TFODTest tfod = new TFODTest(hardwareMap);
         liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {-0.8, 0.8}, new int[] {10700+100, 10700+100});
 //        Thread.sleep(100);
+
 //
 //       mv.translate(0.5, 104);
 //        Thread.sleep(100);
@@ -92,37 +94,37 @@ public class BlueAuton2 extends LinearOpMode {
 
 //        Thread.sleep(100);
 
-        int num = -1;//TODO:Fix //which mineral is the gold mineral one
-        switch (num) {
-            case 0:
-               mv.rotateDegrees(0.5,60);
-               mv.translateDistance(0.7,24);
-               mv.translateDistance(0.7,-24);
-               mv.rotateDegrees(0.5, -60);
-                break;
-            case 2:
-               mv.rotateDegrees(0.5,-60);
-               mv.translateDistance(0.7,24);
-               mv.translateDistance(0.7,-24);
-               mv.rotateDegrees(0.5, 60);
-                break;
-            default:
-            case 1:
-                mv.translateDistance(0.7,16);
-                mv.translateDistance(0.7,-16);
-                break;
-        }
+//        int num = -1;//TODO:Fix //which mineral is the gold mineral one
+//        switch (num) {
+//            case 0:
+//               mv.rotateDegrees(0.5,60);
+//               mv.translateDistance(0.7,24);
+//               mv.translateDistance(0.7,-24);
+//               mv.rotateDegrees(0.5, -60);
+//                break;
+//            case 2:
+//               mv.rotateDegrees(0.5,-60);
+//               mv.translateDistance(0.7,24);
+//               mv.translateDistance(0.7,-24);
+//               mv.rotateDegrees(0.5, 60);
+//                break;
+//            default:
+//            case 1:
+//                mv.translateDistance(0.7,16);
+//                mv.translateDistance(0.7,-16);
+//                break;
+//        }
 //        Thread.sleep(100);
 //       mv.rotateDegrees(0.5,90);//TODO:Add global variable for speed
 
         mv.rotateDegrees(0.7, 90);
 //        Thread.sleep(100);
 //        Thread.sleep(100);
-       mv.translateDistance(0.7, 41);//TODO:See above immortal TODO
+       mv.translateDistance(0.7, 35);//TODO:See above immortal TODO
 //        Thread.sleep(100);
-       mv.rotateDegrees(0.5,45);
+       mv.rotateDegrees(0.5,85);
 //        Thread.sleep(100);
-       mv.translateDistance(0.7, 39);
+       mv.translateDistance(0.7, 50);
 //        Thread.sleep(100);
 //        mv.rotateDegrees(0.7, -60);
 //        Thread.sleep(100);
@@ -135,7 +137,7 @@ public class BlueAuton2 extends LinearOpMode {
 //        mv.rotateDegrees(0.7, 60);
 //        Thread.sleep(100);
 //       mv.rotate(-0.5,-1);
-       mv.translateDistance(0.9,-80);
+       mv.translateDistance(0.9,-70);
     }
     public void initializeMotor(DcMotor[] motors) {
         for (DcMotor motor : motors) {
