@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.NonUpdateCompetitionOpModes;
 import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -16,8 +17,9 @@ import org.firstinspires.ftc.teamcode.TestingOpModes.TFODTest;
 import static org.firstinspires.ftc.teamcode.Movement.distToEncoder;
 import static org.firstinspires.ftc.teamcode.Movement.rotateToEncoder;
 
-@Autonomous(name = "Blue Auton Pit", group = "competition")
-public class BlueAuton2 extends LinearOpMode {
+@Autonomous(name = "Blue Auton Pit Sampling", group = "competition")
+@Disabled
+public class BlueAutonPitSampling extends LinearOpMode {
     DcMotor lf;
     DcMotor lb;
     DcMotor rf;
@@ -49,8 +51,6 @@ public class BlueAuton2 extends LinearOpMode {
         rf.setDirection(DcMotorSimple.Direction.FORWARD);
         rb.setDirection(DcMotorSimple.Direction.FORWARD);
         initializeMotor(new DcMotor[]{lf, lb, rf, rb});
-//        for (int x = 0; x < 4; x++) {
-//        }
 
         liftL.setDirection(DcMotorSimple.Direction.REVERSE);
         int initL = liftL.getCurrentPosition();
@@ -65,7 +65,7 @@ public class BlueAuton2 extends LinearOpMode {
 //        Thread.sleep(100);
 
         //sampling
-     //   int meme = 0;
+        //   int meme = 0;
         Movement mv = new Movement(lf, lb, rf, rb);
         TFODTest tfod = new TFODTest(hardwareMap);
         liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -83,6 +83,8 @@ public class BlueAuton2 extends LinearOpMode {
         //sampling
         mv.translateDistance(0.7,15);
 
+
+
 //        mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {-0.8, 0.8}, new int[] {600, 600});
         liftL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         liftR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -94,7 +96,7 @@ public class BlueAuton2 extends LinearOpMode {
 
 //        Thread.sleep(100);
 
-        int num = -1;//TODO:Fix //which mineral is the gold mineral one
+        int num = 1;//TODO:Fix //which mineral is the gold mineral one
         switch (num) {
             case 0:
                mv.rotateDegrees(0.5,60);
@@ -120,11 +122,11 @@ public class BlueAuton2 extends LinearOpMode {
         mv.rotateDegrees(0.7, 90);
 //        Thread.sleep(100);
 //        Thread.sleep(100);
-       mv.translateDistance(0.7, 35);//TODO:See above immortal TODO
+        mv.translateDistance(0.7, 41);//TODO:See above immortal TODO
 //        Thread.sleep(100);
-       mv.rotateDegrees(0.5,85);
+        mv.rotateDegrees(0.5,45);
 //        Thread.sleep(100);
-       mv.translateDistance(0.7, 50);
+        mv.translateDistance(0.7, 39);
 //        Thread.sleep(100);
 //        mv.rotateDegrees(0.7, -60);
 //        Thread.sleep(100);
@@ -137,7 +139,7 @@ public class BlueAuton2 extends LinearOpMode {
 //        mv.rotateDegrees(0.7, 60);
 //        Thread.sleep(100);
 //       mv.rotate(-0.5,-1);
-       mv.translateDistance(0.9,-70);
+        mv.translateDistance(0.9,-80);
     }
     public void initializeMotor(DcMotor[] motors) {
         for (DcMotor motor : motors) {
