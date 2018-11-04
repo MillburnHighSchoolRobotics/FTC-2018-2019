@@ -112,7 +112,7 @@ public class BlueAuton1 extends LinearOpMode {
         //place marker
         marker.setPosition(1);
         Thread.sleep(100);
-        mv.rotateDegrees(0.5, -150);
+        mv.rotateDegrees(0.5, -135);
         marker.setPosition(0);
         mv.translateDistance(0.7,75);
     }

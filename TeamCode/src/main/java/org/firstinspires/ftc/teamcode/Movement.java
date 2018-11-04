@@ -97,7 +97,7 @@ public class Movement {
             }
             boolean flag = false;
             for (int i = 0; i < motors.length; i++) {
-                flag = flag || motors[i].isBusy();// (motors[i].isBusy() && !MathUtils.equals(motors[i].getCurrentPosition(), position[i], 50));
+                flag = flag || (motors[i].isBusy() && !MathUtils.equals(motors[i].getCurrentPosition(), position[i], 50));
             }
             for (int i = 0; i < motors.length; i++) {
                 Log.d("bigmeme", motors[i].isBusy() + " " + i);
