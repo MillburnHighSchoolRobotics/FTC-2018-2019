@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.TestingOpModes.TFODTest;
 import static org.firstinspires.ftc.teamcode.Movement.distToEncoder;
 import static org.firstinspires.ftc.teamcode.Movement.rotateToEncoder;
 
-@Autonomous(name = "Blue Auton Pit", group = "competition")
+@Autonomous(name = "Blue Auton Pit DEPRECATED", group = "competition")
 public class BlueAuton2 extends LinearOpMode {
     DcMotor lf;
     DcMotor lb;
