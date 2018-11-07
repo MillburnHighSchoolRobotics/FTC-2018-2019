@@ -10,8 +10,14 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.teamcode.Movement;
+import org.firstinspires.ftc.teamcode.SahilClass;
+import org.firstinspires.ftc.teamcode.R;
 import org.firstinspires.ftc.teamcode.TestingOpModes.TFODTest;
+
+import virtualRobot.VuforiaLocalizerImplSubclass;
+import virtualRobot.telemetry.CTelemetry;
 
 import static org.firstinspires.ftc.teamcode.Movement.distToEncoder;
 import static org.firstinspires.ftc.teamcode.Movement.rotateToEncoder;
@@ -68,7 +74,7 @@ public class BlueAuton2 extends LinearOpMode {
         //sampling
      //   int meme = 0;
         Movement mv = new Movement(lf, lb, rf, rb);
-        TFODTest tfod = new TFODTest(hardwareMap);
+//        TFODTest tfod = new TFODTest(hardwareMap);
         liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {-0.8, 0.8}, new int[] {10700+100, 10700+100});
@@ -94,25 +100,31 @@ public class BlueAuton2 extends LinearOpMode {
 
 
 //        Thread.sleep(100);
+        VuforiaLocalizer.Parameters params = new VuforiaLocalizer.Parameters(R.id.cameraMonitorViewId);
+        params.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
+        params.vuforiaLicenseKey = "AdVGalv/////AAAAGYhiDIdk+UI+ivt0Y7WGvUJnm5cKX/lWesW2pH7gnK3eOLTKThLekYSO1q65ttw7X1FvNhxxhdQl3McS+mzYjO+HkaFNJlHxltsI5+b4giqNQKWhyKjzbYbNw8aWarI5YCYUFnyiPPjH39/CbBzzFk3G2RWIzNB7cy4AYhjwYRKRiL3k33YvXv0ZHRzJRkMpnytgvdv5jEQyWa20DIkriC+ZBaj8dph8/akyYfyD1/U19vowknmzxef3ncefgOZoI9yrK82T4GBWazgWvZkIz7bPy/ApGiwnkVzp44gVGsCJCUFERiPVwfFa0SBLeCrQMrQaMDy3kOIVcWTotFn4m1ridgE5ZP/lvRzEC4/vcuV0";
+        VuforiaLocalizerImplSubclass vuforiaInstance = new VuforiaLocalizerImplSubclass(params);
 
-        int num = -1;//TODO:Fix //which mineral is the gold mineral one
-        switch (num) {
-            case 0:
-               mv.rotateDegrees(0.5,60);
-               mv.translateDistance(0.7,24);
-               mv.translateDistance(0.7,-24);
-               mv.rotateDegrees(0.5, -60);
+
+        SahilClass sahilClass = new SahilClass(vuforiaInstance);
+        int pos = sahilClass.getPosition();
+
+        switch (pos) {
+            case 1:
+                mv.rotateDegrees(0.5,60);
+                mv.translateDistance(0.7,24);
+                mv.translateDistance(0.7,-24);
+                mv.rotateDegrees(0.5, -60);
                 break;
             case 2:
-               mv.rotateDegrees(0.5,-60);
-               mv.translateDistance(0.7,24);
-               mv.translateDistance(0.7,-24);
-               mv.rotateDegrees(0.5, 60);
-                break;
-            default:
-            case 1:
                 mv.translateDistance(0.7,16);
                 mv.translateDistance(0.7,-16);
+                break;
+            case 3:
+                mv.rotateDegrees(0.5,-60);
+                mv.translateDistance(0.7,24);
+                mv.translateDistance(0.7,-24);
+                mv.rotateDegrees(0.5, 60);
                 break;
         }
 //        Thread.sleep(100);
