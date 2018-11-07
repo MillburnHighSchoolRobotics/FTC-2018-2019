@@ -39,9 +39,11 @@ public class SahilTest extends LinearOpMode {
         waitForStart();
 
         SahilClass sahilClass = new SahilClass(vuforiaInstance);
-
-        int pos = sahilClass.getPosition();
-        telemetry.addData("Position",pos);
-        telemetry.update();
+        while (!Thread.currentThread().isInterrupted()) {
+            int pos = sahilClass.getPosition();
+            telemetry.addData("Position", pos);
+            telemetry.update();
+            Thread.sleep(10);
+        }
     }
 }

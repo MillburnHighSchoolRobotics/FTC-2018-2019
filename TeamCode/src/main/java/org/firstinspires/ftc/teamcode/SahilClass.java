@@ -15,6 +15,7 @@ import org.opencv.imgproc.Imgproc;
 import org.opencv.imgproc.Moments;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -31,8 +32,8 @@ public class SahilClass {
     private int height;
     private int kSize = 9;
     private int sigmaX = 0;
-    private Scalar lowerG = new Scalar(10, 75, 200);
-    private Scalar upperG = new Scalar(25, 135, 255);
+    private Scalar lowerG = new Scalar(14, 200, 200);
+    private Scalar upperG = new Scalar(35, 255, 255);
     CTelemetry ctel;
 
 
@@ -42,7 +43,7 @@ public class SahilClass {
         width = vuforiaInstance.rgb.getBufferWidth();
         height = vuforiaInstance.rgb.getHeight();
         ctel = new Retrofit.Builder()
-                .baseUrl("http://localhost:8080")
+                .baseUrl("http://localhost:3000")
                 .addConverterFactory(MatConverterFactory.create())
                 .build()
                 .create(CTelemetry.class);
@@ -52,11 +53,15 @@ public class SahilClass {
         Bitmap bm = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
         bm.copyPixelsFromBuffer(vuforiaInstance.rgb.getPixels());
         Utils.bitmapToMat(bm, img);
-        Mat bgr = new Mat();
-        Imgproc.cvtColor(img, bgr, Imgproc.COLOR_RGB2BGR);
-        bgr.release();
+        Mat rgb = new Mat();
+        Imgproc.cvtColor(img, rgb, Imgproc.COLOR_BGR2RGB);
+        Mat hsv = new Mat();
+        Imgproc.cvtColor(img, hsv, Imgproc.COLOR_RGB2HSV);
+//        bgr.release();
         Mat gold = new Mat();
-        Core.inRange(img, lowerG, upperG, gold);
+        Core.inRange(hsv, lowerG, upperG, gold);
+        Log.d("Color", Arrays.toString(hsv.get(100, 100)));
+        hsv.release();
         try {
             ctel.sendImage("Gold",gold).execute();
         } catch (IOException e) {
@@ -64,11 +69,12 @@ public class SahilClass {
             Log.e("CTelemetry", "failed gold");
         }
         try {
-            ctel.sendImage("Image",img).execute();
+            ctel.sendImage("Image", rgb).execute();
         } catch (IOException e) {
             e.printStackTrace();
             Log.e("CTelemetry", "failed img");
         }
+        rgb.release();
         Mat blur = new Mat();
         Imgproc.GaussianBlur(gold, blur, new Size(kSize, kSize), sigmaX);
         List<MatOfPoint> contours = new LinkedList<>();
