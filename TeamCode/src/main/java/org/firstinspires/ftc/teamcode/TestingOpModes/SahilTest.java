@@ -38,12 +38,11 @@ public class SahilTest extends LinearOpMode {
         VuforiaLocalizerImplSubclass vuforiaInstance = new VuforiaLocalizerImplSubclass(params);
         waitForStart();
 
-        SahilClass sahilClass = new SahilClass(vuforiaInstance);
+        SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000);
         while (!Thread.currentThread().isInterrupted()) {
             int pos = sahilClass.getPosition();
-            telemetry.addData("Position", pos);
+            telemetry.addData("Position", pos + "");
             telemetry.update();
-            Thread.sleep(10);
         }
     }
 }
