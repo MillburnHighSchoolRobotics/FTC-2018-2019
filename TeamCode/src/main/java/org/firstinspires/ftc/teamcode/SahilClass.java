@@ -32,8 +32,8 @@ public class SahilClass {
     private int height;
     private int kSize = 9;
     private int sigmaX = 0;
-    private Scalar lowerG = new Scalar(14, 200, 200);
-    private Scalar upperG = new Scalar(35, 255, 255);
+    private Scalar lowerG = new Scalar(0, 193, 95);
+    private Scalar upperG = new Scalar(32, 255, 255);
     CTelemetry ctel;
 
 
@@ -60,13 +60,16 @@ public class SahilClass {
 //        bgr.release();
         Mat gold = new Mat();
         Core.inRange(hsv, lowerG, upperG, gold);
-        Log.d("Color", Arrays.toString(hsv.get(100, 100)));
+        Mat erode = new Mat();
+        Imgproc.erode(gold, erode, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(5, 5)));
+        gold.release();
+//        Log.d("Color", Arrays.toString(hsv.get(100, 100)));
         hsv.release();
         try {
-            ctel.sendImage("Gold",gold).execute();
+            ctel.sendImage("Erode",erode).execute();
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e("CTelemetry", "failed gold");
+            Log.e("CTelemetry", "failed erode");
         }
         try {
             ctel.sendImage("Image", rgb).execute();
@@ -76,9 +79,10 @@ public class SahilClass {
         }
         rgb.release();
         Mat blur = new Mat();
-        Imgproc.GaussianBlur(gold, blur, new Size(kSize, kSize), sigmaX);
+        Imgproc.GaussianBlur(erode, blur, new Size(kSize, kSize), sigmaX);
+        erode.release();
         List<MatOfPoint> contours = new LinkedList<>();
-        Imgproc.findContours(gold.clone(), contours, new Mat(), Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_NONE);
+        Imgproc.findContours(blur, contours, new Mat(), Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_NONE);
         Collections.sort(contours, new Comparator<MatOfPoint>() {
             @Override
             public int compare(MatOfPoint matOfPoint, MatOfPoint s) {
@@ -99,6 +103,7 @@ public class SahilClass {
 //        Imgproc.circle(img,centroid, radius, new Scalar(255,0,0), 80);
 
         int position = 0;
+        Log.d("centroid", centroid.toString() + ", (" + width + ", " + height + ")");
         if ((centroid.x >= 0) && (centroid.x < (width/3))) {
             position = 1;
         } else if ((centroid.x >= (width/3)) && (centroid.x < ((2*width)/3))) {
