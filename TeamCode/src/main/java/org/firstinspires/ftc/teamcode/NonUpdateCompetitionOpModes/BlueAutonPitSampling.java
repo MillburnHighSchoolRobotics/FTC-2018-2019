@@ -8,11 +8,19 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PIDCoefficients;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Movement;
 import org.firstinspires.ftc.teamcode.TestingOpModes.TFODTest;
+
+import virtualRobot.PIDController;
+import virtualRobot.SallyJoeBot;
+import virtualRobot.commands.Command;
+import virtualRobot.utils.MathUtils;
 
 import static org.firstinspires.ftc.teamcode.Movement.distToEncoder;
 import static org.firstinspires.ftc.teamcode.Movement.rotateToEncoder;
@@ -26,11 +34,19 @@ public class BlueAutonPitSampling extends LinearOpMode {
     DcMotor rb;
     Servo marker;
 
+    static int kp = 0;
+    static int ki = 0;
+    static int kd = 0;
+    static int threshold = 0;
 
+    SallyJoeBot robot = Command.ROBOT;
 
     DcMotor liftR;
     DcMotor liftL;
-
+    Movement pidLF;
+    Movement pidLB;
+    Movement pidRF;
+    Movement pidRB;
     int meme = 0;
 
     @Override
@@ -70,6 +86,10 @@ public class BlueAutonPitSampling extends LinearOpMode {
         TFODTest tfod = new TFODTest(hardwareMap);
         liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+
+
+
         mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {-0.8, 0.8}, new int[] {10700+100, 10700+100});
 //        Thread.sleep(100);
 
@@ -81,6 +101,34 @@ public class BlueAutonPitSampling extends LinearOpMode {
 //        Thread.sleep(100);
 
         //sampling
+
+        pidLF = new Movement(kp,ki,kd,threshold);
+        pidLB = new Movement(kp,ki,kd,threshold);
+        pidRF = new Movement(kp,ki,kd,threshold);
+        pidRB = new Movement(kp,ki,kd,threshold);
+
+
+//        PIDFCoefficients pidOriginalLF = ((DcMotorEx) lf).getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
+//        PIDFCoefficients pidOriginalLB = ((DcMotorEx) lf).getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
+//        PIDFCoefficients pidOriginalRF = ((DcMotorEx) lf).getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
+//        PIDFCoefficients pidOriginalRB = ((DcMotorEx) lf).getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        //pidLF.setTarget(HardwareMap.DeviceMapping.);
+        //.clamp(Double.toString(robot.getImu().getHeading()), 0, 45)
+        pidLB.setTarget(mv.distToEncoder(15));
+        pidRF.setTarget(mv.distToEncoder(15));
+        pidRB.setTarget(mv.distToEncoder(15));
+
+        double lfPower = pidLF.getPIDOutput(lf.getTargetPosition());
+        double lbPower = pidLB.getPIDOutput(lb.getTargetPosition());
+        double rfPower = pidRF.getPIDOutput(rf.getTargetPosition());
+        double rbPower = pidRB.getPIDOutput(rb.getTargetPosition());
+
+        lf.setPower(lfPower);
+        lb.setPower(lbPower);
+        rf.setPower(rfPower);
+        rb.setPower(rbPower);
+
         mv.translateDistance(0.7,15);
 
 
