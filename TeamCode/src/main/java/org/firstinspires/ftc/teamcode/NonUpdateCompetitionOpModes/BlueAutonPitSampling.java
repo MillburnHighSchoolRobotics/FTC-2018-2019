@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.NonUpdateCompetitionOpModes;
 import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName:
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -48,10 +49,13 @@ public class BlueAutonPitSampling extends LinearOpMode {
     Movement pidRF;
     Movement pidRB;
     int meme = 0;
+    WebcamName webcamName;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
+        //Here's how we find the webcam
+        webcamName = hardwareMap.get(WebcamName.class, "Whatever the name of the webcam is")
         lf = hardwareMap.dcMotor.get("leftFront");
         lb = hardwareMap.dcMotor.get("leftBack");
         rf = hardwareMap.dcMotor.get("rightFront");
