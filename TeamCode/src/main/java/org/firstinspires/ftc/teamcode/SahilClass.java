@@ -30,13 +30,16 @@ import virtualRobot.utils.GlobalUtils;
 
 public class SahilClass {
     VuforiaLocalizerImplSubclass vuforiaInstance;
-    private int width;
-    private int height;
+    private int widthCamera;
+    private int heightCamera;
     private int kSize = 9;
     private int sigmaX = 0;
     private int length;
     private Scalar lowerG = new Scalar(10, 193, 95);
     private Scalar upperG = new Scalar(32, 255, 255);
+    private Scalar lowerBlack = new Scalar(0, 0, 0);
+    private Scalar upperBlack = new Scalar(255, 255, 1);
+    private int areaBoundary = 10;
     CTelemetry ctel;
 
 
@@ -46,8 +49,8 @@ public class SahilClass {
 
     public SahilClass(VuforiaLocalizerImplSubclass vuforiaInstance, int length) {
         this.vuforiaInstance = vuforiaInstance;
-        width = vuforiaInstance.rgb.getBufferWidth();
-        height = vuforiaInstance.rgb.getHeight();
+        widthCamera = vuforiaInstance.rgb.getBufferWidth();
+        heightCamera = vuforiaInstance.rgb.getHeight();
         ctel = new Retrofit.Builder()
                 .baseUrl("http://localhost:3000")
                 .addConverterFactory(MatConverterFactory.create())
@@ -64,7 +67,7 @@ public class SahilClass {
         int totalY = 0;
         while (time.milliseconds() < length && !Thread.currentThread().isInterrupted()) {
             Mat img = new Mat();
-            Bitmap bm = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+            Bitmap bm = Bitmap.createBitmap(widthCamera, heightCamera, Bitmap.Config.RGB_565);
             bm.copyPixelsFromBuffer(vuforiaInstance.rgb.getPixels());
             Utils.bitmapToMat(bm, img);
             Mat rgb = new Mat();
@@ -72,6 +75,51 @@ public class SahilClass {
             Mat hsv = new Mat();
             Imgproc.cvtColor(img, hsv, Imgproc.COLOR_RGB2HSV);
 //        bgr.release();
+
+
+
+
+            Mat black = new Mat();
+            Core.inRange(hsv, lowerBlack, upperBlack, black);
+            Mat erodeBlack = new Mat();
+            Imgproc.erode(black, erodeBlack, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(10, 10)));
+            black.release();
+//            Mat blurBlack = new Mat();
+//            Imgproc.GaussianBlur(erodeBlack, blurBlack, new Size(kSize, kSize), sigmaX);
+//            List<MatOfPoint> blackContours = new LinkedList<>();
+//            Imgproc.findContours(blurBlack, blackContours, new Mat(), Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_NONE);
+//            blurBlack.release();
+//            Collections.sort(blackContours, new Comparator<MatOfPoint>() {
+//                @Override
+//                public int compare(MatOfPoint matOfPoint, MatOfPoint s) {
+//                    return (int) Math.signum(Imgproc.contourArea(s) - Imgproc.contourArea(matOfPoint));
+//                }
+//            });
+//
+//            for (MatOfPoint pt : blackContours) {
+//
+//            }
+
+//            Point centroidBlack = new Point();
+//            centroidBlack.x = 0;
+//            centroidBlack.y = 0;
+//            if (blackContours.size() > 0) {
+//                Moments moments = Imgproc.moments(blackContours.get(0));
+//                if (moments.get_m00() != 0) {
+//                    centroidBlack.x = moments.get_m10() / moments.get_m00();
+//                    centroidBlack.y = moments.get_m01() / moments.get_m00();
+//                }
+//                totalX += centroidBlack.x;
+//                totalY += centroidBlack.y;
+//                timesRun++;
+//            }
+//            for (MatOfPoint mat : blackContours) {
+//                mat.release();
+//            }
+
+
+
+
             Mat gold = new Mat();
             Core.inRange(hsv, lowerG, upperG, gold);
             Mat erode = new Mat();
@@ -87,7 +135,7 @@ public class SahilClass {
             Collections.sort(contours, new Comparator<MatOfPoint>() {
                 @Override
                 public int compare(MatOfPoint matOfPoint, MatOfPoint s) {
-                    return (int) Math.signum(Imgproc.contourArea(matOfPoint) - Imgproc.contourArea(s));
+                    return (int) Math.signum(Imgproc.contourArea(s) - Imgproc.contourArea(matOfPoint));
                 }
             });
             Point centroid = new Point();
@@ -108,6 +156,17 @@ public class SahilClass {
             }
 
             Imgproc.circle(rgb,centroid, 80, new Scalar(255,0,0), 80);
+
+
+
+
+
+            try {
+                ctel.sendImage("Black", erodeBlack).execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.e("CTelemetry", "failed black erode");
+            }
             try {
                 ctel.sendImage("Erode", erode).execute();
             } catch (IOException e) {
@@ -128,12 +187,12 @@ public class SahilClass {
 
         int position = 0;
         Point centroid = new Point(totalX/(double)timesRun, totalY/(double)timesRun);
-        Log.d("SahilClass", "Centroid: " + centroid.toString() + ", (" + width + ", " + height + ")");
-        if ((centroid.x >= 0) && (centroid.x < (width/3))) {
+        Log.d("SahilClass", "Centroid: " + centroid.toString() + ", (" + widthCamera + ", " + heightCamera + ")");
+        if ((centroid.x >= 0) && (centroid.x < (widthCamera/3))) {
             position = 1;
-        } else if ((centroid.x >= (width/3)) && (centroid.x < ((2*width)/3))) {
+        } else if ((centroid.x >= (widthCamera/3)) && (centroid.x < ((2*widthCamera)/3))) {
             position = 2;
-        } else if (centroid.x >= (2*width)/3) {
+        } else if (centroid.x >= (2*widthCamera)/3) {
             position = 3;
         } else {
             position = -1;
