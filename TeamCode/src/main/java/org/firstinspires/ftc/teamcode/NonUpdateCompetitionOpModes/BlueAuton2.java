@@ -24,6 +24,7 @@ import static org.firstinspires.ftc.teamcode.Movement.rotateToEncoder;
 
 @Autonomous(name = "Blue Auton Pit", group = "competition")
 public class BlueAuton2 extends LinearOpMode {
+    //TODO: Synchronize hardwaremap
     DcMotor lf;
     DcMotor lb;
     DcMotor rf;
