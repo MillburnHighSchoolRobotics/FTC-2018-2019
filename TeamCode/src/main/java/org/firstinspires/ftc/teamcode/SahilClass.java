@@ -84,6 +84,24 @@ public class SahilClass {
             Mat erodeBlack = new Mat();
             Imgproc.erode(black, erodeBlack, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(10, 10)));
             black.release();
+
+            Size blackSize = erodeBlack.size();
+            int max = -1;
+            int min = -1;
+            loop: for (int w = 0; w < blackSize.width; w++) {
+                int h = (int) Math.round(blackSize.height/2);
+                double[] data = erodeBlack.get(h,w);
+                if (data[2] > 1) {
+                    if (min == -1) {
+                        min = w;
+                    } else if ((max == -1) && (min != -1)) {
+                        max = w;
+                        break loop;
+                    }
+                }
+            }
+
+
 //            Mat blurBlack = new Mat();
 //            Imgproc.GaussianBlur(erodeBlack, blurBlack, new Size(kSize, kSize), sigmaX);
 //            List<MatOfPoint> blackContours = new LinkedList<>();
@@ -92,11 +110,16 @@ public class SahilClass {
 //            Collections.sort(blackContours, new Comparator<MatOfPoint>() {
 //                @Override
 //                public int compare(MatOfPoint matOfPoint, MatOfPoint s) {
-//                    return (int) Math.signum(Imgproc.contourArea(s) - Imgproc.contourArea(matOfPoint));
+//                    Moments moments1 = Imgproc.moments(matOfPoint);
+//                    Moments moments2 = Imgproc.moments(s);
+//                    if ((moments1.get_m00() != 0) && (moments2.get_m00() != 0)) {
+//                        return Double.compare((moments1.get_m01() / moments1.get_m00()) , (moments2.get_m01() / moments2.get_m00()));
+//                    }
+//                    return 0;
 //                }
 //            });
-//
 //            for (MatOfPoint pt : blackContours) {
+//                pt.release();
 //
 //            }
 
