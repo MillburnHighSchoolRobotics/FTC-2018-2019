@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.NonUpdateCompetitionOpModes;
 import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName:
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -55,7 +55,7 @@ public class BlueAutonPitSampling extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         //Here's how we find the webcam
-        webcamName = hardwareMap.get(WebcamName.class, "Whatever the name of the webcam is")
+        webcamName = hardwareMap.get(WebcamName.class, "Whatever the name of the webcam is");
         lf = hardwareMap.dcMotor.get("leftFront");
         lb = hardwareMap.dcMotor.get("leftBack");
         rf = hardwareMap.dcMotor.get("rightFront");
@@ -106,10 +106,10 @@ public class BlueAutonPitSampling extends LinearOpMode {
 
         //sampling
 
-        pidLF = new Movement(kp,ki,kd,threshold);
-        pidLB = new Movement(kp,ki,kd,threshold);
-        pidRF = new Movement(kp,ki,kd,threshold);
-        pidRB = new Movement(kp,ki,kd,threshold);
+//        pidLF = new Movement(kp,ki,kd,threshold);
+//        pidLB = new Movement(kp,ki,kd,threshold);
+//        pidRF = new Movement(kp,ki,kd,threshold);
+//        pidRB = new Movement(kp,ki,kd,threshold);
 
 
 //        PIDFCoefficients pidOriginalLF = ((DcMotorEx) lf).getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -119,19 +119,19 @@ public class BlueAutonPitSampling extends LinearOpMode {
 
         //pidLF.setTarget(HardwareMap.DeviceMapping.);
         //.clamp(Double.toString(robot.getImu().getHeading()), 0, 45)
-        pidLB.setTarget(mv.distToEncoder(15));
-        pidRF.setTarget(mv.distToEncoder(15));
-        pidRB.setTarget(mv.distToEncoder(15));
+//        pidLB.setTarget(mv.distToEncoder(15));
+//        pidRF.setTarget(mv.distToEncoder(15));
+//        pidRB.setTarget(mv.distToEncoder(15));
 
-        double lfPower = pidLF.getPIDOutput(lf.getTargetPosition());
-        double lbPower = pidLB.getPIDOutput(lb.getTargetPosition());
-        double rfPower = pidRF.getPIDOutput(rf.getTargetPosition());
-        double rbPower = pidRB.getPIDOutput(rb.getTargetPosition());
+//        double lfPower = pidLF.getPIDOutput(lf.getTargetPosition());
+//        double lbPower = pidLB.getPIDOutput(lb.getTargetPosition());
+//        double rfPower = pidRF.getPIDOutput(rf.getTargetPosition());
+//        double rbPower = pidRB.getPIDOutput(rb.getTargetPosition());
 
-        lf.setPower(lfPower);
-        lb.setPower(lbPower);
-        rf.setPower(rfPower);
-        rb.setPower(rbPower);
+//        lf.setPower(lfPower);
+//        lb.setPower(lbPower);
+//        rf.setPower(rfPower);
+//        rb.setPower(rbPower);
 
         mv.translateDistance(0.7,15);
 

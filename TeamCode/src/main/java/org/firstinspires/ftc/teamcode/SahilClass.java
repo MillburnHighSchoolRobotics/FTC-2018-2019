@@ -54,7 +54,7 @@ public class SahilClass {
         widthCamera = vuforiaInstance.rgb.getBufferWidth();
         heightCamera = vuforiaInstance.rgb.getHeight();
         ctel = new Retrofit.Builder()
-                .baseUrl("http://localhost:3000")
+                .baseUrl("http://127.0.0.1:3000")
                 .addConverterFactory(MatConverterFactory.create())
                 .build()
                 .create(CTelemetry.class);

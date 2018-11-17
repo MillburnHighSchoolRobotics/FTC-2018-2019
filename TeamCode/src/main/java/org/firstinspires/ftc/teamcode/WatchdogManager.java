@@ -38,7 +38,7 @@ public class WatchdogManager {
         passedArgs[0] = Thread.currentThread();
         passedArgs[1] = hardwareMap;
         System.arraycopy(args, 0, passedArgs, 2, args.length);
-        Class argTypes[] = new Class[args.length];
+        Class argTypes[] = new Class[passedArgs.length];
         for (int i = 0; i < passedArgs.length; i++) {
             argTypes[i] = passedArgs[i].getClass();
         }
