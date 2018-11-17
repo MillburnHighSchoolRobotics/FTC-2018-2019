@@ -91,6 +91,7 @@ public class SahilClass {
             loop: for (int w = 0; w < blackSize.width; w++) {
                 int h = (int) Math.round(blackSize.height/2);
                 double[] data = erodeBlack.get(h,w);
+                Log.d("color values",data[0] + " " + data[1] + " " + data[2]);
                 if ((data[2] > 1) && ((max == -1) || (min == -1))) {
                     if (min == -1) {
                         min = w;
