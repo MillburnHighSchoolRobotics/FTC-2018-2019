@@ -26,7 +26,6 @@ import retrofit2.Retrofit;
 import virtualRobot.VuforiaLocalizerImplSubclass;
 import virtualRobot.telemetry.CTelemetry;
 import virtualRobot.telemetry.MatConverterFactory;
-import virtualRobot.utils.GlobalUtils;
 
 public class SahilClass {
     VuforiaLocalizerImplSubclass vuforiaInstance;
@@ -39,9 +38,6 @@ public class SahilClass {
     private Scalar upperG = new Scalar(32, 255, 255);
     private Scalar lowerBlack = new Scalar(0, 0, 0);
     private Scalar upperBlack = new Scalar(255, 255, 1);
-    private int areaBoundary = 10;
-    private int max = -1;
-    private int min = -1;
     CTelemetry ctel;
 
 
@@ -61,101 +57,73 @@ public class SahilClass {
         this.length = length;
     }
 
-    //TODO: In case of any mistake, return -1
     public int getPosition() {
         ElapsedTime time = new ElapsedTime();
         int timesRun = 0;
         int totalX = 0;
         int totalY = 0;
+        int totalMax = 0;
+        int totalMin = 0;
+
+
+
         while (time.milliseconds() < length && !Thread.currentThread().isInterrupted()) {
             Mat img = new Mat();
             Bitmap bm = Bitmap.createBitmap(widthCamera, heightCamera, Bitmap.Config.RGB_565);
             bm.copyPixelsFromBuffer(vuforiaInstance.rgb.getPixels());
             Utils.bitmapToMat(bm, img);
-            Mat rgb = new Mat();
-            Imgproc.cvtColor(img, rgb, Imgproc.COLOR_BGR2RGB);
             Mat hsv = new Mat();
             Imgproc.cvtColor(img, hsv, Imgproc.COLOR_RGB2HSV);
-//        bgr.release();
-
-
-
+            Mat rgb = new Mat();
+            Imgproc.cvtColor(img, rgb, Imgproc.COLOR_BGR2RGB);
+            img.release();
 
             Mat black = new Mat();
             Core.inRange(hsv, lowerBlack, upperBlack, black);
             Mat erodeBlack = new Mat();
             Imgproc.erode(black, erodeBlack, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(10, 10)));
             black.release();
-
             Size blackSize = erodeBlack.size();
+
+            int min = 0;
+            int max = 0;
             for (int w = 0; w < blackSize.width; w++) {
                 int h = (int) Math.round(blackSize.height/2);
                 double[] data = erodeBlack.get(h,w);
-                Log.d("color values",Arrays.toString(data));
-                if ((data[0] > 1) && (min == -1)) {
+                Log.d("min color values", w + "," + h + " - " + Arrays.toString(data));
+                if (data[0] > 0) {
                     min = w;
+                    Log.d("good", "minimum");
                     break;
                 }
             }
-
             for (int w = (int)(Math.round(blackSize.width-1))-1; w >= 0; w--) {
-                int h = (int) Math.round(blackSize.height/2);
-                double[] data = erodeBlack.get(h,w);
-                Log.d("color values",Arrays.toString(data));
-                if ((data[0] > 1) && (max == -1)) {
+                int h = (int) Math.round(blackSize.height / 2);
+                double[] data = erodeBlack.get(h, w);
+                Log.d("max color values", w + "," + h + " - " + Arrays.toString(data));
+                if (data[0] > 0) {
                     max = w;
+                    Log.d("good", "maximum");
                     break;
                 }
             }
 
+            if (max <= min) {
+                hsv.release();
+                rgb.release();
+                erodeBlack.release();
+                continue;
+            }
 
-//            Mat blurBlack = new Mat();
-//            Imgproc.GaussianBlur(erodeBlack, blurBlack, new Size(kSize, kSize), sigmaX);
-//            List<MatOfPoint> blackContours = new LinkedList<>();
-//            Imgproc.findContours(blurBlack, blackContours, new Mat(), Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_NONE);
-//            blurBlack.release();
-//            Collections.sort(blackContours, new Comparator<MatOfPoint>() {
-//                @Override
-//                public int compare(MatOfPoint matOfPoint, MatOfPoint s) {
-//                    Moments moments1 = Imgproc.moments(matOfPoint);
-//                    Moments moments2 = Imgproc.moments(s);
-//                    if ((moments1.get_m00() != 0) && (moments2.get_m00() != 0)) {
-//                        return Double.compare((moments1.get_m01() / moments1.get_m00()) , (moments2.get_m01() / moments2.get_m00()));
-//                    }
-//                    return 0;
-//                }
-//            });
-//            for (MatOfPoint pt : blackContours) {
-//                pt.release();
-//
-//            }
-
-//            Point centroidBlack = new Point();
-//            centroidBlack.x = 0;
-//            centroidBlack.y = 0;
-//            if (blackContours.size() > 0) {
-//                Moments moments = Imgproc.moments(blackContours.get(0));
-//                if (moments.get_m00() != 0) {
-//                    centroidBlack.x = moments.get_m10() / moments.get_m00();
-//                    centroidBlack.y = moments.get_m01() / moments.get_m00();
-//                }
-//                totalX += centroidBlack.x;
-//                totalY += centroidBlack.y;
-//                timesRun++;
-//            }
-//            for (MatOfPoint mat : blackContours) {
-//                mat.release();
-//            }
-
-
-
+            totalMin += min;
+            totalMax += max;
 
             Mat gold = new Mat();
             Core.inRange(hsv, lowerG, upperG, gold);
-            Mat erode = new Mat();
-            Imgproc.erode(gold, erode, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(5, 5)));
+            Mat cropped = gold.submat(heightCamera,0,min,max);
             gold.release();
-//        Log.d("Color", Arrays.toString(hsv.get(100, 100)));
+            Mat erode = new Mat();
+            Imgproc.erode(cropped, erode, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(5, 5)));
             hsv.release();
             Mat blur = new Mat();
             Imgproc.GaussianBlur(erode, blur, new Size(kSize, kSize), sigmaX);
@@ -168,6 +136,7 @@ public class SahilClass {
                     return (int) Math.signum(Imgproc.contourArea(s) - Imgproc.contourArea(matOfPoint));
                 }
             });
+
             Point centroid = new Point();
             centroid.x = 0;
             centroid.y = 0;
@@ -185,55 +154,60 @@ public class SahilClass {
                 mat.release();
             }
 
-            Imgproc.circle(rgb,centroid, 80, new Scalar(255,0,0), 80);
-
-
-
-
+            Mat croppedImage = rgb.submat(heightCamera,0,min,max);
+            Imgproc.circle(croppedImage,centroid, 80, new Scalar(255,0,0), 80);
 
             try {
-                ctel.sendImage("Black", erodeBlack).execute();
+                ctel.sendImage("Camera Image", rgb).execute();
             } catch (IOException e) {
                 e.printStackTrace();
-                Log.e("CTelemetry", "failed black erode");
+                Log.e("CTelemetry", "failed camera img");
             }
             try {
-                ctel.sendImage("Erode", erode).execute();
+                ctel.sendImage("Cropped Image", croppedImage).execute();
             } catch (IOException e) {
                 e.printStackTrace();
-                Log.e("CTelemetry", "failed erode");
+                Log.e("CTelemetry", "failed cropped img");
             }
             try {
-                ctel.sendImage("Image", rgb).execute();
+                ctel.sendImage("Camera Outline", erodeBlack).execute();
             } catch (IOException e) {
                 e.printStackTrace();
-                Log.e("CTelemetry", "failed img");
+                Log.e("CTelemetry", "failed black detection");
             }
+            try {
+                ctel.sendImage("Mineral Detection", erode).execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.e("CTelemetry", "failed gold detection");
+            }
+
+            rgb.release();
+            croppedImage.release();
             erodeBlack.release();
             erode.release();
-            img.release();
-            rgb.release();
         }
-//        int radius = 2;
 
         int position = 0;
-        int widthImage = max-min;
+        double max = totalMax/(double)timesRun;
+        double min = totalMin/(double)timesRun;
+        double widthImage = max-min+1;
         Point centroid = new Point(totalX/(double)timesRun, totalY/(double)timesRun);
-        Log.d("SahilClass", "Centroid: " + centroid.toString() + ", (" + widthCamera + ", " + heightCamera + ")");
-        if (!((max == -1) || (min == -1))) {
-            if ((centroid.x >= 0) && (centroid.x < ((widthImage/3)+min))) {
+        Log.d("Width Range", "Width: " + min + " - " + max);
+        Log.d("Centroid", "Centroid: " + centroid.toString());
+
+        if (max <= min) {
+            if ((centroid.x >= 0) && (centroid.x < (widthImage/3))) {
                 position = 1;
-            } else if ((centroid.x >= ((widthImage/3)+min)) && (centroid.x < ((2*(widthImage/3))+min))) {
+            } else if ((centroid.x >= (widthImage/3)) && (centroid.x < (2*(widthImage/3)))) {
                 position = 2;
-            } else if (centroid.x >= ((2*(widthImage/3))+min)) {
+            } else if (centroid.x >= (2*(widthImage/3))) {
                 position = 3;
-            } else {
-                position = -1;
             }
+            Log.d("Position", "Position: " + position);
         } else {
-            position = -1;
+            Log.d("Position", "uh oh we have a big error determining the max and min");
         }
-        Log.d("SahilClass", "Position: " + position);
         return position;
     }
 }
