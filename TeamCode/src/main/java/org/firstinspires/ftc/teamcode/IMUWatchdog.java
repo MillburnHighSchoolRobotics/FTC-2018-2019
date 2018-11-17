@@ -40,5 +40,6 @@ public class IMUWatchdog extends Watchdog {
             }
         }
         rotation = newRot;
+        WatchdogManager.getInstance().setValue("rotation", turns * 360 + rotation);
     }
 }
