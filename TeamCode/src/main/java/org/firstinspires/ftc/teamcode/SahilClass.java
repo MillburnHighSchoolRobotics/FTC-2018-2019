@@ -54,7 +54,7 @@ public class SahilClass {
         widthCamera = vuforiaInstance.rgb.getBufferWidth();
         heightCamera = vuforiaInstance.rgb.getHeight();
         ctel = new Retrofit.Builder()
-                .baseUrl("http://127.0.0.1:3000")
+                .baseUrl("http://localhost:3000")
                 .addConverterFactory(MatConverterFactory.create())
                 .build()
                 .create(CTelemetry.class);
@@ -88,17 +88,23 @@ public class SahilClass {
             black.release();
 
             Size blackSize = erodeBlack.size();
-            loop: for (int w = 0; w < blackSize.width; w++) {
+            for (int w = 0; w < blackSize.width; w++) {
                 int h = (int) Math.round(blackSize.height/2);
                 double[] data = erodeBlack.get(h,w);
-                Log.d("color values",data[0] + " " + data[1] + " " + data[2]);
-                if ((data[2] > 1) && ((max == -1) || (min == -1))) {
-                    if (min == -1) {
-                        min = w;
-                    } else {
-                        max = w;
-                        break loop;
-                    }
+                Log.d("color values",Arrays.toString(data));
+                if ((data[0] > 1) && (min == -1)) {
+                    min = w;
+                    break;
+                }
+            }
+
+            for (int w = (int)(Math.round(blackSize.width-1))-1; w >= 0; w--) {
+                int h = (int) Math.round(blackSize.height/2);
+                double[] data = erodeBlack.get(h,w);
+                Log.d("color values",Arrays.toString(data));
+                if ((data[0] > 1) && (max == -1)) {
+                    max = w;
+                    break;
                 }
             }
 
