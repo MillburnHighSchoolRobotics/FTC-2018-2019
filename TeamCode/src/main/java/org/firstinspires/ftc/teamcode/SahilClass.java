@@ -40,6 +40,8 @@ public class SahilClass {
     private Scalar lowerBlack = new Scalar(0, 0, 0);
     private Scalar upperBlack = new Scalar(255, 255, 1);
     private int areaBoundary = 10;
+    private int max = -1;
+    private int min = -1;
     CTelemetry ctel;
 
 
@@ -86,15 +88,13 @@ public class SahilClass {
             black.release();
 
             Size blackSize = erodeBlack.size();
-            int max = -1;
-            int min = -1;
             loop: for (int w = 0; w < blackSize.width; w++) {
                 int h = (int) Math.round(blackSize.height/2);
                 double[] data = erodeBlack.get(h,w);
-                if (data[2] > 1) {
+                if ((data[2] > 1) && ((max == -1) || (min == -1))) {
                     if (min == -1) {
                         min = w;
-                    } else if ((max == -1) && (min != -1)) {
+                    } else {
                         max = w;
                         break loop;
                     }
@@ -202,6 +202,7 @@ public class SahilClass {
                 e.printStackTrace();
                 Log.e("CTelemetry", "failed img");
             }
+            erodeBlack.release();
             erode.release();
             img.release();
             rgb.release();
@@ -209,14 +210,19 @@ public class SahilClass {
 //        int radius = 2;
 
         int position = 0;
+        int widthImage = max-min;
         Point centroid = new Point(totalX/(double)timesRun, totalY/(double)timesRun);
         Log.d("SahilClass", "Centroid: " + centroid.toString() + ", (" + widthCamera + ", " + heightCamera + ")");
-        if ((centroid.x >= 0) && (centroid.x < (widthCamera/3))) {
-            position = 1;
-        } else if ((centroid.x >= (widthCamera/3)) && (centroid.x < ((2*widthCamera)/3))) {
-            position = 2;
-        } else if (centroid.x >= (2*widthCamera)/3) {
-            position = 3;
+        if (!((max == -1) || (min == -1))) {
+            if ((centroid.x >= 0) && (centroid.x < ((widthImage/3)+min))) {
+                position = 1;
+            } else if ((centroid.x >= ((widthImage/3)+min)) && (centroid.x < ((2*(widthImage/3))+min))) {
+                position = 2;
+            } else if (centroid.x >= ((2*(widthImage/3))+min)) {
+                position = 3;
+            } else {
+                position = -1;
+            }
         } else {
             position = -1;
         }
