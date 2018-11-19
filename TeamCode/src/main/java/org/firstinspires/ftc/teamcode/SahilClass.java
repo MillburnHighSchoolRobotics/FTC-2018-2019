@@ -120,7 +120,7 @@ public class SahilClass {
 
             Mat gold = new Mat();
             Core.inRange(hsv, lowerG, upperG, gold);
-            Mat cropped = gold.submat(heightCamera,0,min,max);
+            Mat cropped = gold.submat(0,heightCamera,min,max);
             gold.release();
             Mat erode = new Mat();
             Imgproc.erode(cropped, erode, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(5, 5)));
@@ -154,7 +154,7 @@ public class SahilClass {
                 mat.release();
             }
 
-            Mat croppedImage = rgb.submat(heightCamera,0,min,max);
+            Mat croppedImage = rgb.submat(0, heightCamera, min, max);
             Imgproc.circle(croppedImage,centroid, 80, new Scalar(255,0,0), 80);
 
             try {
@@ -206,7 +206,7 @@ public class SahilClass {
             }
             Log.d("Position", "Position: " + position);
         } else {
-            Log.d("Position", "uh oh we have a big error determining the max and min");
+            Log.d("Position", "uh oh we got a big error determining the max and min");
         }
         return position;
     }
