@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import android.util.Log;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import virtualRobot.utils.MathUtils;
@@ -84,6 +85,28 @@ public class Movement {
 
     public void rotateDegrees(double power, double degrees) throws InterruptedException {
         rotate(power, rotateToEncoder(MathUtils.sgn(degrees) * Math.toRadians(Math.abs(degrees))));
+    }
+    public void moveUntilPressed(DcMotor[] motors, DigitalChannel limitSwitch, boolean Direction) throws InterruptedException {
+        for (int x = 0; x < motors.length; x++) {
+            motors[x].setPower(Math.pow(-1, Direction ? 0 : 1) * 0.7);//True means up, False means down.
+            motors[x].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
+        while (true) {
+            if (Thread.currentThread().isInterrupted()) {
+                throw new InterruptedException();
+            }
+            if (!limitSwitch.getState()) {//Yes, it is inverted.
+                break;
+            }
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException ex) {
+            }
+        }
+        for (DcMotor motor : motors) {
+            motor.setPower(0);
+            motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
     }
     public void moveToPosition(DcMotor[] motors, double[] power, int[] position) throws InterruptedException {
         for (int x = 0; x < motors.length; x++) {
