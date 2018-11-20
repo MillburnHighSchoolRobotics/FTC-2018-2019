@@ -17,6 +17,7 @@ import org.opencv.imgproc.Imgproc;
 import org.opencv.imgproc.Moments;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -83,30 +84,55 @@ public class SahilClass {
             Mat erodeBlack = new Mat();
             Imgproc.erode(black, erodeBlack, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(10, 10)));
             black.release();
-            Size blackSize = erodeBlack.size();
 
-            int min = 0;
-            int max = 0;
-            for (int w = 0; w < blackSize.width; w++) {
-                int h = (int) Math.round(blackSize.height/2);
+            int minPrev = -1;
+            int maxPrev = -1;
+            ArrayList<int[]> minRanges = new ArrayList<>();
+            ArrayList<int[]> maxRanges = new ArrayList<>();
+
+            for (int w = 0; w < widthCamera; w++) {
+                int h = (int) Math.round(heightCamera/2);
                 double[] data = erodeBlack.get(h,w);
-                Log.d("min color values", w + "," + h + " - " + Arrays.toString(data));
-                if (data[0] > 0) {
-                    min = w;
-                    Log.d("good", "minimum");
-                    break;
+                if ((data[0] > 0) && (minPrev == -1)) {
+                    minPrev = w;
+                } else if ((data[0] == 0)  && (minPrev != -1)) {
+                    minRanges.add(new int[] {minPrev, w});
+                    minPrev = -1;
                 }
             }
-            for (int w = (int)(Math.round(blackSize.width-1))-1; w >= 0; w--) {
-                int h = (int) Math.round(blackSize.height / 2);
-                double[] data = erodeBlack.get(h, w);
-                Log.d("max color values", w + "," + h + " - " + Arrays.toString(data));
-                if (data[0] > 0) {
-                    max = w;
-                    Log.d("good", "maximum");
-                    break;
+            int minLength = 0;
+            int min = 0;
+            for (int a = 0; a < minRanges.size(); a++) {
+                int minLengthNew = Math.abs(minRanges.get(a)[1] - minRanges.get(a)[0]);
+                if (minLengthNew > minLength) {
+                    minLength = minLengthNew;
+                    min = minRanges.get(a)[1];
                 }
             }
+
+
+            for (int w = (int)(Math.round(widthCamera-1))-1; w >= 0; w--) {
+                int h = (int) Math.round(heightCamera/2);
+                double[] data = erodeBlack.get(h,w);
+                if ((data[0] == 0) && (minPrev == -1)) {
+                    maxPrev = w;
+                } else if ((data[0] > 0)  && (minPrev != -1)) {
+                    maxRanges.add(new int[] {maxPrev, w});
+                    maxPrev = -1;
+                }
+            }
+            int maxLength = 0;
+            int max = 0;
+            for (int a = 0; a < maxRanges.size(); a++) {
+                int maxLengthNew = Math.abs(maxRanges.get(a)[0] - maxRanges.get(a)[1]);
+                if (maxLengthNew > maxLength) {
+                    maxLength = maxLengthNew;
+                    max = maxRanges.get(a)[0];
+                }
+            }
+
+            Log.d("good", "minimum - " + min);
+            Log.d("good", "maximum - " + max);
 
             if (max <= min) {
                 hsv.release();
@@ -156,6 +182,8 @@ public class SahilClass {
 
             Mat croppedImage = rgb.submat(0, heightCamera, min, max);
             Imgproc.circle(croppedImage,centroid, 80, new Scalar(255,0,0), 80);
+            Imgproc.line(rgb, new Point(min,0), new Point(min,heightCamera), new Scalar(255,0,0), 5);
+            Imgproc.line(rgb, new Point(max,0), new Point(max,heightCamera), new Scalar(0,255,0), 5);
 
             try {
                 ctel.sendImage("Camera Image", rgb).execute();

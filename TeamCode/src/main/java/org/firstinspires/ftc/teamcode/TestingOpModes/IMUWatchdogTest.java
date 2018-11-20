@@ -18,4 +18,9 @@ public class IMUWatchdogTest extends OpMode {
     public void loop() {
         telemetry.addData("Rotation", WatchdogManager.getInstance().getValue("rotation"));
     }
+
+    @Override
+    public void stop() {
+        WatchdogManager.getInstance().clean();
+    }
 }

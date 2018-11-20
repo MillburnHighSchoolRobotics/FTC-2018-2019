@@ -4,13 +4,14 @@ import android.util.Log;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class WatchdogManager {
     private HashMap<String, Watchdog> watchdogs;
     private HashMap<String, Object> values;
-    private HashMap<String, Integer> owners;
+    private HashMap<String, Thread> owners;
     private HardwareMap hardwareMap;
     private static final String TAG = "WatchdogManager";
 
@@ -31,6 +32,7 @@ public class WatchdogManager {
         watchdogs.clear();
         values.clear();
         owners.clear();
+        Log.d(TAG, "Owners: " + owners.size());
     }
 
     public synchronized void provision(String name, Class<? extends Watchdog> watchdogClass, Object... args) {
@@ -54,10 +56,16 @@ public class WatchdogManager {
     }
 
     public synchronized void setValue(String name, Object obj) {
+        Log.d(TAG, "Owners: " + Arrays.asList(owners) + ", Thread: " + Thread.currentThread());
         if (!values.containsKey(name)) {
-            values.put(name, obj);
-            owners.put(name, Thread.currentThread().hashCode());
-        } else if (owners.get(name) == Thread.currentThread().hashCode()) {
+            if (!watchdogs.containsValue((Watchdog)Thread.currentThread())) {
+                Log.e(TAG, "Unable to set new value " + name + ": thread " + Thread.currentThread() + " is not a registered Watchdog.");
+            } else {
+                values.put(name, obj);
+                owners.put(name, Thread.currentThread());
+                Log.d(TAG, "SetNewThread: " + Thread.currentThread());
+            }
+        } else if (owners.get(name) == Thread.currentThread()) {
             values.put(name, obj);
         } else {
             Log.e(TAG, "Unable to set value for " + name + ": Not owned by thread " + Thread.currentThread().getName());
