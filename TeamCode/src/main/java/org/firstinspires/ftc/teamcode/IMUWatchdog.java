@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.util.Log;
+
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -7,7 +9,7 @@ public class IMUWatchdog extends Watchdog {
     private static final String TAG = "IMUWatchdog";
     private String imuTag;
     private final BNO055IMU imu;
-    private int rotation;
+    private float rotation;
     private int turns;
     public IMUWatchdog(Thread parentThread, HardwareMap hardwareMap, String imuTag) {
         super(parentThread, hardwareMap);
@@ -26,20 +28,20 @@ public class IMUWatchdog extends Watchdog {
         synchronized (imu) {
             imu.initialize(parameters);
         }
-        rotation = -1;
         turns = 0;
     }
     @Override
     protected void loop() {
-        int newRot = (int)imu.getAngularOrientation().firstAngle;
+        float newRot = imu.getAngularOrientation().firstAngle;
         if (Math.abs(newRot - rotation) > 180) {
-            if (newRot > 180) {
+            if (newRot > 0) {
                 turns--;
             } else {
                 turns++;
             }
         }
         rotation = newRot;
+        Log.d(TAG, "Rotation: " + turns + " turns, " + rotation + " degrees");
         WatchdogManager.getInstance().setValue("rotation", turns * 360 + rotation);
     }
 }
