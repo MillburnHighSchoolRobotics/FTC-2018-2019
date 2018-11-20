@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.Movement;
 import org.firstinspires.ftc.teamcode.TestingOpModes.TFODTest;
@@ -24,6 +25,7 @@ public class BlueAuton1 extends LinearOpMode {
     DcMotor liftR;
     DcMotor liftL;
     Servo marker;
+    DigitalChannel magneticLimitSwitch;
 
     final float botWidth = 16.5f; //inches
     final float botRadius = botWidth/2; //in
@@ -41,6 +43,7 @@ public class BlueAuton1 extends LinearOpMode {
         rb = hardwareMap.dcMotor.get("rightBack");
         liftL = hardwareMap.dcMotor.get("liftL");
         liftR = hardwareMap.dcMotor.get("liftR");
+        magneticLimitSwitch = hardwareMap.get(DigitalChannel.class, "Switchy");
         marker = hardwareMap.servo.get("marker");
         marker.setPosition(0);
         waitForStart();
@@ -60,7 +63,8 @@ public class BlueAuton1 extends LinearOpMode {
         TFODTest tfod = new TFODTest(hardwareMap);
         liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {-0.8, 0.8}, new int[] {10700+100, 10700+100});
+        mv.moveUntilPressed(new DcMotor[]{liftL, liftR}, magneticLimitSwitch, true);//Move until limit switch pressed
+        //mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {-0.8, 0.8}, new int[] {10700+100, 10700+100});
 //        Thread.sleep(100);
 //
 //       mv.translate(0.5, 104);

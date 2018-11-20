@@ -34,8 +34,8 @@ public class SahilClass {
     private int kSize = 9;
     private int sigmaX = 0;
     private int length;
-    private Scalar lowerG = new Scalar(10, 193, 95);
-    private Scalar upperG = new Scalar(32, 255, 255);
+    private Scalar lowerG = new Scalar(10, 75, 200);
+    private Scalar upperG = new Scalar(25, 135, 255);
     private Scalar lowerBlack = new Scalar(0, 0, 0);
     private Scalar upperBlack = new Scalar(255, 255, 1);
     CTelemetry ctel;
@@ -50,7 +50,7 @@ public class SahilClass {
         widthCamera = vuforiaInstance.rgb.getBufferWidth();
         heightCamera = vuforiaInstance.rgb.getHeight();
         ctel = new Retrofit.Builder()
-                .baseUrl("http://localhost:3000")
+                .baseUrl(BuildConfig.CTELEM_SERVER_IP)
                 .addConverterFactory(MatConverterFactory.create())
                 .build()
                 .create(CTelemetry.class);

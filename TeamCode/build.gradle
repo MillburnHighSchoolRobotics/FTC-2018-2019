@@ -41,10 +41,10 @@ android {
     }
     buildTypes {
         debug {
-            buildConfigField 'String', 'CTELEM_SERVER_IP', "\"http://${getIP()}:8080\""
+            buildConfigField 'String', 'CTELEM_SERVER_IP', "\"http://${getIP()}:3000\""
         }
         release {
-            buildConfigField 'String', 'CTELEM_SERVER_IP', "\"http://${getIP()}:8080\""
+            buildConfigField 'String', 'CTELEM_SERVER_IP', "\"http://${getIP()}:3000\""
         }
     }
 }
