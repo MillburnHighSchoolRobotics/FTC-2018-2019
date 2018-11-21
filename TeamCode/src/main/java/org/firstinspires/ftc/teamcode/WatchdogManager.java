@@ -12,14 +12,12 @@ public class WatchdogManager {
     private HashMap<String, Watchdog> watchdogs;
     private HashMap<String, Object> values;
     private HashMap<String, Thread> owners;
-    private HardwareMap hardwareMap;
     private static final String TAG = "WatchdogManager";
 
     public WatchdogManager() {
         this.watchdogs = new HashMap<>();
         this.values = new HashMap<>();
         this.owners = new HashMap<>();
-        this.hardwareMap = null;
     }
 
     public synchronized void clean() {
@@ -36,10 +34,9 @@ public class WatchdogManager {
     }
 
     public synchronized void provision(String name, Class<? extends Watchdog> watchdogClass, Object... args) {
-        Object[] passedArgs = new Object[args.length + 2];
+        Object[] passedArgs = new Object[args.length + 1];
         passedArgs[0] = Thread.currentThread();
-        passedArgs[1] = hardwareMap;
-        System.arraycopy(args, 0, passedArgs, 2, args.length);
+        System.arraycopy(args, 0, passedArgs, 1, args.length);
         Class argTypes[] = new Class[passedArgs.length];
         for (int i = 0; i < passedArgs.length; i++) {
             argTypes[i] = passedArgs[i].getClass();
@@ -86,7 +83,4 @@ public class WatchdogManager {
         return INSTANCE;
     }
 
-    public void setHardwareMap(HardwareMap hardwareMap) {
-        this.hardwareMap = hardwareMap;
-    }
 }

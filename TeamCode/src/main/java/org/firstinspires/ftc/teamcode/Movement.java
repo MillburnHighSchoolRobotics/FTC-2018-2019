@@ -86,9 +86,9 @@ public class Movement {
     public void rotateDegrees(double power, double degrees) throws InterruptedException {
         rotate(power, rotateToEncoder(MathUtils.sgn(degrees) * Math.toRadians(Math.abs(degrees))));
     }
-    public void moveUntilPressed(DcMotor[] motors, DigitalChannel limitSwitch, boolean Direction) throws InterruptedException {
+    public void moveUntilPressed(DcMotor[] motors, DigitalChannel limitSwitch, double power) throws InterruptedException {
         for (int x = 0; x < motors.length; x++) {
-            motors[x].setPower(Math.pow(-1, Direction ? 0 : 1) * 0.7);//True means up, False means down.
+            motors[x].setPower(power);//True means up, False means down.
             motors[x].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
         while (true) {

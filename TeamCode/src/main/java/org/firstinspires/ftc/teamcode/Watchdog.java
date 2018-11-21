@@ -6,10 +6,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public abstract class Watchdog extends Thread {
     protected final Thread parentThread;
-    protected final HardwareMap hardwareMap;
-    public Watchdog(Thread parentThread, HardwareMap hardwareMap) {
+    public Watchdog(Thread parentThread) {
         this.parentThread = parentThread;
-        this.hardwareMap = hardwareMap;
     }
     @Override
     public void run() {
