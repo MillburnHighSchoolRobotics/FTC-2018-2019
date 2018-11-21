@@ -47,7 +47,7 @@ public class SahilTest extends LinearOpMode {
         VuforiaLocalizerImplSubclass vuforiaInstance = new VuforiaLocalizerImplSubclass(params);
         waitForStart();
 
-        SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000);
+        SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000); //this only loops once after 1000 millis but keep this constraint just in case
 //        while (!Thread.currentThread().isInterrupted()) {
         int pos = sahilClass.getPosition();
         telemetry.addData("Position", pos + "");

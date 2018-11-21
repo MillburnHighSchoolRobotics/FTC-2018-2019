@@ -114,9 +114,9 @@ public class SahilClass {
             for (int w = (int)(Math.round(widthCamera-1))-1; w >= 0; w--) {
                 int h = (int) Math.round(heightCamera/2);
                 double[] data = erodeBlack.get(h,w);
-                if ((data[0] == 0) && (minPrev == -1)) {
+                if ((data[0] == 0) && (maxPrev == -1)) {
                     maxPrev = w;
-                } else if ((data[0] > 0)  && (minPrev != -1)) {
+                } else if ((data[0] > 0)  && (maxPrev != -1)) {
                     maxRanges.add(new int[] {maxPrev, w});
                     maxPrev = -1;
                 }
@@ -145,6 +145,8 @@ public class SahilClass {
             totalMax += max;
 
             Mat gold = new Mat();
+            Mat goldNotCropped = new Mat();
+            Core.inRange(hsv, lowerG, upperG, goldNotCropped);
             Core.inRange(hsv, lowerG, upperG, gold);
             Mat cropped = gold.submat(0,heightCamera,min,max);
             gold.release();
@@ -209,11 +211,18 @@ public class SahilClass {
                 e.printStackTrace();
                 Log.e("CTelemetry", "failed gold detection");
             }
+            try {
+                ctel.sendImage("Test Gold Detection", goldNotCropped).execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.e("CTelemetry", "failed non cropped gold detection");
+            }
 
             rgb.release();
             croppedImage.release();
             erodeBlack.release();
             erode.release();
+            goldNotCropped.release();
         }
 
         int position = 0;
@@ -224,7 +233,7 @@ public class SahilClass {
         Log.d("Width Range", "Width: " + min + " - " + max);
         Log.d("Centroid", "Centroid: " + centroid.toString());
 
-        if (max <= min) {
+        if (max > min) {
             if ((centroid.x >= 0) && (centroid.x < (widthImage/3))) {
                 position = 1;
             } else if ((centroid.x >= (widthImage/3)) && (centroid.x < (2*(widthImage/3)))) {
