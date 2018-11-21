@@ -6,11 +6,15 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import virtualRobot.PIDController;
 import virtualRobot.utils.MathUtils;
 
 import static virtualRobot.utils.MathUtils.sgn;
 
 public class Movement {
+    final int kP = 0;
+    final int kI = 0;
+    final int kD = 0;
     DcMotor lf;
     DcMotor lb;
     DcMotor rf;
@@ -81,6 +85,22 @@ public class Movement {
         rf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         moveToPosition(new DcMotor[] {lf,lb,rf,rb}, new double[] {power,power,-power,-power},  new int[] {(positionChange),(positionChange),(-positionChange),(-positionChange)});
+    }
+
+    public void rotateTo(double target) throws InterruptedException {
+        PIDController pidController = new PIDController(kP, kI, kD, 2, target);
+        while (!Thread.currentThread().isInterrupted()) {
+            double output = pidController.getPIDOutput((double)WatchdogManager.getInstance().getValue("rotation"));
+            if (Math.abs(output) < 0.05) {
+                stop();
+                break;
+            }
+            lf.setPower(-1 * output);
+            lb.setPower(-1 * output);
+            rf.setPower(1 * output);
+            rb.setPower(1 * output);
+            Thread.sleep(5);
+        }
     }
 
     public void rotateDegrees(double power, double degrees) throws InterruptedException {
@@ -156,6 +176,13 @@ public class Movement {
     }
     public static int distToEncoder(double dist) { //inches
         return (int)(dist/(2*Math.PI*wheelRadius) * ticksPerRev);
+    }
+
+    public void stop() {
+        lf.setPower(0);
+        lb.setPower(0);
+        rf.setPower(0);
+        rb.setPower(0);
     }
 
     public static int rotateToEncoder(double rad) {

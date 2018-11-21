@@ -68,7 +68,7 @@ public class AutoPIDOscillator extends LinearOpMode {
                         break;
                     }
                 }
-                Thread.sleep(1);
+                Thread.sleep(5);
             }
             lf.setPower(power * -1);
             lb.setPower(power * -1);
@@ -90,7 +90,7 @@ public class AutoPIDOscillator extends LinearOpMode {
                         break;
                     }
                 }
-                Thread.sleep(1);
+                Thread.sleep(5);
             }
         }
         lf.setPower(0);
