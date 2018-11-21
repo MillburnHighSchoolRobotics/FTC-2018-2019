@@ -225,7 +225,7 @@ public class SahilClass {
             goldNotCropped.release();
         }
 
-        int position = 0;
+        int position = -1;
         double max = totalMax/(double)timesRun;
         double min = totalMin/(double)timesRun;
         double widthImage = max-min+1;
@@ -235,11 +235,11 @@ public class SahilClass {
 
         if (max > min) {
             if ((centroid.x >= 0) && (centroid.x < (widthImage/3))) {
-                position = 1;
+                position = 0;
             } else if ((centroid.x >= (widthImage/3)) && (centroid.x < (2*(widthImage/3)))) {
-                position = 2;
+                position = 1;
             } else if (centroid.x >= (2*(widthImage/3))) {
-                position = 3;
+                position = 2;
             }
             Log.d("Position", "Position: " + position);
         } else {
