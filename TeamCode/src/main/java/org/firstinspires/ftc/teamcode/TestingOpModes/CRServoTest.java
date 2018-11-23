@@ -9,7 +9,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 /**
  * Created by ethachu19 on 10/21/2016.
  */
-@Disabled
 @TeleOp(name = "CRServoTest", group = "Test Components")
 public class CRServoTest extends OpMode {
 
@@ -27,12 +26,12 @@ public class CRServoTest extends OpMode {
 
     @Override
     public void loop() {
-        if (gamepad1.a) pos -= 0.02;
-        else if (gamepad1.b) pos += 0.02;
 
-        pos = Math.max(Math.min(pos, 1), 0);
-
-        servo.getController().setServoPosition(servo.getPortNumber(),pos);
-//        servo.setPower(power);
+//        pos += 0.2;
+//
+//        pos = Math.max(Math.min(pos, 1), 0);
+//
+//        servo.getController().setServoPosition(servo.getPortNumber(),pos);
+        servo.setPower(0.5);
     }
 }
