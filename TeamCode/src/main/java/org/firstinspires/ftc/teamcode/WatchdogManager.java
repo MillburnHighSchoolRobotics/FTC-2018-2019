@@ -12,9 +12,10 @@ public class WatchdogManager {
     private HashMap<String, Watchdog> watchdogs;
     private HashMap<String, Object> values;
     private HashMap<String, Thread> owners;
-    private HardwareMap hardwareMap;
-    private static final String TAG = "WatchdogManager";
 
+    private HardwareMap hardwareMap;
+
+    private static final String TAG = "WatchdogManager";
     public WatchdogManager() {
         this.watchdogs = new HashMap<>();
         this.values = new HashMap<>();
@@ -82,6 +83,7 @@ public class WatchdogManager {
     }
 
     private static final WatchdogManager INSTANCE = new WatchdogManager();
+
     public static synchronized WatchdogManager getInstance() {
         return INSTANCE;
     }

@@ -6,11 +6,15 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import virtualRobot.PIDController;
 import virtualRobot.utils.MathUtils;
 
 import static virtualRobot.utils.MathUtils.sgn;
 
 public class Movement {
+    final double kP = 12.306655975;
+    final double kI = 26.169795373;
+    final double kD = 1.446837653;
     DcMotor lf;
     DcMotor lb;
     DcMotor rf;
@@ -83,12 +87,31 @@ public class Movement {
         moveToPosition(new DcMotor[] {lf,lb,rf,rb}, new double[] {power,power,-power,-power},  new int[] {(positionChange),(positionChange),(-positionChange),(-positionChange)});
     }
 
+    public void rotateTo(double target) throws InterruptedException {
+        while (!Thread.currentThread().isInterrupted() && WatchdogManager.getInstance().getValue("rotation") == null) {
+            Thread.sleep(5);
+        }
+        PIDController pidController = new PIDController(kP, kI, kD, 5, target);
+        while (!Thread.currentThread().isInterrupted()) {
+            double output = pidController.getPIDOutput(((Float)WatchdogManager.getInstance().getValue("rotation")).doubleValue());
+            if (Math.abs(output) < 0.01) {
+                stop();
+                break;
+            }
+            lf.setPower(-1 * output);
+            lb.setPower(-1 * output);
+            rf.setPower(1 * output);
+            rb.setPower(1 * output);
+            Thread.sleep(5);
+        }
+    }
+
     public void rotateDegrees(double power, double degrees) throws InterruptedException {
         rotate(power, rotateToEncoder(MathUtils.sgn(degrees) * Math.toRadians(Math.abs(degrees))));
     }
-    public void moveUntilPressed(DcMotor[] motors, DigitalChannel limitSwitch, boolean Direction) throws InterruptedException {
+    public void moveUntilPressed(DcMotor[] motors, DigitalChannel limitSwitch, double power) throws InterruptedException {
         for (int x = 0; x < motors.length; x++) {
-            motors[x].setPower(Math.pow(-1, Direction ? 0 : 1) * 0.7);//True means up, False means down.
+            motors[x].setPower(power);//True means up, False means down.
             motors[x].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
         while (true) {
@@ -156,6 +179,13 @@ public class Movement {
     }
     public static int distToEncoder(double dist) { //inches
         return (int)(dist/(2*Math.PI*wheelRadius) * ticksPerRev);
+    }
+
+    public void stop() {
+        lf.setPower(0);
+        lb.setPower(0);
+        rf.setPower(0);
+        rb.setPower(0);
     }
 
     public static int rotateToEncoder(double rad) {
