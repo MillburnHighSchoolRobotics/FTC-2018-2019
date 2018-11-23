@@ -10,7 +10,8 @@ import org.firstinspires.ftc.teamcode.WatchdogManager;
 public class IMUWatchdogTest extends OpMode {
     @Override
     public void init() {
-        WatchdogManager.getInstance().provision("IMUWatch", IMUWatchdog.class, hardwareMap.get("imu"));
+        WatchdogManager.getInstance().setHardwareMap(hardwareMap);
+        WatchdogManager.getInstance().provision("IMUWatch", IMUWatchdog.class, "imu");
     }
 
     @Override

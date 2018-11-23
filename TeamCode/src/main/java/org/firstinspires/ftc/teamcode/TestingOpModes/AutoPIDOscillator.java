@@ -6,6 +6,7 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -15,25 +16,28 @@ import org.firstinspires.ftc.teamcode.WatchdogManager;
 
 import java.util.ArrayList;
 
-@Autonomous(name = "AutoPID", group="testing")
-@Disabled
+import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
+
+@TeleOp(name = "AutoPID", group="testing")
+//@Disabled
 public class AutoPIDOscillator extends LinearOpMode {
     private final double power = 1;
     private final int iterations = 10;
     private final double setpoint = 90;
     private final String TAG = "AutoPID";
 
-    private final DcMotor lf = hardwareMap.dcMotor.get("leftFront");
-    private final DcMotor lb = hardwareMap.dcMotor.get("leftBack");
-    private final DcMotor rf = hardwareMap.dcMotor.get("rightFront");
-    private final DcMotor rb = hardwareMap.dcMotor.get("rightBack");
     @Override
     public void runOpMode() throws InterruptedException {
+        DcMotor lf = hardwareMap.dcMotor.get("leftFront");
+        DcMotor lb = hardwareMap.dcMotor.get("leftBack");
+        DcMotor rf = hardwareMap.dcMotor.get("rightFront");
+        DcMotor rb = hardwareMap.dcMotor.get("rightBack");
         ArrayList<Double> periods = new ArrayList<>();
         ArrayList<Double> extremes = new ArrayList<>();
         WatchdogManager wdm = WatchdogManager.getInstance();
         BNO055IMU imu = (BNO055IMU)hardwareMap.get("imu");
-        wdm.provision("IMUWatch", IMUWatchdog.class, imu);
+        wdm.setHardwareMap(hardwareMap);
+        wdm.provision("IMUWatch", IMUWatchdog.class, "imu");
         Movement mv = new Movement(lf, lb, rf, rb);
         waitForStart();
         ElapsedTime time = new ElapsedTime();
@@ -41,11 +45,15 @@ public class AutoPIDOscillator extends LinearOpMode {
         lb.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rb.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rf.setDirection(REVERSE);
+        rb.setDirection(REVERSE);
         lf.setPower(power * -1);
         lb.setPower(power * -1);
         rf.setPower(power * 1);
         rb.setPower(power * 1);
-        while(!Thread.currentThread().isInterrupted() && (double)wdm.getValue("rotation") < setpoint) {
+        while(!Thread.currentThread().isInterrupted() && (wdm.getValue("rotation") == null || ((Float)wdm.getValue("rotation")).doubleValue() < setpoint)) {
+            telemetry.addData("Rotation", wdm.getValue("rotation"));
+            telemetry.update();
             Thread.sleep(1);
         }
         boolean direction = true; //true means positive, false means negative
@@ -60,11 +68,11 @@ public class AutoPIDOscillator extends LinearOpMode {
                         double angularVelocity = imu.getAngularVelocity().zRotationRate;
                         if (angularVelocity <= 0) {
                             direction = false;
-                            extremes.add((double)wdm.getValue("rotation"));
+                            extremes.add(((Float)wdm.getValue("rotation")).doubleValue());
                         }
                     }
                 } else {
-                    if ((double)wdm.getValue("rotation") <= setpoint) {
+                    if (((Float)wdm.getValue("rotation")).doubleValue() <= setpoint) {
                         break;
                     }
                 }
@@ -81,12 +89,12 @@ public class AutoPIDOscillator extends LinearOpMode {
                         if (angularVelocity >= 0) {
                             direction = true;
                             if (i != 0) periods.add(time.seconds());
-                            extremes.add((double)wdm.getValue("rotation"));
+                            extremes.add(((Float)wdm.getValue("rotation")).doubleValue());
                             time.reset();
                         }
                     }
                 } else {
-                    if ((double)wdm.getValue("rotation") >= setpoint) {
+                    if (((Float)wdm.getValue("rotation")).doubleValue() >= setpoint) {
                         break;
                     }
                 }

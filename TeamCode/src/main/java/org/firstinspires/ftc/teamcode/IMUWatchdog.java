@@ -9,9 +9,11 @@ public class IMUWatchdog extends Watchdog {
     private static final String TAG = "IMUWatchdog";
     private final BNO055IMU imu;
     private float rotation;
+    private String imuTag;
     private int turns;
-    public IMUWatchdog(Thread parentThread, BNO055IMU imu) {
-        super(parentThread);
+    public IMUWatchdog(Thread parentThread, HardwareMap hardwareMap, String imuTag) {
+        super(parentThread, hardwareMap);
+        this.imuTag = imuTag;
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
@@ -19,7 +21,9 @@ public class IMUWatchdog extends Watchdog {
         parameters.loggingEnabled = false;
         parameters.loggingTag = "IMU";
         parameters.accelerationIntegrationAlgorithm = null;//new JustLoggingAccelerationIntegrator();
-        this.imu = imu;
+        synchronized (this.hardwareMap) {
+            this.imu = hardwareMap.get(BNO055IMU.class, this.imuTag);
+        }
         synchronized (this.imu) {
             this.imu.initialize(parameters);
         }

@@ -12,9 +12,9 @@ import virtualRobot.utils.MathUtils;
 import static virtualRobot.utils.MathUtils.sgn;
 
 public class Movement {
-    final int kP = 0;
-    final int kI = 0;
-    final int kD = 0;
+    final double kP = 12.306655975;
+    final double kI = 26.169795373;
+    final double kD = 1.446837653;
     DcMotor lf;
     DcMotor lb;
     DcMotor rf;
@@ -88,10 +88,13 @@ public class Movement {
     }
 
     public void rotateTo(double target) throws InterruptedException {
-        PIDController pidController = new PIDController(kP, kI, kD, 2, target);
+        while (!Thread.currentThread().isInterrupted() && WatchdogManager.getInstance().getValue("rotation") == null) {
+            Thread.sleep(5);
+        }
+        PIDController pidController = new PIDController(kP, kI, kD, 5, target);
         while (!Thread.currentThread().isInterrupted()) {
-            double output = pidController.getPIDOutput((double)WatchdogManager.getInstance().getValue("rotation"));
-            if (Math.abs(output) < 0.05) {
+            double output = pidController.getPIDOutput(((Float)WatchdogManager.getInstance().getValue("rotation")).doubleValue());
+            if (Math.abs(output) < 0.01) {
                 stop();
                 break;
             }
