@@ -6,10 +6,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.watchdog.WatchdogManager;
+
 import virtualRobot.PIDController;
 import virtualRobot.utils.MathUtils;
-
-import static virtualRobot.utils.MathUtils.sgn;
 
 public class Movement {
     final double kP = 12.306655975;

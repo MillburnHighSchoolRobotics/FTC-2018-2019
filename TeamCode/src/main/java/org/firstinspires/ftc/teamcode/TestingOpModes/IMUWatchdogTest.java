@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode.TestingOpModes;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.IMUWatchdog;
-import org.firstinspires.ftc.teamcode.WatchdogManager;
+import org.firstinspires.ftc.teamcode.watchdog.IMUWatchdog;
+import org.firstinspires.ftc.teamcode.watchdog.WatchdogManager;
 
 @TeleOp(name = "IMU Watchdog Test", group = "testing")
 public class IMUWatchdogTest extends OpMode {
