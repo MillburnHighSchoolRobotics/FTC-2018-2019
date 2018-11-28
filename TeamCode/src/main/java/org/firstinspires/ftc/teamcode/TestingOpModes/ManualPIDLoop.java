@@ -18,7 +18,7 @@ public class ManualPIDLoop extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         WatchdogManager wdm = WatchdogManager.getInstance();
         wdm.setHardwareMap(hardwareMap);
-//        wdm.provision("IMUWatch", IMUWatchdog.class, "imu");
+        wdm.provision("IMUWatch", IMUWatchdog.class, "imu");
         wdm.provision("PIDValues", PIDValueWatchdog.class);
 
         DcMotor lf = hardwareMap.dcMotor.get("leftFront");
