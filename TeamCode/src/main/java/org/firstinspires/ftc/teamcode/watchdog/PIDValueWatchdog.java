@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.BuildConfig;
 import java.io.IOException;
 
 import retrofit2.Retrofit;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 import virtualRobot.telemetry.CTelemetry;
 import virtualRobot.telemetry.MatConverterFactory;
 
@@ -20,6 +21,7 @@ public class PIDValueWatchdog extends Watchdog {
         ctel = new Retrofit.Builder()
                 .baseUrl(BuildConfig.CTELEM_SERVER_IP)
                 .addConverterFactory(MatConverterFactory.create())
+                .addConverterFactory(ScalarsConverterFactory.create())
                 .build()
                 .create(CTelemetry.class);
     }

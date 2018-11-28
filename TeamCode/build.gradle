@@ -53,6 +53,7 @@ android {
 dependencies {
     implementation files('../libs/opencv-android.jar')
     api 'com.squareup.retrofit2:retrofit:2.3.0'
+    api 'com.squareup.retrofit2:converter-scalars:2.5.0'
     api 'com.squareup.okhttp3:okhttp:3.9.0'
     api 'com.squareup.okio:okio:1.13.0'
 }

@@ -25,6 +25,7 @@ public class WatchdogManager {
 
     public synchronized void clean() {
         for (Map.Entry<String, Watchdog> watchdog : watchdogs.entrySet()) {
+            Log.d(TAG, "Killing Watchdog: " + watchdog.getKey());
             if (watchdog.getValue().isAlive()) {
                 watchdog.getValue().interrupt();
                 Log.d(TAG, "Killed Watchdog " + watchdog.getKey());
@@ -33,7 +34,7 @@ public class WatchdogManager {
         watchdogs.clear();
         values.clear();
         owners.clear();
-        Log.d(TAG, "Owners: " + owners.size());
+//        Log.d(TAG, "Owners: " + owners.size());
     }
 
     public synchronized void provision(String name, Class<? extends Watchdog> watchdogClass, Object... args) {

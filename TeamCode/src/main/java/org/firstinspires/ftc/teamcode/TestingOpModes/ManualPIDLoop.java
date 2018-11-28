@@ -18,7 +18,7 @@ public class ManualPIDLoop extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         WatchdogManager wdm = WatchdogManager.getInstance();
         wdm.setHardwareMap(hardwareMap);
-        wdm.provision("IMUWatch", IMUWatchdog.class, "imu");
+//        wdm.provision("IMUWatch", IMUWatchdog.class, "imu");
         wdm.provision("PIDValues", PIDValueWatchdog.class);
 
         DcMotor lf = hardwareMap.dcMotor.get("leftFront");
@@ -36,7 +36,7 @@ public class ManualPIDLoop extends LinearOpMode {
         waitForStart();
         PIDController pid = new PIDController();
         pid.setThreshold(5);
-        while (!Thread.currentThread().isInterrupted()) {
+        while (!Thread.currentThread().isInterrupted() && !gamepad1.a) {
             Double rotation = wdm.getValue("rotation", Double.class);
             rotation = rotation == null ? 0 : rotation;
             Double p = wdm.getValue("p", Double.class);
@@ -62,7 +62,6 @@ public class ManualPIDLoop extends LinearOpMode {
 
             Thread.sleep(5);
         }
-
         wdm.clean();
     }
 }
