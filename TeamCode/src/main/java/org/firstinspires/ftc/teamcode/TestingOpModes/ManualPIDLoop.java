@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.TestingOpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.watchdog.IMUWatchdog;
@@ -11,6 +12,7 @@ import virtualRobot.PIDController;
 
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 
+@TeleOp(name = "Manual PID Tuning", group = "testing")
 public class ManualPIDLoop extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
@@ -33,6 +35,7 @@ public class ManualPIDLoop extends LinearOpMode {
 
         waitForStart();
         PIDController pid = new PIDController();
+        pid.setThreshold(5);
         while (!Thread.currentThread().isInterrupted()) {
             Double rotation = wdm.getValue("rotation", Double.class);
             rotation = rotation == null ? 0 : rotation;
@@ -49,11 +52,13 @@ public class ManualPIDLoop extends LinearOpMode {
             pid.setKD(d);
             pid.setTarget(target);
             double power = pid.getPIDOutput(rotation);
+            telemetry.addData("PID Output", power);
 
             lf.setPower(power * -1);
             lb.setPower(power * -1);
             rf.setPower(power * 1);
             rb.setPower(power * 1);
+            telemetry.update();
 
             Thread.sleep(5);
         }

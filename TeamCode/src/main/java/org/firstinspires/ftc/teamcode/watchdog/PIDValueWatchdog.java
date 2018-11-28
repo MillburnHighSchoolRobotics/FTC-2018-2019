@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.watchdog;
 
+import android.util.Log;
+
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.BuildConfig;
@@ -11,6 +13,7 @@ import virtualRobot.telemetry.CTelemetry;
 import virtualRobot.telemetry.MatConverterFactory;
 
 public class PIDValueWatchdog extends Watchdog {
+    private final static String TAG = "PIDValueWatchdog";
     CTelemetry ctel;
     public PIDValueWatchdog(Thread parentThread, HardwareMap hardwareMap) {
         super(parentThread, hardwareMap);
@@ -31,8 +34,9 @@ public class PIDValueWatchdog extends Watchdog {
             WatchdogManager.getInstance().setValue("i", i);
             WatchdogManager.getInstance().setValue("d", d);
             WatchdogManager.getInstance().setValue("target", target);
+            Log.d(TAG, "P: " + p);
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e(TAG, "Error", e);
         }
     }
 }

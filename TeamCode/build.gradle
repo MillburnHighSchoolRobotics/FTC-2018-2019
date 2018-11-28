@@ -21,7 +21,8 @@ def getIP() {
         Enumeration<InetAddress> addresses = interfaces.nextElement().getInetAddresses();
         while (addresses.hasMoreElements()) {
             InetAddress address = addresses.nextElement();
-            if (!address.isLoopbackAddress()) {
+            if (!address.isLoopbackAddress() && NetworkInterface.getByInetAddress(address).isUp()) {
+//                project.logger.lifecycle("[DAB]" + address.getHostAddress() + " " )
                 if (address.isSiteLocalAddress()) {
 //                    System.out.println(address.getHostAddress());
                     return address.getHostAddress();
