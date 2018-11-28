@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.watchdog;
 
 import android.util.Log;
 
@@ -75,6 +75,11 @@ public class WatchdogManager {
 
     public synchronized Object getValue(String name) {
         return values.get(name);
+    }
+
+    public synchronized <T> T getValue(String name, Class<T> type) {
+        Object obj = values.get(name);
+        return obj == null ? null : type.cast(obj);
     }
 
     public synchronized void remove(String name) {

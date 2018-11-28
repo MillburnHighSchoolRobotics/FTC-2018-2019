@@ -3,16 +3,14 @@ package org.firstinspires.ftc.teamcode.TestingOpModes;
 import android.util.Log;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.IMUWatchdog;
+import org.firstinspires.ftc.teamcode.watchdog.IMUWatchdog;
 import org.firstinspires.ftc.teamcode.Movement;
-import org.firstinspires.ftc.teamcode.WatchdogManager;
+import org.firstinspires.ftc.teamcode.watchdog.WatchdogManager;
 
 import java.util.ArrayList;
 
@@ -51,7 +49,7 @@ public class AutoPIDOscillator extends LinearOpMode {
         lb.setPower(power * -1);
         rf.setPower(power * 1);
         rb.setPower(power * 1);
-        while(!Thread.currentThread().isInterrupted() && (wdm.getValue("rotation") == null || ((Float)wdm.getValue("rotation")).doubleValue() < setpoint)) {
+        while(!Thread.currentThread().isInterrupted() && (wdm.getValue("rotation") == null || wdm.getValue("rotation", Double.class) < setpoint)) {
             telemetry.addData("Rotation", wdm.getValue("rotation"));
             telemetry.update();
             Thread.sleep(1);
@@ -68,11 +66,11 @@ public class AutoPIDOscillator extends LinearOpMode {
                         double angularVelocity = imu.getAngularVelocity().zRotationRate;
                         if (angularVelocity <= 0) {
                             direction = false;
-                            extremes.add(((Float)wdm.getValue("rotation")).doubleValue());
+                            extremes.add(wdm.getValue("rotation", Double.class));
                         }
                     }
                 } else {
-                    if (((Float)wdm.getValue("rotation")).doubleValue() <= setpoint) {
+                    if (wdm.getValue("rotation", Double.class) <= setpoint) {
                         break;
                     }
                 }
@@ -89,12 +87,12 @@ public class AutoPIDOscillator extends LinearOpMode {
                         if (angularVelocity >= 0) {
                             direction = true;
                             if (i != 0) periods.add(time.seconds());
-                            extremes.add(((Float)wdm.getValue("rotation")).doubleValue());
+                            extremes.add(wdm.getValue("rotation", Double.class));
                             time.reset();
                         }
                     }
                 } else {
-                    if (((Float)wdm.getValue("rotation")).doubleValue() >= setpoint) {
+                    if (wdm.getValue("rotation", Double.class) >= setpoint) {
                         break;
                     }
                 }

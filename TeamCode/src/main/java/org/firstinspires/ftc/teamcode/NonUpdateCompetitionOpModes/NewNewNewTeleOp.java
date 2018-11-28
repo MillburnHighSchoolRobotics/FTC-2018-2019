@@ -49,6 +49,10 @@ public class NewNewNewTeleOp extends OpMode {
         lb.setDirection(REVERSE);
         liftL.setDirection(REVERSE);
 
+        lf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        lb.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rb.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         reaperL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
