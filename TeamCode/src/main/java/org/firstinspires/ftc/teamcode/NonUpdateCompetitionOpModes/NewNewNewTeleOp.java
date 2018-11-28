@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
 import virtualRobot.utils.MathUtils;
 
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
@@ -121,7 +120,7 @@ public class NewNewNewTeleOp extends OpMode {
 
 
         if (!MathUtils.equals(gamepad2.right_stick_x,0)) {
-            reaper.setPower(gearing * gamepad2.right_stick_x);
+            reaper.setPower(Math.signum(gamepad2.right_stick_x));
         } else {
             reaper.setPower(0);
         }
