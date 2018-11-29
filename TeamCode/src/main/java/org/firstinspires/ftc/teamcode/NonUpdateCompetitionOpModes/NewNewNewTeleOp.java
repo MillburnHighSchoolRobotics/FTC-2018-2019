@@ -6,6 +6,9 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
 import virtualRobot.utils.MathUtils;
 
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
@@ -21,12 +24,16 @@ public class NewNewNewTeleOp extends OpMode {
     private DcMotorEx liftL;
     private DcMotorEx liftR;
     private CRServo reaper;
+    private Servo stopper;
     double power = 0.9;
     double gearing = 1;
 
+    private ElapsedTime canToggleStopper;
 
     @Override
     public void init() {
+        canToggleStopper = new ElapsedTime();
+        this.msStuckDetectStop = 3000;
         lf = (DcMotorEx)hardwareMap.dcMotor.get("leftFront");
         lb = (DcMotorEx)hardwareMap.dcMotor.get("leftBack");
         rf = (DcMotorEx)hardwareMap.dcMotor.get("rightFront");
@@ -36,6 +43,7 @@ public class NewNewNewTeleOp extends OpMode {
         reaperL = (DcMotorEx)hardwareMap.dcMotor.get("reaperL");
         reaperR = (DcMotorEx)hardwareMap.dcMotor.get("reaperR");
         reaper = hardwareMap.crservo.get("reaper");
+        stopper = hardwareMap.servo.get("stopper");
 
         lf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         lb.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -67,6 +75,7 @@ public class NewNewNewTeleOp extends OpMode {
         reaperL.setPower(0);
         reaperR.setPower(0);
         reaper.setPower(0);
+        stopper.setPosition(0);
     }
 
     @Override
@@ -147,6 +156,11 @@ public class NewNewNewTeleOp extends OpMode {
             reaperR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
 
+        if (gamepad1.x && canToggleStopper.milliseconds() > 500) {
+            stopper.setPosition(1 - stopper.getPosition());
+            canToggleStopper.reset();
+        }
+
 
 
         telemetry.addData("LF", lf.getCurrentPosition() + "");
@@ -158,5 +172,15 @@ public class NewNewNewTeleOp extends OpMode {
         telemetry.addData("REAPERL", reaperL.getCurrentPosition() + "");
         telemetry.addData("REAPERR", reaperR.getCurrentPosition() + "");
         telemetry.addData("REAPER", reaper.getPower() + "");
+    }
+
+    @Override
+    public void stop() {
+        stopper.setPosition(1);
+        try {
+            Thread.sleep(750);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
