@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.watchdog;
 
 import android.util.Log;
 
@@ -12,9 +12,10 @@ public class WatchdogManager {
     private HashMap<String, Watchdog> watchdogs;
     private HashMap<String, Object> values;
     private HashMap<String, Thread> owners;
-    private HardwareMap hardwareMap;
-    private static final String TAG = "WatchdogManager";
 
+    private HardwareMap hardwareMap;
+
+    private static final String TAG = "WatchdogManager";
     public WatchdogManager() {
         this.watchdogs = new HashMap<>();
         this.values = new HashMap<>();
@@ -24,6 +25,7 @@ public class WatchdogManager {
 
     public synchronized void clean() {
         for (Map.Entry<String, Watchdog> watchdog : watchdogs.entrySet()) {
+            Log.d(TAG, "Killing Watchdog: " + watchdog.getKey());
             if (watchdog.getValue().isAlive()) {
                 watchdog.getValue().interrupt();
                 Log.d(TAG, "Killed Watchdog " + watchdog.getKey());
@@ -32,7 +34,7 @@ public class WatchdogManager {
         watchdogs.clear();
         values.clear();
         owners.clear();
-        Log.d(TAG, "Owners: " + owners.size());
+//        Log.d(TAG, "Owners: " + owners.size());
     }
 
     public synchronized void provision(String name, Class<? extends Watchdog> watchdogClass, Object... args) {
@@ -76,12 +78,18 @@ public class WatchdogManager {
         return values.get(name);
     }
 
+    public synchronized <T> T getValue(String name, Class<T> type) {
+        Object obj = values.get(name);
+        return obj == null ? null : type.cast(obj);
+    }
+
     public synchronized void remove(String name) {
         Watchdog wd = watchdogs.get(name);
         wd.interrupt();
     }
 
     private static final WatchdogManager INSTANCE = new WatchdogManager();
+
     public static synchronized WatchdogManager getInstance() {
         return INSTANCE;
     }

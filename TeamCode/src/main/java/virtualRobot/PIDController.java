@@ -1,5 +1,7 @@
 package virtualRobot;
 
+import com.qualcomm.robotcore.util.ElapsedTime;
+
 /**
  * Created by Yanjun on 10/14/2015.
  * Our PID Controller implementation.
@@ -15,6 +17,7 @@ public class PIDController {
     private double P;
     private double I;
     private double D;
+    private ElapsedTime time;
 
     private double target;
 
@@ -63,21 +66,26 @@ public class PIDController {
     }
 
     public double getPIDOutput(double currentValue) {
-        D = (target-currentValue) - P;
+        boolean first = false;
+        if (time == null) {
+            time = new ElapsedTime();
+            first = true;
+        } else {
+            D = ((target - currentValue) - P)/time.seconds();
+        }
         P = target - currentValue;
 
-        if (!switchSign) {
-            if (Math.abs(currentValue - target) < threshold) {
-                I = P + I;
+
+
+        if (!switchSign ? Math.abs(currentValue - target) < threshold : Math.abs(currentValue - target) > threshold) {
+            if (time == null || first) {
+                time = new ElapsedTime();
             } else {
-                I = 0;
+                I = time.seconds() * P + I;
+                time.reset();
             }
         } else {
-            if (Math.abs(currentValue - target) > threshold) {
-                I = P + I;
-            } else {
-                I = 0;
-            }
+            I = 0;
         }
 
         I = Math.min(I,maxI);
