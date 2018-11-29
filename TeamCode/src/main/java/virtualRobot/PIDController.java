@@ -1,5 +1,7 @@
 package virtualRobot;
 
+import android.util.Log;
+
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -74,6 +76,7 @@ public class PIDController {
             D = ((target - currentValue) - P)/time.seconds();
         }
         P = target - currentValue;
+        Log.d("PIDValue: Error", Double.toString(P));
 
 
 

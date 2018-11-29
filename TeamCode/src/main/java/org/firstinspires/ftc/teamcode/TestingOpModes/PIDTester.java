@@ -19,6 +19,7 @@ public class PIDTester extends OpMode {
     private Movement mv;
     @Override
     public void init() {
+        this.msStuckDetectLoop = Integer.MAX_VALUE;
         lf = hardwareMap.dcMotor.get("leftFront");
         lb = hardwareMap.dcMotor.get("leftBack");
         rf = hardwareMap.dcMotor.get("rightFront");
@@ -39,9 +40,9 @@ public class PIDTester extends OpMode {
     public void loop() {
         try {
             mv.rotateTo(90);
-            Thread.sleep(1000);
+            Thread.sleep(2000);
             mv.rotateTo(-90);
-            Thread.sleep(1000);
+            Thread.sleep(2000);
 
         } catch (InterruptedException e) {
             e.printStackTrace();
