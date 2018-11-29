@@ -28,7 +28,7 @@ public class BlueAuton1 extends LinearOpMode {
     DigitalChannel magneticLimitSwitch;
 
     final float botWidth = 16.5f; //inches
-    final float botRadius = botWidth/2; //in
+    final float botRadiuxs = botWidth/2; //in
     final float wheelWidth = 3; //in
     final float wheelRadius = wheelWidth/2; //in
     final int ticksPerRev = 680; //ticks per rev
