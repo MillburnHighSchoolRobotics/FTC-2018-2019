@@ -10,6 +10,7 @@ import org.opencv.android.Utils;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
+import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.core.Point;
@@ -35,6 +36,7 @@ public class SahilClass {
     private int kSize = 9;
     private int sigmaX = 0;
     private int length;
+    private double ratioDeviation = 0.2; //for 0.2, the size range is form 0.8 to 1.2 exclusive
     private Scalar lowerG = new Scalar(10, 193, 95);
     private Scalar upperG = new Scalar(32, 255, 255);
     private Scalar lowerBlack = new Scalar(0, 0, 0);
@@ -155,9 +157,17 @@ public class SahilClass {
             hsv.release();
             Mat blur = new Mat();
             Imgproc.GaussianBlur(erode, blur, new Size(kSize, kSize), sigmaX);
-            List<MatOfPoint> contours = new LinkedList<>();
-            Imgproc.findContours(blur, contours, new Mat(), Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_NONE);
+            List<MatOfPoint> contoursUnbound = new LinkedList<>();
+            Imgproc.findContours(blur, contoursUnbound, new Mat(), Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_NONE);
             blur.release();
+            List<MatOfPoint> contours = new LinkedList<>();
+            for (int a = 0; a < contoursUnbound.size(); a++) {
+                Rect r = Imgproc.boundingRect(contoursUnbound.get(a));
+                double ratio = Math.max(r.width,r.height)/Math.min(r.width,r.height);
+                if ((ratio < (1+ratioDeviation)) && (ratio > (1-ratioDeviation))) {
+                    contours.add(contoursUnbound.get(a));
+                }
+            }
             Collections.sort(contours, new Comparator<MatOfPoint>() {
                 @Override
                 public int compare(MatOfPoint matOfPoint, MatOfPoint s) {

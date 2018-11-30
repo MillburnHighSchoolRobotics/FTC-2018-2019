@@ -12,11 +12,11 @@ import virtualRobot.PIDController;
 import virtualRobot.utils.MathUtils;
 
 public class Movement {
-    final double kP = 12.306655975;
-    final double kI = 26.169795373;
-    final double kD = 1.446837653;
     public final double POS_POWER_CONST = 0.7;
     public final double NEG_POWER_CONST = 0.7;
+    final double kP = 0.0225;
+    final double kI = 0.0035;
+    final double kD = 0.012;
     DcMotor lf;
     DcMotor lb;
     DcMotor rf;
@@ -95,7 +95,7 @@ public class Movement {
         }
         PIDController pidController = new PIDController(kP, kI, kD, 5, target);
         while (!Thread.currentThread().isInterrupted()) {
-            double output = pidController.getPIDOutput(((Float)WatchdogManager.getInstance().getValue("rotation")).doubleValue());
+            double output = pidController.getPIDOutput(WatchdogManager.getInstance().getValue("rotation", Double.class));
             if (Math.abs(output) < 0.01) {
                 stop();
                 break;
