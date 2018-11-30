@@ -55,7 +55,7 @@ public class Movement {
         lb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        moveToPosition(new DcMotor[] {lf,lb,rf,rb}, new double[] {power,power,-power,-power}, new int[] {(positionChange),(positionChange),(positionChange),(positionChange)});
+        moveToPosition(new DcMotor[] {lf,lb,rf,rb}, new double[] {-power,-power,power,power}, new int[] {(positionChange),(positionChange),(positionChange),(positionChange)});
     }
 
     public void translateDistance(double power, double dist) throws InterruptedException {
@@ -86,14 +86,14 @@ public class Movement {
         lb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        moveToPosition(new DcMotor[] {lf,lb,rf,rb}, new double[] {power,power,-power,-power},  new int[] {(positionChange),(positionChange),(-positionChange),(-positionChange)});
+        moveToPosition(new DcMotor[] {lf,lb,rf,rb}, new double[] {-power,-power,power,power},  new int[] {(positionChange),(positionChange),(-positionChange),(-positionChange)});
     }
 
     public void rotateTo(double target) throws InterruptedException {
         while (!Thread.currentThread().isInterrupted() && WatchdogManager.getInstance().getValue("rotation") == null) {
             Thread.sleep(5);
         }
-        PIDController pidController = new PIDController(kP, kI, kD, 5, target);
+        PIDController pidController = new PIDController(kP, kI, kD, 2, target);
         while (!Thread.currentThread().isInterrupted()) {
             double output = pidController.getPIDOutput(WatchdogManager.getInstance().getValue("rotation", Double.class));
             if (Math.abs(output) < 0.01) {

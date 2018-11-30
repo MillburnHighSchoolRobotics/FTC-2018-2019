@@ -11,6 +11,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Movement;
 import org.firstinspires.ftc.teamcode.TestingOpModes.TFODTest;
+import org.firstinspires.ftc.teamcode.watchdog.IMUWatchdog;
+import org.firstinspires.ftc.teamcode.watchdog.WatchdogManager;
 
 import virtualRobot.utils.MathUtils;
 
@@ -27,6 +29,7 @@ public class BlueAuton1 extends LinearOpMode {
     DcMotor liftR;
     DcMotor liftL;
     Servo marker;
+    Servo stopper;
     DigitalChannel magneticLimitSwitch;
 
     final float botWidth = 16.5f; //inches
@@ -47,12 +50,16 @@ public class BlueAuton1 extends LinearOpMode {
         liftR = hardwareMap.dcMotor.get("liftR");
         magneticLimitSwitch = hardwareMap.get(DigitalChannel.class, "Switchy");
         marker = hardwareMap.servo.get("marker");
+        stopper = hardwareMap.servo.get("stopper");
+        WatchdogManager wdm = WatchdogManager.getInstance();
+        wdm.setHardwareMap(hardwareMap);
+        wdm.provision("IMUWatch", IMUWatchdog.class, "imu");
         marker.setPosition(0);
         waitForStart();
-        lf.setDirection(DcMotorSimple.Direction.REVERSE);
-        lb.setDirection(DcMotorSimple.Direction.REVERSE);
-        rf.setDirection(DcMotorSimple.Direction.FORWARD);
-        rb.setDirection(DcMotorSimple.Direction.FORWARD);
+        rf.setDirection(DcMotorSimple.Direction.REVERSE);
+        rb.setDirection(DcMotorSimple.Direction.REVERSE);
+        lf.setDirection(DcMotorSimple.Direction.FORWARD);
+        lb.setDirection(DcMotorSimple.Direction.FORWARD);
         initializeMotor(new DcMotor[]{lf, lb, rf, rb});
 //        for (int x = 0; x < 4; x++) {
 
@@ -65,13 +72,20 @@ public class BlueAuton1 extends LinearOpMode {
         TFODTest tfod = new TFODTest(hardwareMap);
         liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        stopper.setPosition(1);
+        liftL.setPower(mv.NEG_POWER_CONST);
+        liftR.setPower(mv.NEG_POWER_CONST);
+        ElapsedTime time = new ElapsedTime();
+        while(time.milliseconds()<250){
+            Thread.sleep(5);
+        }
         mv.moveUntilPressed(new DcMotor[]{liftL, liftR}, magneticLimitSwitch, mv.POS_POWER_CONST);//Move until limit switch pressed
 //        liftL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 //        liftR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         liftL.setPower(0.6);
         liftR.setPower(0.6);
         ElapsedTime extraLiftTimer = new ElapsedTime();
-        while (extraLiftTimer.milliseconds() < 500) {
+        while (extraLiftTimer.milliseconds() < 250) {
             Thread.sleep(5);
         }
         liftL.setPower(0);
@@ -86,7 +100,8 @@ public class BlueAuton1 extends LinearOpMode {
 //        Thread.sleep(100);
 
         //sampling
-        mv.translateDistance(0.7,15);
+        mv.translateDistance(0.7,-15);
+        mv.rotateTo(0);
 
         int num = 1;//tfod.getGoldPos();//TODO:Fix //which mineral is the gold mineral one
 //        tfod.clean();
@@ -96,17 +111,17 @@ public class BlueAuton1 extends LinearOpMode {
         switch (num) {
             case 0:
                 mv.rotateDegrees(0.5,60);
-                mv.translateDistance(0.7,24);
+                mv.translateDistance(0.7,-24);
                 mv.rotateDegrees(0.5, -60);
                 break;
             case 2:
                 mv.rotateDegrees(0.5,-60);
-                mv.translateDistance(0.7,24);
+                mv.translateDistance(0.7,-24);
                 mv.rotateDegrees(0.5, 60);
                 break;
             default:
             case 1:
-                mv.translateDistance(0.7,35);
+                mv.translateDistance(0.7,-35);
                 break;
         }
 
@@ -128,9 +143,9 @@ public class BlueAuton1 extends LinearOpMode {
         //place marker
         marker.setPosition(1);
         Thread.sleep(100);
-        mv.rotateDegrees(0.5, -135);
+        mv.rotateTo(-135);
         marker.setPosition(0);
-        mv.translateDistance(0.7,75);
+        mv.translateDistance(0.7,-75);
     }
     public void initializeMotor(DcMotor[] motors) {
         for (DcMotor motor : motors) {
