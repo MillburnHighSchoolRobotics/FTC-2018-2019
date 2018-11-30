@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -30,7 +31,7 @@ public class BlueAuton2 extends LinearOpMode {
     DcMotor rf;
     DcMotor rb;
     Servo marker;
-
+    DigitalChannel magneticLimitSwitch;
 
 
     DcMotor liftR;
@@ -47,6 +48,7 @@ public class BlueAuton2 extends LinearOpMode {
         rb = hardwareMap.dcMotor.get("rightBack");
         liftL = hardwareMap.dcMotor.get("liftL");
         liftR = hardwareMap.dcMotor.get("liftR");
+        magneticLimitSwitch = hardwareMap.get(DigitalChannel.class, "Switchy");
         marker = hardwareMap.servo.get("marker");
         marker.setPosition(0);
 
@@ -78,7 +80,8 @@ public class BlueAuton2 extends LinearOpMode {
 //        TFODTest tfod = new TFODTest(hardwareMap);
         liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {-0.8, 0.8}, new int[] {10700+100, 10700+100});
+        mv.moveUntilPressed(new DcMotor[]{liftL, liftR}, magneticLimitSwitch, mv.POS_POWER_CONST);//Move until limit switch pressed
+        //mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {-0.8, 0.8}, new int[] {10700+100, 10700+100});
 //        Thread.sleep(100);
 
 //

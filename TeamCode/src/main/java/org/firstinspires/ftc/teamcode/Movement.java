@@ -15,6 +15,8 @@ public class Movement {
     final double kP = 12.306655975;
     final double kI = 26.169795373;
     final double kD = 1.446837653;
+    public final double POS_POWER_CONST = 0.7;
+    public final double NEG_POWER_CONST = 0.7;
     DcMotor lf;
     DcMotor lb;
     DcMotor rf;
@@ -111,7 +113,7 @@ public class Movement {
     }
     public void moveUntilPressed(DcMotor[] motors, DigitalChannel limitSwitch, double power) throws InterruptedException {
         for (int x = 0; x < motors.length; x++) {
-            motors[x].setPower(power);//True means up, False means down.
+            motors[x].setPower(power);
             motors[x].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
         while (true) {
