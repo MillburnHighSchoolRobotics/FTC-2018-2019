@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
 import org.firstinspires.ftc.teamcode.Movement;
 import org.firstinspires.ftc.teamcode.TestingOpModes.TFODTest;
 
@@ -64,6 +66,16 @@ public class BlueAuton1 extends LinearOpMode {
         liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         mv.moveUntilPressed(new DcMotor[]{liftL, liftR}, magneticLimitSwitch, 0.8);//Move until limit switch pressed
+//        liftL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        liftR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        liftL.setPower(0.6);
+        liftR.setPower(0.6);
+        ElapsedTime extraLiftTimer = new ElapsedTime();
+        while (extraLiftTimer.milliseconds() < 500) {
+            Thread.sleep(5);
+        }
+        liftL.setPower(0);
+        liftR.setPower(0);
         //mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {-0.8, 0.8}, new int[] {10700+100, 10700+100});
 //        Thread.sleep(100);
 //
