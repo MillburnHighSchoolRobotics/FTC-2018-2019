@@ -25,6 +25,6 @@ public class MagLev extends LinearOpMode {
         Movement mv = new Movement(lf, lb, rf, rb);
         liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        mv.moveUntilPressed(new DcMotor[]{liftL, liftR}, magneticLimitSwitch, true);
+        mv.moveUntilPressed(new DcMotor[]{liftL, liftR}, magneticLimitSwitch, 0.7);
     }
 }
