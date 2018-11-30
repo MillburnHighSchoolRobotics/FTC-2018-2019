@@ -6,6 +6,9 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
 import virtualRobot.utils.MathUtils;
 
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
@@ -20,27 +23,34 @@ public class NewNewNewTeleOp extends OpMode {
     private DcMotorEx reaperR;
     private DcMotorEx liftL;
     private DcMotorEx liftR;
-    private CRServo reaper;
+//    private CRServo reaper;
+    private Servo stopper;
     double power = 0.9;
     double gearing = 1;
 
+    private ElapsedTime canToggleStopper;
 
     @Override
     public void init() {
+        canToggleStopper = new ElapsedTime();
+        this.msStuckDetectStop = 3000;
         lf = (DcMotorEx)hardwareMap.dcMotor.get("leftFront");
         lb = (DcMotorEx)hardwareMap.dcMotor.get("leftBack");
         rf = (DcMotorEx)hardwareMap.dcMotor.get("rightFront");
         rb = (DcMotorEx)hardwareMap.dcMotor.get("rightBack");
         liftL = (DcMotorEx)hardwareMap.dcMotor.get("liftL");
         liftR = (DcMotorEx)hardwareMap.dcMotor.get("liftR");
-        reaperL = (DcMotorEx)hardwareMap.dcMotor.get("reaperL");
-        reaperR = (DcMotorEx)hardwareMap.dcMotor.get("reaperR");
-        reaper = hardwareMap.crservo.get("reaper");
+        reaperL = (DcMotorEx)hardwareMap.dcMotor.get("horizL");
+        reaperR = (DcMotorEx)hardwareMap.dcMotor.get("horizR");
+//        reaper = hardwareMap.crservo.get("reaper");
+        stopper = hardwareMap.servo.get("stopper");
 
         lf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         lb.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rb.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        liftL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        liftR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         lf.setDirection(DcMotorSimple.Direction.FORWARD);
         lb.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -66,7 +76,8 @@ public class NewNewNewTeleOp extends OpMode {
         liftR.setPower(0);
         reaperL.setPower(0);
         reaperR.setPower(0);
-        reaper.setPower(0);
+//        reaper.setPower(0);
+        stopper.setPosition(1);
     }
 
     @Override
@@ -124,15 +135,15 @@ public class NewNewNewTeleOp extends OpMode {
 
 
         if (!MathUtils.equals(gamepad2.right_stick_x,0)) {
-            reaper.setPower(Math.signum(gamepad2.right_stick_x));
+//            reaper.setPower(Math.signum(gamepad2.right_stick_x));
         } else {
-            reaper.setPower(0);
+//            reaper.setPower(0);
         }
 
         if(gamepad2.dpad_up) {
             reaperL.setPower(1 * gearing);
             reaperR.setPower(1 * gearing);
-        } else if (gamepad1.dpad_down) {
+        } else if (gamepad2.dpad_down) {
             reaperL.setPower(-1 * gearing);
             reaperR.setPower(-1 * gearing);
         } else {
@@ -147,6 +158,11 @@ public class NewNewNewTeleOp extends OpMode {
             reaperR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
 
+        if (gamepad1.x && canToggleStopper.milliseconds() > 500) {
+            stopper.setPosition(1 - stopper.getPosition());
+            canToggleStopper.reset();
+        }
+
 
 
         telemetry.addData("LF", lf.getCurrentPosition() + "");
@@ -157,6 +173,16 @@ public class NewNewNewTeleOp extends OpMode {
         telemetry.addData("LIFTR", liftR.getCurrentPosition() + "");
         telemetry.addData("REAPERL", reaperL.getCurrentPosition() + "");
         telemetry.addData("REAPERR", reaperR.getCurrentPosition() + "");
-        telemetry.addData("REAPER", reaper.getPower() + "");
+//        telemetry.addData("REAPER", reaper.getPower() + "");
+    }
+
+    @Override
+    public void stop() {
+        stopper.setPosition(0);
+        try {
+            Thread.sleep(750);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

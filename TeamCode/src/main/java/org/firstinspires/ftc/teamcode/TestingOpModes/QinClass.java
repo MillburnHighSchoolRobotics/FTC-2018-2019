@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode.TestingOpModes;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 
+@TeleOp(name="Mag",group="Testing")
 public class QinClass extends LinearOpMode {
     DigitalChannel magneticLimitSwitch;
 
