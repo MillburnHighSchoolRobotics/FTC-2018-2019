@@ -16,7 +16,7 @@ public class Movement {
     public final double NEG_POWER_CONST = 0.7;
     final double kP = 0.0225;
     final double kI = 0.0035;
-    final double kD = 0.012;
+    final double kD = 0.0175; //0.012
     DcMotor lf;
     DcMotor lb;
     DcMotor rf;
@@ -93,10 +93,10 @@ public class Movement {
         while (!Thread.currentThread().isInterrupted() && WatchdogManager.getInstance().getValue("rotation") == null) {
             Thread.sleep(5);
         }
-        PIDController pidController = new PIDController(kP, kI, kD, 2, target);
+        PIDController pidController = new PIDController(kP, kI, kD, 1, target);
         while (!Thread.currentThread().isInterrupted()) {
             double output = pidController.getPIDOutput(WatchdogManager.getInstance().getValue("rotation", Double.class));
-            if (Math.abs(output) < 0.01) {
+            if ((true || Math.abs(output) < 0.01) && Math.abs(WatchdogManager.getInstance().getValue("rotation", Double.class) - target) < 1) {
                 stop();
                 break;
             }

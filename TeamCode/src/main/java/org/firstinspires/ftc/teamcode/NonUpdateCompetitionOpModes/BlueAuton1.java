@@ -72,10 +72,13 @@ public class BlueAuton1 extends LinearOpMode {
         TFODTest tfod = new TFODTest(hardwareMap);
         liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        stopper.setPosition(1);
         liftL.setPower(mv.NEG_POWER_CONST);
         liftR.setPower(mv.NEG_POWER_CONST);
         ElapsedTime time = new ElapsedTime();
+        while(time.milliseconds() < 100) {
+            Thread.sleep(5);
+        }
+        stopper.setPosition(1);
         while(time.milliseconds()<250){
             Thread.sleep(5);
         }
@@ -101,13 +104,15 @@ public class BlueAuton1 extends LinearOpMode {
 
         //sampling
         mv.translateDistance(0.7,-15);
-        mv.rotateTo(0);
+//        mv.rotateTo(0);
 
         int num = 1;//tfod.getGoldPos();//TODO:Fix //which mineral is the gold mineral one
 //        tfod.clean();
 //        String name[] = new String[] {"LEFT", "CENTER", "RIGHT"};
 //        telemetry.addData("Mineral", num > -1 && num < 4 ? name[num] : "UNKNOWN");
 //        telemetry.update();
+
+        //TODO: SWITCH TO ROTATETO
         switch (num) {
             case 0:
                 mv.rotateDegrees(0.5,60);
@@ -141,11 +146,14 @@ public class BlueAuton1 extends LinearOpMode {
 
 
         //place marker
+        mv.rotateTo(-60);
         marker.setPosition(1);
-        Thread.sleep(100);
+        Thread.sleep(1000);
         mv.rotateTo(-135);
         marker.setPosition(0);
-        mv.translateDistance(0.7,-75);
+        mv.translateDistance(0.7,-80);
+
+        wdm.clean();
     }
     public void initializeMotor(DcMotor[] motors) {
         for (DcMotor motor : motors) {
