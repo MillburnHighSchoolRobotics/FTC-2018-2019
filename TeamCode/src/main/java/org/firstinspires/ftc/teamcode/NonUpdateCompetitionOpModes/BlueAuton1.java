@@ -57,7 +57,7 @@ public class BlueAuton1 extends LinearOpMode {
 //        for (int x = 0; x < 4; x++) {
 
 //        }
-        liftL.setDirection(DcMotorSimple.Direction.REVERSE);
+        liftR.setDirection(DcMotorSimple.Direction.REVERSE);
 
         int initL = liftL.getCurrentPosition();
         int initR = liftR.getCurrentPosition();

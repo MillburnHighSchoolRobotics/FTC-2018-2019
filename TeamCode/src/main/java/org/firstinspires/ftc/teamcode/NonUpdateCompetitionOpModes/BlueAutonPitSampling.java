@@ -72,7 +72,7 @@ public class BlueAutonPitSampling extends LinearOpMode {
         rb.setDirection(DcMotorSimple.Direction.FORWARD);
         initializeMotor(new DcMotor[]{lf, lb, rf, rb});
 
-        liftL.setDirection(DcMotorSimple.Direction.REVERSE);
+        liftR.setDirection(DcMotorSimple.Direction.REVERSE);
         int initL = liftL.getCurrentPosition();
         int initR = liftR.getCurrentPosition();
 
@@ -94,7 +94,7 @@ public class BlueAutonPitSampling extends LinearOpMode {
 
 
 
-        mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {-0.8, 0.8}, new int[] {10700+100, 10700+100});
+        mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {0.8, -0.8}, new int[] {10700+100, 10700+100});
 //        Thread.sleep(100);
 
 //

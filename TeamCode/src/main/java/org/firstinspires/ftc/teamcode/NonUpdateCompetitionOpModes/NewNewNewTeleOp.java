@@ -57,7 +57,7 @@ public class NewNewNewTeleOp extends OpMode {
 
         lf.setDirection(REVERSE);
         lb.setDirection(REVERSE);
-        liftL.setDirection(REVERSE);
+        liftR.setDirection(REVERSE);
 
         lf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lb.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

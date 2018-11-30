@@ -51,7 +51,7 @@ public class DumbDumbAutonPit extends LinearOpMode {
 //        for (int x = 0; x < 4; x++) {
         initializeMotor(new DcMotor[]{lf, lb, rf, rb});
 //        }
-        liftL.setDirection(DcMotorSimple.Direction.REVERSE);
+        liftR.setDirection(DcMotorSimple.Direction.REVERSE);
 
         int initL = liftL.getCurrentPosition();
         int initR = liftR.getCurrentPosition();

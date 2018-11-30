@@ -49,7 +49,7 @@ public class BlueAutonPitSad extends LinearOpMode {
         rb.setDirection(DcMotorSimple.Direction.FORWARD);
         initializeMotor(new DcMotor[]{lf, lb, rf, rb});
 
-        liftL.setDirection(DcMotorSimple.Direction.REVERSE);
+        liftR.setDirection(DcMotorSimple.Direction.REVERSE);
         int initL = liftL.getCurrentPosition();
         int initR = liftR.getCurrentPosition();
 
@@ -57,7 +57,7 @@ public class BlueAutonPitSad extends LinearOpMode {
         Movement mv = new Movement(lf, lb, rf, rb);
         liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {-0.8, 0.8}, new int[] {10700+100, 10700+100});
+        mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {0.8, -0.8}, new int[] {10700+100, 10700+100});
         mv.translateDistance(0.7,15);
         Thread.sleep(100);
 

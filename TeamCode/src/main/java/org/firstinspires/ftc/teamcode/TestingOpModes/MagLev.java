@@ -21,7 +21,7 @@ public class MagLev extends LinearOpMode {
         liftR = hardwareMap.dcMotor.get("liftR");
         magneticLimitSwitch = hardwareMap.get(DigitalChannel.class, "Switchy");
         waitForStart();
-        liftL.setDirection(DcMotorSimple.Direction.REVERSE);
+        liftR.setDirection(DcMotorSimple.Direction.REVERSE);
         Movement mv = new Movement(lf, lb, rf, rb);
         liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
