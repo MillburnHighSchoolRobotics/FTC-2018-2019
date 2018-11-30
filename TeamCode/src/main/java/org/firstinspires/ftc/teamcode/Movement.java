@@ -12,6 +12,8 @@ import virtualRobot.PIDController;
 import virtualRobot.utils.MathUtils;
 
 public class Movement {
+    public final double POS_POWER_CONST = 0.7;
+    public final double NEG_POWER_CONST = 0.7;
     final double kP = 0.0225;
     final double kI = 0.0035;
     final double kD = 0.012;
@@ -111,7 +113,7 @@ public class Movement {
     }
     public void moveUntilPressed(DcMotor[] motors, DigitalChannel limitSwitch, double power) throws InterruptedException {
         for (int x = 0; x < motors.length; x++) {
-            motors[x].setPower(power);//True means up, False means down.
+            motors[x].setPower(power);
             motors[x].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
         while (true) {
