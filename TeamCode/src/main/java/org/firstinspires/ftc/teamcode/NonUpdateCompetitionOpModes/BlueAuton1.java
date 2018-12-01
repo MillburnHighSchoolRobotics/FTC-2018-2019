@@ -68,7 +68,7 @@ public class BlueAuton1 extends LinearOpMode {
         stopper = hardwareMap.servo.get("stopper");
         WatchdogManager wdm = WatchdogManager.getInstance();
         wdm.setHardwareMap(hardwareMap);
-        wdm.provision("IMUWatch", IMUWatchdog.class, "imu");
+        wdm.provision("IMUWatch", IMUWatchdog.class, "imu 1");
         marker.setPosition(0.5);
         VuforiaLocalizer.Parameters params = new VuforiaLocalizer.Parameters(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
         params.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
@@ -141,11 +141,11 @@ public class BlueAuton1 extends LinearOpMode {
         //TODO: SWITCH TO ROTATETO
         switch (num) {
             case 2:
-                mv.rotateTo(-45);
-                mv.translateDistance(0.7,-24);
+                mv.rotateTo(-58);
+                mv.translateDistance(0.7,-36);
                 mv.rotateTo(45);
-                mv.translateDistance(0.7, -2421);
-                mv.rotateTo(0);
+                mv.translateDistance(0.7, -45);
+//                mv.rotateTo(0);
                 break;
             case 0:
                 mv.rotateTo(45);
@@ -158,10 +158,11 @@ public class BlueAuton1 extends LinearOpMode {
             default:
             case 1:
                 mv.translateDistance(0.7,-32);
+
+                mv.translateDistance(0.7, -17);
                 break;
         }
         if (num != 0) {
-            mv.translateDistance(0.7, -17);
 
 
 

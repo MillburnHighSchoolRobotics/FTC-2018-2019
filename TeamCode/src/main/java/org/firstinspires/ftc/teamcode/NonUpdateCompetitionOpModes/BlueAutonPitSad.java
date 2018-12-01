@@ -1,20 +1,21 @@
 package org.firstinspires.ftc.teamcode.NonUpdateCompetitionOpModes;
 
 import android.util.Log;
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.teamcode.Movement;
-import org.firstinspires.ftc.teamcode.TestingOpModes.TFODTest;
-
-import static org.firstinspires.ftc.teamcode.Movement.distToEncoder;
-import static org.firstinspires.ftc.teamcode.Movement.rotateToEncoder;
+import org.firstinspires.ftc.teamcode.SahilClass;
+import org.firstinspires.ftc.teamcode.watchdog.IMUWatchdog;
+import org.firstinspires.ftc.teamcode.watchdog.WatchdogManager;
+import org.opencv.android.OpenCVLoader;
+import virtualRobot.VuforiaLocalizerImplSubclass;
 
 @Autonomous(name = "Blue Auton Pit Sad", group = "competition")
 public class BlueAutonPitSad extends LinearOpMode {
@@ -23,13 +24,20 @@ public class BlueAutonPitSad extends LinearOpMode {
     DcMotor rf;
     DcMotor rb;
     Servo marker;
-
-
+    Servo stopper;
+    DigitalChannel magneticLimitSwitch;
 
     DcMotor liftR;
     DcMotor liftL;
 
-    int meme = 0;
+
+    static {
+        if(OpenCVLoader.initDebug()) {
+            Log.d("opencv","yay it works");
+        } else {
+            Log.d("opencv","nope it doesnt work");
+        }
+    }
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -40,42 +48,76 @@ public class BlueAutonPitSad extends LinearOpMode {
         rb = hardwareMap.dcMotor.get("rightBack");
         liftL = hardwareMap.dcMotor.get("liftL");
         liftR = hardwareMap.dcMotor.get("liftR");
+        magneticLimitSwitch = hardwareMap.get(DigitalChannel.class, "Switchy");
         marker = hardwareMap.servo.get("marker");
+        stopper = hardwareMap.servo.get("stopper");
+        WatchdogManager wdm = WatchdogManager.getInstance();
+        wdm.setHardwareMap(hardwareMap);
+        wdm.provision("IMUWatch", IMUWatchdog.class, "imu 1");
+        marker.setPosition(0.5);
+        VuforiaLocalizer.Parameters params = new VuforiaLocalizer.Parameters(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
+        params.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
 
+        params.vuforiaLicenseKey = "AdVGalv/////AAAAGYhiDIdk+UI+ivt0Y7WGvUJnm5cKX/lWesW2pH7gnK3eOLTKThLekYSO1q65ttw7X1FvNhxxhdQl3McS+mzYjO+HkaFNJlHxltsI5+b4giqNQKWhyKjzbYbNw8aWarI5YCYUFnyiPPjH39/CbBzzFk3G2RWIzNB7cy4AYhjwYRKRiL3k33YvXv0ZHRzJRkMpnytgvdv5jEQyWa20DIkriC+ZBaj8dph8/akyYfyD1/U19vowknmzxef3ncefgOZoI9yrK82T4GBWazgWvZkIz7bPy/ApGiwnkVzp44gVGsCJCUFERiPVwfFa0SBLeCrQMrQaMDy3kOIVcWTotFn4m1ridgE5ZP/lvRzEC4/vcuV0";
+
+        VuforiaLocalizerImplSubclass vuforiaInstance = new VuforiaLocalizerImplSubclass(params);
         waitForStart();
-        lf.setDirection(DcMotorSimple.Direction.REVERSE);
-        lb.setDirection(DcMotorSimple.Direction.REVERSE);
-        rf.setDirection(DcMotorSimple.Direction.FORWARD);
-        rb.setDirection(DcMotorSimple.Direction.FORWARD);
+        rf.setDirection(DcMotorSimple.Direction.REVERSE);
+        rb.setDirection(DcMotorSimple.Direction.REVERSE);
+        lf.setDirection(DcMotorSimple.Direction.FORWARD);
+        lb.setDirection(DcMotorSimple.Direction.FORWARD);
         initializeMotor(new DcMotor[]{lf, lb, rf, rb});
 
         liftR.setDirection(DcMotorSimple.Direction.REVERSE);
-        int initL = liftL.getCurrentPosition();
-        int initR = liftR.getCurrentPosition();
-
-
         Movement mv = new Movement(lf, lb, rf, rb);
         liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {0.8, -0.8}, new int[] {10700+100, 10700+100});
-        mv.translateDistance(0.7,15);
-        Thread.sleep(100);
+        liftL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        liftR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        liftL.setPower(-0.5);
+        liftR.setPower(-0.5);
+        Thread.sleep(500);
+        stopper.setPosition(1);
+        Thread.sleep(1000);
+        liftL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        liftR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        mv.moveUntilPressed(new DcMotor[]{liftL, liftR}, magneticLimitSwitch, mv.POS_POWER_CONST);//Move until limit switch pressed
+        liftL.setPower(0.6);
+        liftR.setPower(0.6);
+        ElapsedTime extraLiftTimer = new ElapsedTime();
+        while (extraLiftTimer.milliseconds() < 250) {
+            Thread.sleep(5);
+        }
+        liftL.setPower(0);
+        liftR.setPower(0);
+        SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000);
+        int num = sahilClass.getPosition();
+        telemetry.addData("Position", num + "");
+        telemetry.update();
+        mv.translateDistance(0.7,-12);
 
-        liftL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        liftR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        liftL.setPower(0.8);
-        liftR.setPower(-0.8);
-        liftL.setTargetPosition(600);
-        liftR.setTargetPosition(600);
-
-        mv.translateDistance(0.7,35);
+        switch (num) {
+            case 2:
+                mv.rotateTo(-50);
+                mv.translateDistance(0.7,-39);
+                break;
+            case 0:
+                mv.rotateTo(50);
+                mv.translateDistance(0.7,-39);
+                break;
+            default:
+            case 1:
+                mv.translateDistance(0.7,-32);
+                break;
+        }
+        mv.rotateTo(0);
+        mv.translateDistance(0.7, -6);
+        wdm.clean();
     }
     public void initializeMotor(DcMotor[] motors) {
         for (DcMotor motor : motors) {
             motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             motor.setPower(0);
-//            motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//            motor.setTargetPosition(0);
         }
     }
 }

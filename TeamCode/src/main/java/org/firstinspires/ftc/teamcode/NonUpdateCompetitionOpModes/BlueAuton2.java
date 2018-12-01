@@ -56,9 +56,14 @@ public class BlueAuton2 extends LinearOpMode {
         stopper = hardwareMap.servo.get("stopper");
         WatchdogManager wdm = WatchdogManager.getInstance();
         wdm.setHardwareMap(hardwareMap);
-        wdm.provision("IMUWatch", IMUWatchdog.class, "imu");
-        marker.setPosition(0);
+        wdm.provision("IMUWatch", IMUWatchdog.class, "imu 1");
+        marker.setPosition(0.5);
+        VuforiaLocalizer.Parameters params = new VuforiaLocalizer.Parameters(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
+        params.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
 
+        params.vuforiaLicenseKey = "AdVGalv/////AAAAGYhiDIdk+UI+ivt0Y7WGvUJnm5cKX/lWesW2pH7gnK3eOLTKThLekYSO1q65ttw7X1FvNhxxhdQl3McS+mzYjO+HkaFNJlHxltsI5+b4giqNQKWhyKjzbYbNw8aWarI5YCYUFnyiPPjH39/CbBzzFk3G2RWIzNB7cy4AYhjwYRKRiL3k33YvXv0ZHRzJRkMpnytgvdv5jEQyWa20DIkriC+ZBaj8dph8/akyYfyD1/U19vowknmzxef3ncefgOZoI9yrK82T4GBWazgWvZkIz7bPy/ApGiwnkVzp44gVGsCJCUFERiPVwfFa0SBLeCrQMrQaMDy3kOIVcWTotFn4m1ridgE5ZP/lvRzEC4/vcuV0";
+
+        VuforiaLocalizerImplSubclass vuforiaInstance = new VuforiaLocalizerImplSubclass(params);
         waitForStart();
         Thread.sleep(3000);
         rf.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -92,13 +97,9 @@ public class BlueAuton2 extends LinearOpMode {
         liftL.setPower(-0.5);
         liftR.setPower(-0.5);
         ElapsedTime time = new ElapsedTime();
-        while(time.milliseconds() < 500) {
-            Thread.sleep(5);
-        }
+        Thread.sleep(500);
         stopper.setPosition(1);
-        while(time.milliseconds()<2000){
-            Thread.sleep(5);
-        }
+        Thread.sleep(1000);
         mv.moveUntilPressed(new DcMotor[]{liftL, liftR}, magneticLimitSwitch, mv.POS_POWER_CONST);//Move until limit switch pressed
 //        liftL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 //        liftR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -121,6 +122,10 @@ public class BlueAuton2 extends LinearOpMode {
 //        Thread.sleep(100);
 
         //sampling
+        SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000);
+
+
+        int pos = sahilClass.getPosition();
         mv.translateDistance(0.7,-15);
 
 //        mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {-0.8, 0.8}, new int[] {600, 600});
@@ -142,27 +147,25 @@ public class BlueAuton2 extends LinearOpMode {
 //        VuforiaLocalizerImplSubclass vuforiaInstance = new VuforiaLocalizerImplSubclass(params);
 //
 //
-//        SahilClass sahilClass = new SahilClass(vuforiaInstance);
 
-
-        int pos = 2;//sahilClass.getPosition();
 
         switch (pos) {
-            case 1:
+            case 0:
                 mv.rotateTo(45);
                 mv.translateDistance(0.7,-24);
                 mv.translateDistance(0.7,24);
                 mv.rotateTo(0);
                 break;
             case 2:
-                mv.translateDistance(0.7,16);
-                mv.translateDistance(0.7,-16);
-                break;
-            case 3:
                 mv.rotateTo(-45);
                 mv.translateDistance(0.7,-24);
                 mv.translateDistance(0.7,24);
                 mv.rotateTo(0);
+                break;
+            default:
+            case 1:
+                mv.translateDistance(0.7,16);
+                mv.translateDistance(0.7,-16);
                 break;
         }
 //        Thread.sleep(100);
@@ -171,23 +174,24 @@ public class BlueAuton2 extends LinearOpMode {
         mv.rotateTo(90);
 //        Thread.sleep(100);
 //        Thread.sleep(100);
-       mv.translateDistance(0.7, 41);//TODO:See above immortal TODO
+       mv.translateDistance(0.7, -48);//TODO:See above immortal TODO
 //        Thread.sleep(100);
        mv.rotateTo(135);
 //        Thread.sleep(100);
-       mv.translateDistance(0.7, 53);
+       mv.translateDistance(0.7, -53);
 //        Thread.sleep(100);
 //        mv.rotateDegrees(0.7, -60);
 //        Thread.sleep(100);
-        mv.rotateTo(135+90);
-        marker.setPosition(1);
+        mv.rotateTo(135-90);
+        marker.setPosition(0);
         Thread.sleep(1000);
+        marker.setPosition(0.5);
         mv.rotateTo(135);
 //        Thread.sleep(100);
 //        mv.rotateDegrees(0.7, 60);
 //        Thread.sleep(100);
 //       mv.rotate(-0.5,-1);
-       mv.translateDistance(0.9,-95);
+       mv.translateDistance(0.9,95);
     }
     public void initializeMotor(DcMotor[] motors) {
         for (DcMotor motor : motors) {
