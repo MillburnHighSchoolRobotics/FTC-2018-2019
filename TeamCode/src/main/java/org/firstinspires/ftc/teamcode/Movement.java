@@ -90,15 +90,22 @@ public class Movement {
     }
 
     public void rotateTo(double target) throws InterruptedException {
+        ElapsedTime time = new ElapsedTime();
         while (!Thread.currentThread().isInterrupted() && WatchdogManager.getInstance().getValue("rotation") == null) {
             Thread.sleep(5);
         }
         PIDController pidController = new PIDController(kP, kI, kD, 1, target);
+        double lastTime = -1;
         while (!Thread.currentThread().isInterrupted()) {
             double output = pidController.getPIDOutput(WatchdogManager.getInstance().getValue("rotation", Double.class));
-            if ((true || Math.abs(output) < 0.01) && Math.abs(WatchdogManager.getInstance().getValue("rotation", Double.class) - target) < 1) {
-                stop();
-                break;
+            if (Math.abs(WatchdogManager.getInstance().getValue("rotation", Double.class) - target) < 1) {
+                if (lastTime < 0) lastTime = time.milliseconds();
+                else if (time.milliseconds() - lastTime > 100) {
+                    stop();
+                    break;
+                }
+            } else {
+                lastTime = -1;
             }
             lf.setPower(-1 * output);
             lb.setPower(-1 * output);
