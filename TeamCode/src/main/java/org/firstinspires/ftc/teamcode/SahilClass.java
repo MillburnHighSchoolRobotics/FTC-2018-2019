@@ -52,11 +52,12 @@ public class SahilClass {
         this.vuforiaInstance = vuforiaInstance;
         widthCamera = vuforiaInstance.rgb.getBufferWidth();
         heightCamera = vuforiaInstance.rgb.getHeight();
-        ctel = new Retrofit.Builder()
-                .baseUrl(BuildConfig.CTELEM_SERVER_IP)
-                .addConverterFactory(MatConverterFactory.create())
-                .build()
-                .create(CTelemetry.class);
+//        ctel = new Retrofit.Builder()
+//                .baseUrl(BuildConfig.CTELEM_SERVER_IP)
+//                .addConverterFactory(MatConverterFactory.create())
+//                .build()
+//                .create(CTelemetry.class);
+        ctel = null;
         this.length = length;
     }
 

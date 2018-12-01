@@ -56,6 +56,7 @@ public class BlueAuton2 extends LinearOpMode {
         stopper = hardwareMap.servo.get("stopper");
         WatchdogManager wdm = WatchdogManager.getInstance();
         wdm.setHardwareMap(hardwareMap);
+        wdm.setCurrentAuton(this);
         wdm.provision("IMUWatch", IMUWatchdog.class, "imu 1");
         marker.setPosition(0.5);
         VuforiaLocalizer.Parameters params = new VuforiaLocalizer.Parameters(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()));

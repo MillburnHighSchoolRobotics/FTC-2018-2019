@@ -53,6 +53,7 @@ public class BlueAutonPitSad extends LinearOpMode {
         stopper = hardwareMap.servo.get("stopper");
         WatchdogManager wdm = WatchdogManager.getInstance();
         wdm.setHardwareMap(hardwareMap);
+        wdm.setCurrentAuton(this);
         wdm.provision("IMUWatch", IMUWatchdog.class, "imu 1");
         marker.setPosition(0.5);
         VuforiaLocalizer.Parameters params = new VuforiaLocalizer.Parameters(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
@@ -90,6 +91,7 @@ public class BlueAutonPitSad extends LinearOpMode {
         }
         liftL.setPower(0);
         liftR.setPower(0);
+
         SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000);
         int num = sahilClass.getPosition();
         telemetry.addData("Position", num + "");
@@ -99,11 +101,11 @@ public class BlueAutonPitSad extends LinearOpMode {
         switch (num) {
             case 2:
                 mv.rotateTo(-50);
-                mv.translateDistance(0.7,-39);
+                mv.translateDistance(0.7,-37);
                 break;
             case 0:
                 mv.rotateTo(50);
-                mv.translateDistance(0.7,-39);
+                mv.translateDistance(0.7,-37);
                 break;
             default:
             case 1:

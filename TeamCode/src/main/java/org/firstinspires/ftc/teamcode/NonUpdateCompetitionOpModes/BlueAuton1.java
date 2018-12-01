@@ -67,6 +67,7 @@ public class BlueAuton1 extends LinearOpMode {
         marker = hardwareMap.servo.get("marker");
         stopper = hardwareMap.servo.get("stopper");
         WatchdogManager wdm = WatchdogManager.getInstance();
+        wdm.setCurrentAuton(this);
         wdm.setHardwareMap(hardwareMap);
         wdm.provision("IMUWatch", IMUWatchdog.class, "imu 1");
         marker.setPosition(0.5);
@@ -141,8 +142,8 @@ public class BlueAuton1 extends LinearOpMode {
         //TODO: SWITCH TO ROTATETO
         switch (num) {
             case 2:
-                mv.rotateTo(-58);
-                mv.translateDistance(0.7,-36);
+                mv.rotateTo(-55);
+                mv.translateDistance(0.7,-35);
                 mv.rotateTo(45);
                 mv.translateDistance(0.7, -45);
 //                mv.rotateTo(0);
