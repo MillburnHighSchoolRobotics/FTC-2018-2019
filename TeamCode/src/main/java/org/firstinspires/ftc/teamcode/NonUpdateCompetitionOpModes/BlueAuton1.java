@@ -72,14 +72,16 @@ public class BlueAuton1 extends LinearOpMode {
         TFODTest tfod = new TFODTest(hardwareMap);
         liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        liftL.setPower(mv.NEG_POWER_CONST);
-        liftR.setPower(mv.NEG_POWER_CONST);
+        liftL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        liftR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        liftL.setPower(-0.5);
+        liftR.setPower(-0.5);
         ElapsedTime time = new ElapsedTime();
-        while(time.milliseconds() < 100) {
+        while(time.milliseconds() < 500) {
             Thread.sleep(5);
         }
         stopper.setPosition(1);
-        while(time.milliseconds()<250){
+        while(time.milliseconds()<2000){
             Thread.sleep(5);
         }
         mv.moveUntilPressed(new DcMotor[]{liftL, liftR}, magneticLimitSwitch, mv.POS_POWER_CONST);//Move until limit switch pressed
