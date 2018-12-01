@@ -13,7 +13,7 @@ import virtualRobot.utils.MathUtils;
 
 public class Movement {
     public final double POS_POWER_CONST = 0.7;
-    public final double NEG_POWER_CONST = 0.7;
+    public final double NEG_POWER_CONST = -0.7;
     final double kP = 0.0225;
     final double kI = 0.0035;
     final double kD = 0.0175; //0.012
