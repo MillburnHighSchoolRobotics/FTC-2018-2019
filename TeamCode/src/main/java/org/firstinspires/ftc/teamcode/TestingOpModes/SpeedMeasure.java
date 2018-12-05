@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-import org.firstinspires.ftc.teamcode.Movement;
+import org.firstinspires.ftc.teamcode.JeffBot;
 
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 
@@ -14,7 +14,7 @@ public class SpeedMeasure extends OpMode {
     private DcMotorEx rf;
     private DcMotorEx lb;
     private DcMotorEx rb;
-    private Movement mv;
+    private JeffBot mv;
     private BNO055IMU imu;
     @Override
     public void init() {
@@ -30,7 +30,7 @@ public class SpeedMeasure extends OpMode {
         rb.setDirection(REVERSE);
 //        WatchdogManager.getInstance().setHardwareMap(hardwareMap);
 //        WatchdogManager.getInstance().provision("IMUWatch", IMUWatchdog.class, "imu");
-        mv = new Movement(lf, lb, rf, rb);
+        mv = new JeffBot(lf, lb, rf, rb);
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;

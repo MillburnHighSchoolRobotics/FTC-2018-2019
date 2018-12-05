@@ -1,30 +1,19 @@
 package org.firstinspires.ftc.teamcode.NonUpdateCompetitionOpModes;
 
-import android.util.Log;
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.PIDCoefficients;
-import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.Movement;
+import org.firstinspires.ftc.teamcode.JeffBot;
 import org.firstinspires.ftc.teamcode.TestingOpModes.TFODTest;
 
-import virtualRobot.PIDController;
 import virtualRobot.SallyJoeBot;
 import virtualRobot.commands.Command;
-import virtualRobot.utils.MathUtils;
-
-import static org.firstinspires.ftc.teamcode.Movement.distToEncoder;
-import static org.firstinspires.ftc.teamcode.Movement.rotateToEncoder;
 
 @Autonomous(name = "Blue Auton Pit Sampling", group = "competition")
 @Disabled
@@ -44,10 +33,10 @@ public class BlueAutonPitSampling extends LinearOpMode {
 
     DcMotor liftR;
     DcMotor liftL;
-    Movement pidLF;
-    Movement pidLB;
-    Movement pidRF;
-    Movement pidRB;
+    JeffBot pidLF;
+    JeffBot pidLB;
+    JeffBot pidRF;
+    JeffBot pidRB;
     int meme = 0;
     WebcamName webcamName;
 
@@ -86,7 +75,7 @@ public class BlueAutonPitSampling extends LinearOpMode {
 
         //sampling
         //   int meme = 0;
-        Movement mv = new Movement(lf, lb, rf, rb);
+        JeffBot mv = new JeffBot(lf, lb, rf, rb);
         TFODTest tfod = new TFODTest(hardwareMap);
         liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -106,10 +95,10 @@ public class BlueAutonPitSampling extends LinearOpMode {
 
         //sampling
 
-//        pidLF = new Movement(kp,ki,kd,threshold);
-//        pidLB = new Movement(kp,ki,kd,threshold);
-//        pidRF = new Movement(kp,ki,kd,threshold);
-//        pidRB = new Movement(kp,ki,kd,threshold);
+//        pidLF = new JeffBot(kp,ki,kd,threshold);
+//        pidLB = new JeffBot(kp,ki,kd,threshold);
+//        pidRF = new JeffBot(kp,ki,kd,threshold);
+//        pidRB = new JeffBot(kp,ki,kd,threshold);
 
 
 //        PIDFCoefficients pidOriginalLF = ((DcMotorEx) lf).getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);

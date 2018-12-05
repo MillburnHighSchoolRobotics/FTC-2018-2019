@@ -4,17 +4,11 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
-import org.firstinspires.ftc.teamcode.Movement;
+
+import org.firstinspires.ftc.teamcode.JeffBot;
 import org.firstinspires.ftc.teamcode.TestingOpModes.TFODTest;
-
-import virtualRobot.utils.MathUtils;
-
-import static org.firstinspires.ftc.teamcode.Movement.distToEncoder;
-import static org.firstinspires.ftc.teamcode.Movement.rotateToEncoder;
-import static virtualRobot.utils.MathUtils.sgn;
 
 @Autonomous(name = "Blue Auton Depot Sampling", group = "competition")
 @Disabled
@@ -58,7 +52,7 @@ public class BlueAutonDepotSampling extends LinearOpMode {
 
         int initL = liftL.getCurrentPosition();
         int initR = liftR.getCurrentPosition();
-        Movement mv = new Movement(lf, lb, rf, rb);
+        JeffBot mv = new JeffBot(lf, lb, rf, rb);
         TFODTest tfod = new TFODTest(hardwareMap);
         liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -129,7 +123,7 @@ public class BlueAutonDepotSampling extends LinearOpMode {
 //            motor.setTargetPosition(0);
         }
     }
-    public void sampleThisShit(Movement mv, TFODTest tfod) {
+    public void sampleThisShit(JeffBot mv, TFODTest tfod) {
 
 //        tfod.initStuff();
 

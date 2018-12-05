@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.JeffBot;
 import org.firstinspires.ftc.teamcode.watchdog.IMUWatchdog;
-import org.firstinspires.ftc.teamcode.Movement;
 import org.firstinspires.ftc.teamcode.watchdog.WatchdogManager;
 
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class AutoPIDOscillator extends LinearOpMode {
         BNO055IMU imu = (BNO055IMU)hardwareMap.get("imu");
         wdm.setHardwareMap(hardwareMap);
         wdm.provision("IMUWatch", IMUWatchdog.class, "imu");
-        Movement mv = new Movement(lf, lb, rf, rb);
+        JeffBot mv = new JeffBot(lf, lb, rf, rb);
         waitForStart();
         ElapsedTime time = new ElapsedTime();
         lf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
