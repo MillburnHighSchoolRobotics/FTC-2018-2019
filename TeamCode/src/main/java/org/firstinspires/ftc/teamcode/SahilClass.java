@@ -220,6 +220,7 @@ public class SahilClass {
             } catch (IOException e) {
                 e.printStackTrace();
                 Log.e("CTelemetry", "failed gold detection");
+                return 2;//TODO: See if this really works
             }
             try {
                 ctel.sendImage("Test Gold Detection", goldNotCropped).execute();
@@ -244,12 +245,12 @@ public class SahilClass {
         Log.d("Centroid", "Centroid: " + centroid.toString());
 
         if (max > min) {
-            if ((centroid.x >= 0) && (centroid.x < (widthImage/3))) {
+            if ((centroid.x >= 0) && (centroid.x < (widthImage/2/*3*/))) {
                 position = 0;
-            } else if ((centroid.x >= (widthImage/3)) && (centroid.x < (2*(widthImage/3)))) {
-                position = 1;
-            } else if (centroid.x >= (2*(widthImage/3))) {
-                position = 2;
+            }// else if ((centroid.x >= (widthImage/3)) && (centroid.x < (2*(widthImage/3)))) {
+             //   position = 1;
+            /*}*/ else if (centroid.x >= (/*2**/(widthImage/2/*3*/))) {
+                position = 1;//2;
             }
             Log.d("Position", "Position: " + position);
         } else {
