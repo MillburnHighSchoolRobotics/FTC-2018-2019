@@ -4,8 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.JeffBot;
 import org.firstinspires.ftc.teamcode.watchdog.IMUWatchdog;
-import org.firstinspires.ftc.teamcode.Movement;
 import org.firstinspires.ftc.teamcode.watchdog.WatchdogManager;
 
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
@@ -16,7 +16,7 @@ public class PIDTester extends OpMode {
     private DcMotor rf;
     private DcMotor lb;
     private DcMotor rb;
-    private Movement mv;
+    private JeffBot mv;
     @Override
     public void init() {
         this.msStuckDetectLoop = Integer.MAX_VALUE;
@@ -32,7 +32,7 @@ public class PIDTester extends OpMode {
         rb.setDirection(REVERSE);
         WatchdogManager.getInstance().setHardwareMap(hardwareMap);
         WatchdogManager.getInstance().provision("IMUWatch", IMUWatchdog.class, "imu");
-        mv = new Movement(lf, lb, rf, rb);
+        mv = new JeffBot(lf, lb, rf, rb);
 
     }
 

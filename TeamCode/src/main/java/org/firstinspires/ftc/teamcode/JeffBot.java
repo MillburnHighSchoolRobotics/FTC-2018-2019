@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.watchdog.WatchdogManager;
 import virtualRobot.PIDController;
 import virtualRobot.utils.MathUtils;
 
-public class Movement {
+public class JeffBot {
     public final double POS_POWER_CONST = 0.7;
     public final double NEG_POWER_CONST = -0.7;
     final double kP = 0.0225;
@@ -26,7 +26,8 @@ public class Movement {
     final static float wheelWidth = 3; //in
     final static float wheelRadius = wheelWidth/2; //in
     final static int ticksPerRev = 730; //ticks per rev
-    public Movement(DcMotor lf, DcMotor lb, DcMotor rf, DcMotor rb) {
+    public final static String vuforiaKey = "AcSW/tj/////AAABmUB3byzZQksfqhymb0Tr3M92yvtrzF4HgDl0t7Z07OZ2xscXR1yyeX4GxftrShvm9T926ZCW0VglQKXuQE5+JkrABVijohk5DCkcE9CcxHy3mTs2Ui76Nz+9CQTgOsr6/AMLV+Te6uyXTs3rZwGdnHGRo0Q1yboJCQ51Ap2rgJc//ehVdkp/QetIMnfhRffac0edAHFt0i2F5++S/OH/4kdxFd5ha0lswd4nTnqU2MiJrz+OH4WQPQ8JC94dQZ6F3m/iX5mk4TCq/9xg3cTJvFccEUawf7PIsapABxKMJB6hcPikwa0XtyGB+vEb7fQAXZ80tRal2mcwKSHrDM4ZvYisD73X+sTIAqQnXgxYiL14";
+    public JeffBot(DcMotor lf, DcMotor lb, DcMotor rf, DcMotor rb) {
         this.lf = lf;
         this.lb = lb;
         this.rf = rf;
