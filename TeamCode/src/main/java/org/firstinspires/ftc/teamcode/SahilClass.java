@@ -52,11 +52,12 @@ public class SahilClass {
         this.vuforiaInstance = vuforiaInstance;
         widthCamera = vuforiaInstance.rgb.getBufferWidth();
         heightCamera = vuforiaInstance.rgb.getHeight();
-        ctel = new Retrofit.Builder()
-                .baseUrl(BuildConfig.CTELEM_SERVER_IP)
-                .addConverterFactory(MatConverterFactory.create())
-                .build()
-                .create(CTelemetry.class);
+//        ctel = new Retrofit.Builder()
+//                .baseUrl(BuildConfig.CTELEM_SERVER_IP)
+//                .addConverterFactory(MatConverterFactory.create())
+//                .build()
+//                .create(CTelemetry.class);
+        ctel = null;
         this.length = length;
     }
 
@@ -197,6 +198,7 @@ public class SahilClass {
             Imgproc.line(rgb, new Point(min,0), new Point(min,heightCamera), new Scalar(255,0,0), 5);
             Imgproc.line(rgb, new Point(max,0), new Point(max,heightCamera), new Scalar(0,255,0), 5);
 
+<<<<<<< HEAD
             try {
                 ctel.sendImage("Camera Image", rgb).execute();
             } catch (IOException e) {
@@ -228,6 +230,38 @@ public class SahilClass {
                 e.printStackTrace();
                 Log.e("CTelemetry", "failed non cropped gold detection");
             }
+=======
+//            try {
+//                ctel.sendImage("Camera Image", rgb).execute();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                Log.e("CTelemetry", "failed camera img");
+//            }
+//            try {
+//                ctel.sendImage("Cropped Image", croppedImage).execute();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                Log.e("CTelemetry", "failed cropped img");
+//            }
+//            try {
+//                ctel.sendImage("Camera Outline", erodeBlack).execute();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                Log.e("CTelemetry", "failed black detection");
+//            }
+//            try {
+//                ctel.sendImage("Mineral Detection", erode).execute();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                Log.e("CTelemetry", "failed gold detection");
+//            }
+//            try {
+//                ctel.sendImage("Test Gold Detection", goldNotCropped).execute();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                Log.e("CTelemetry", "failed non cropped gold detection");
+//            }
+>>>>>>> 7e03ac9825bfafbaceda5f94eaaea6784f00c64b
 
             rgb.release();
             croppedImage.release();

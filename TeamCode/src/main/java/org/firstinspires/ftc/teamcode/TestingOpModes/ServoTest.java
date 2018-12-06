@@ -14,7 +14,7 @@ public class ServoTest extends OpMode {
 //    Servo right;
     @Override
     public void init() {
-        left = hardwareMap.servo.get("marker");
+        left = hardwareMap.servo.get("stopper");
 //        right = hardwareMap.servo.get("rollerLiftRight");
         left.setPosition(0);
 //        right.setPosition(1);

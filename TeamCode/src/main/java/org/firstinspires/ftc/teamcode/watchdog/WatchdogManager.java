@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.watchdog;
 
 import android.util.Log;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import java.util.Arrays;
@@ -14,6 +16,7 @@ public class WatchdogManager {
     private HashMap<String, Thread> owners;
 
     private HardwareMap hardwareMap;
+    private LinearOpMode currentAuton;
 
     private static final String TAG = "WatchdogManager";
     public WatchdogManager() {
@@ -21,9 +24,11 @@ public class WatchdogManager {
         this.values = new HashMap<>();
         this.owners = new HashMap<>();
         this.hardwareMap = null;
+        this.currentAuton = null;
     }
 
     public synchronized void clean() {
+        this.currentAuton = null;
         for (Map.Entry<String, Watchdog> watchdog : watchdogs.entrySet()) {
             Log.d(TAG, "Killing Watchdog: " + watchdog.getKey());
             if (watchdog.getValue().isAlive()) {
@@ -96,5 +101,13 @@ public class WatchdogManager {
 
     public void setHardwareMap(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
+    }
+
+    public LinearOpMode getCurrentAuton() {
+        return currentAuton;
+    }
+
+    public void setCurrentAuton(LinearOpMode currentAuton) {
+        this.currentAuton = currentAuton;
     }
 }
