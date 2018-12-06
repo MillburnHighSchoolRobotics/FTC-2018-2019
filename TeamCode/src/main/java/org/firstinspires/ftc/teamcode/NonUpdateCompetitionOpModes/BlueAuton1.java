@@ -124,7 +124,7 @@ public class BlueAuton1 extends LinearOpMode {
 
         SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000); //this only loops once after 1000 millis but keep this constraint just in case
 //        while (!Thread.currentThread().isInterrupted()) {
-        int num = sahilClass.getPosition();
+        int num = sahilClass.getThreeMineralPosition();
         telemetry.addData("Position", num + "");
         telemetry.update();
         mv.translateDistance(0.7,-12);

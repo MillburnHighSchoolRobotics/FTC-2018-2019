@@ -37,8 +37,10 @@ public class SahilClass {
     private int sigmaX = 0;
     private int length;
     private double ratioDeviation = 0.2; //for 0.2, the size range is form 0.8 to 1.2 exclusive
-    private Scalar lowerG = new Scalar(0, 49, 210);
-    private Scalar upperG = new Scalar(44, 255, 255);
+//    private Scalar lowerG = new Scalar(0, 49, 210); //this is for webcam
+//    private Scalar upperG = new Scalar(44, 255, 255); //this is for webcam
+    private Scalar lowerG = new Scalar(10, 193, 95);
+    private Scalar upperG = new Scalar(32, 255, 255);
     private Scalar lowerBlack = new Scalar(0, 0, 0);
     private Scalar upperBlack = new Scalar(255, 255, 1);
     CTelemetry ctel;
@@ -52,25 +54,84 @@ public class SahilClass {
         this.vuforiaInstance = vuforiaInstance;
         widthCamera = vuforiaInstance.rgb.getBufferWidth();
         heightCamera = vuforiaInstance.rgb.getHeight();
-//        ctel = new Retrofit.Builder()
-//                .baseUrl(BuildConfig.CTELEM_SERVER_IP)
-//                .addConverterFactory(MatConverterFactory.create())
-//                .build()
-//                .create(CTelemetry.class);
-        ctel = null;
+        ctel = new Retrofit.Builder()
+                .baseUrl(BuildConfig.CTELEM_SERVER_IP)
+                .addConverterFactory(MatConverterFactory.create())
+                .build()
+                .create(CTelemetry.class);
+//        ctel = null;
         this.length = length;
     }
 
-    public int getPosition() {
+    public int getThreeMineralPosition() {
+        int[] data = getMineralLocation();
+        int totalMax = data[0];
+        int totalMin = data[1];
+        int totalX = data[2];
+        int totalY = data[3];
+        int timesRun = data[4];
+
+        int position = -1;
+        double max = totalMax/(double)timesRun;
+        double min = totalMin/(double)timesRun;
+        double widthImage = max-min+1;
+        Point centroid = new Point(totalX/(double)timesRun, totalY/(double)timesRun);
+        Log.d("Width Range", "Width: " + min + " - " + max);
+        Log.d("Centroid", "Centroid: " + centroid.toString());
+
+        if (max > min) {
+            if ((centroid.x >= 0) && (centroid.x < (widthImage/3))) {
+                position = 0;
+            } } else if ((centroid.x >= (widthImage/3)) && (centroid.x < (2*(widthImage/3)))) {
+            position = 1;
+        } else if (centroid.x >= (2*(widthImage/3))) {
+            position = 2;
+            Log.d("Position", "Position: " + position);
+        } else {
+            Log.d("Position", "uh oh we got a big error determining the max and min");
+        }
+        return position;
+    }
+    public int getTwoMineralPosition() {
+        int[] data = getMineralLocation();
+        int totalMax = data[0];
+        int totalMin = data[1];
+        int totalX = data[2];
+        int totalY = data[3];
+        int timesRun = data[4];
+        int detected = data[5];
+
+        int position = -1;
+        double max = totalMax/(double)timesRun;
+        double min = totalMin/(double)timesRun;
+        double widthImage = max-min+1;
+        Point centroid = new Point(totalX/(double)timesRun, totalY/(double)timesRun);
+        Log.d("Width Range", "Width: " + min + " - " + max);
+        Log.d("Centroid", "Centroid: " + centroid.toString());
+
+        if (detected == -1) {
+            position = 2;
+            Log.d("Position", "Position: " + position);
+        } else if (max > min) {
+            if ((centroid.x >= 0) && (centroid.x < (widthImage/2))) {
+                position = 0;
+            } else if (centroid.x >= ((widthImage/2))) {
+                position = 1;
+            }
+            Log.d("Position", "Position: " + position);
+        } else {
+            Log.d("Position", "uh oh we got a big error determining the max and min");
+        }
+        return position;
+    }
+    public int[] getMineralLocation() {
         ElapsedTime time = new ElapsedTime();
         int timesRun = 0;
         int totalX = 0;
         int totalY = 0;
         int totalMax = 0;
         int totalMin = 0;
-
-
-
+        int detected = 0;
         while (time.milliseconds() < length && !Thread.currentThread().isInterrupted()) {
             Mat img = new Mat();
             Bitmap bm = Bitmap.createBitmap(widthCamera, heightCamera, Bitmap.Config.RGB_565);
@@ -221,7 +282,7 @@ public class SahilClass {
             } catch (IOException e) {
                 e.printStackTrace();
                 Log.e("CTelemetry", "failed gold detection");
-                return 2;//TODO: See if this really works
+                detected = -1;
             }
             try {
                 ctel.sendImage("Test Gold Detection", goldNotCropped).execute();
@@ -236,27 +297,6 @@ public class SahilClass {
             erode.release();
             goldNotCropped.release();
         }
-
-        int position = -1;
-        double max = totalMax/(double)timesRun;
-        double min = totalMin/(double)timesRun;
-        double widthImage = max-min+1;
-        Point centroid = new Point(totalX/(double)timesRun, totalY/(double)timesRun);
-        Log.d("Width Range", "Width: " + min + " - " + max);
-        Log.d("Centroid", "Centroid: " + centroid.toString());
-
-        if (max > min) {
-            if ((centroid.x >= 0) && (centroid.x < (widthImage/2/*3*/))) {
-                position = 0;
-            }// else if ((centroid.x >= (widthImage/3)) && (centroid.x < (2*(widthImage/3)))) {
-             //   position = 1;
-            /*}*/ else if (centroid.x >= (/*2**/(widthImage/2/*3*/))) {
-                position = 1;//2;
-            }
-            Log.d("Position", "Position: " + position);
-        } else {
-            Log.d("Position", "uh oh we got a big error determining the max and min");
-        }
-        return position;
+        return new int[] {totalMax, totalMin, totalX, totalY, timesRun, detected};
     }
 }

@@ -117,7 +117,7 @@ public class BlueAuton2 extends LinearOpMode {
         SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000);
 
 
-        int pos = sahilClass.getPosition();
+        int pos = sahilClass.getThreeMineralPosition();
         mv.translateDistance(0.7,-15);
 
 //        mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {-0.8, 0.8}, new int[] {600, 600});

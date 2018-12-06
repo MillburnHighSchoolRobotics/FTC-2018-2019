@@ -92,7 +92,7 @@ public class BlueAutonPitSad extends LinearOpMode {
         liftR.setPower(0);
 
         SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000);
-        int num = sahilClass.getPosition();
+        int num = sahilClass.getThreeMineralPosition();
         telemetry.addData("Position", num + "");
         telemetry.update();
         mv.translateDistance(0.7,-12);
