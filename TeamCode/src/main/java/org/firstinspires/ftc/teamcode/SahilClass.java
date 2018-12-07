@@ -118,13 +118,14 @@ public class SahilClass {
             } else if (centroid.x >= ((widthImage/2))) {
                 position = 1;
             }
-            Log.d("Position", "Position: " + position);
         } else {
-            Log.d("Position", "uh oh we got a big error determining the max and min");
+            position = 2;
+//            Log.d("Position", "uh oh we got a big error determining the max and min");
         }
+        Log.d("Position", "Position: " + position);
         return position;
     }
-    public int[] getMineralLocation() {
+    private int[] getMineralLocation() {
         ElapsedTime time = new ElapsedTime();
         int timesRun = 0;
         int totalX = 0;
