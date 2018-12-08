@@ -52,12 +52,18 @@ public class NewNewNewTeleOp extends OpMode {
     private ElapsedTime canToggleStopper;
     private ElapsedTime canToggleDropper;
     private ElapsedTime canToggleFolder;
+    private ElapsedTime canToggleMarker;
+
+
+    int foldCount = 2;
+    double[] foldPositions = {0.9,0.7,0.3};
 
     @Override
     public void init() {
         canToggleStopper = new ElapsedTime();
         canToggleDropper = new ElapsedTime();
         canToggleFolder = new ElapsedTime();
+        canToggleMarker = new ElapsedTime();
         this.msStuckDetectStop = 3000;
         lf = (DcMotorEx)hardwareMap.dcMotor.get("leftFront");
         lb = (DcMotorEx)hardwareMap.dcMotor.get("leftBack");
@@ -108,10 +114,10 @@ public class NewNewNewTeleOp extends OpMode {
         reaperRight.setPower(0);
         reaperSpin.setPower(0);
         stopper.setPosition(1);
-        dropper.setPosition(0);
+        dropper.setPosition(1);
         marker.setPosition(0.5);
-        reaperFoldLeft.setPosition(0);
-        reaperFoldRight.setPosition(0);
+        reaperFoldLeft.setPosition(foldPositions[foldCount]);
+        reaperFoldRight.setPosition(foldPositions[foldCount]);
     }
 
     @Override
@@ -162,23 +168,26 @@ public class NewNewNewTeleOp extends OpMode {
 
         // you spin me right round
         if (gamepad1.left_bumper) {
-            reaperSpin.setPower(1);
+            reaperSpin.setPower(0.6);
         } else if (gamepad1.right_bumper) {
-            reaperSpin.setPower(-1);
+            reaperSpin.setPower(-0.6);
         } else {
             reaperSpin.setPower(0);
         }
 
 
-        // dump truck
+        // folding stuff
         if (gamepad1.left_trigger == 1  && canToggleFolder.milliseconds() > 500) {
-            reaperFoldLeft.setPosition(0.5 - reaperFoldLeft.getPosition());
-            reaperFoldRight.setPosition(0.5 - reaperFoldRight.getPosition());
+            foldCount++;
+            reaperFoldLeft.setPosition(foldPositions[foldCount%3]);
+            reaperFoldRight.setPosition(foldPositions[foldCount%3]);
             canToggleFolder.reset();
         }
 
+
+        // dump truck
         if (gamepad1.right_trigger == 1  && canToggleDropper.milliseconds() > 500) {
-            dropper.setPosition(1 - dropper.getPosition());
+            dropper.setPosition(1.2 - dropper.getPosition());
             canToggleDropper.reset();
         }
 
@@ -205,34 +214,17 @@ public class NewNewNewTeleOp extends OpMode {
         }
 
 
-//        // where we droppin boys?
-//        if (gamepad1.y) {
-//            int initialPosition = 0;
-//            int finalPosition = 1;
-//            if (dropper.getPosition() == initialPosition) {
-//                dropper.setPosition(finalPosition);
-//            } else {
-//                dropper.setPosition(initialPosition);
-//            }
-//        }
-
-
-        // toggle dropper
-//        if (gamepad1.y && canToggleDropper.milliseconds() > 500) {
-//            dropper.setPosition(1 - dropper.getPosition());
-//            canToggleDropper.reset();
-//        }
-
-
         // toggle locking lift
         if (gamepad1.x && canToggleStopper.milliseconds() > 500) {
             stopper.setPosition(1 - stopper.getPosition());
             canToggleStopper.reset();
         }
 
-        if (gamepad1.y && canToggleStopper.milliseconds() > 500) {
-            stopper.setPosition(0.5 - stopper.getPosition());
-            canToggleStopper.reset();
+
+        // marker bc why not
+        if (gamepad1.y && canToggleMarker.milliseconds() > 500) {
+            marker.setPosition(1.5 - marker.getPosition());
+            canToggleMarker.reset();
         }
 
 
