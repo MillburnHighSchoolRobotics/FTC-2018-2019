@@ -40,8 +40,8 @@ public class BlueAuton2 extends LinearOpMode {
         lb = hardwareMap.dcMotor.get("leftBack");
         rf = hardwareMap.dcMotor.get("rightFront");
         rb = hardwareMap.dcMotor.get("rightBack");
-        liftL = hardwareMap.dcMotor.get("liftL");
-        liftR = hardwareMap.dcMotor.get("liftR");
+        liftL = hardwareMap.dcMotor.get("liftLeft");
+        liftR = hardwareMap.dcMotor.get("liftRight");
         magneticLimitSwitch = hardwareMap.get(DigitalChannel.class, "Switchy");
         marker = hardwareMap.servo.get("marker");
         stopper = hardwareMap.servo.get("stopper");

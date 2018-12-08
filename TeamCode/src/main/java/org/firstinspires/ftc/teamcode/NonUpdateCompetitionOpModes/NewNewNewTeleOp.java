@@ -21,9 +21,10 @@ Dpad up and down - lift
 Dpad left and right - reaper extends forward/backward
 a - reset every damn thing
 x - toggle locking lift
-y - toggle dumping mineral servo
+y - toggle marker
 right/left bumper - hold to spin reaper forward/backward
-trigger - folding reaper forward/backward
+trigger left - folding reaper forward/backward
+trigger right - dumping mineral servo
  */
 
 @TeleOp(name = "REAL TeleOp", group = "competition")
@@ -39,9 +40,10 @@ public class NewNewNewTeleOp extends OpMode {
     private CRServo reaperSpin;
     private Servo stopper;
     private Servo dropper;
+    private Servo marker;
     private Servo reaperFoldLeft;
     private Servo reaperFoldRight;
-    private JeffBot mv = new JeffBot();
+//    private JeffBot mv;
 
 
     double power = 0.9;
@@ -49,24 +51,28 @@ public class NewNewNewTeleOp extends OpMode {
 
     private ElapsedTime canToggleStopper;
     private ElapsedTime canToggleDropper;
+    private ElapsedTime canToggleFolder;
 
     @Override
     public void init() {
         canToggleStopper = new ElapsedTime();
+        canToggleDropper = new ElapsedTime();
+        canToggleFolder = new ElapsedTime();
         this.msStuckDetectStop = 3000;
         lf = (DcMotorEx)hardwareMap.dcMotor.get("leftFront");
         lb = (DcMotorEx)hardwareMap.dcMotor.get("leftBack");
         rf = (DcMotorEx)hardwareMap.dcMotor.get("rightFront");
         rb = (DcMotorEx)hardwareMap.dcMotor.get("rightBack");
-        liftLeft = (DcMotorEx)hardwareMap.dcMotor.get("liftL");
-        liftRight = (DcMotorEx)hardwareMap.dcMotor.get("liftR");
-        reaperLeft = (DcMotorEx)hardwareMap.dcMotor.get("horizL");
-        reaperRight = (DcMotorEx)hardwareMap.dcMotor.get("horizR");
+        liftLeft = (DcMotorEx)hardwareMap.dcMotor.get("liftLeft");
+        liftRight = (DcMotorEx)hardwareMap.dcMotor.get("liftRight");
+        reaperLeft = (DcMotorEx)hardwareMap.dcMotor.get("horizLeft");
+        reaperRight = (DcMotorEx)hardwareMap.dcMotor.get("horizRight");
         reaperSpin = hardwareMap.crservo.get("reaper");
         stopper = hardwareMap.servo.get("stopper");
         dropper = hardwareMap.servo.get("dropper");
-        reaperFoldLeft = hardwareMap.servo.get("reaperFoldL");
-        reaperFoldRight = hardwareMap.servo.get("reaperFoldT");
+        marker = hardwareMap.servo.get("marker");
+        reaperFoldLeft = hardwareMap.servo.get("reaperFoldLeft");
+        reaperFoldRight = hardwareMap.servo.get("reaperFoldRight");
 
 
         lf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -103,8 +109,9 @@ public class NewNewNewTeleOp extends OpMode {
         reaperSpin.setPower(0);
         stopper.setPosition(1);
         dropper.setPosition(0);
-        reaperFoldLeft.setPosition(0.1);
-        reaperFoldRight.setPosition(0.1);
+        marker.setPosition(0.5);
+        reaperFoldLeft.setPosition(0);
+        reaperFoldRight.setPosition(0);
     }
 
     @Override
@@ -164,12 +171,15 @@ public class NewNewNewTeleOp extends OpMode {
 
 
         // dump truck
-        if (gamepad1.left_trigger == 1) {
-            reaperFoldLeft.setPosition(1);
-            reaperFoldLeft.setPosition(1);
-        } else if (gamepad1.right_trigger == 1) {
-            reaperFoldLeft.setPosition(0.1);
-            reaperFoldRight.setPosition(0.1);
+        if (gamepad1.left_trigger == 1  && canToggleFolder.milliseconds() > 500) {
+            reaperFoldLeft.setPosition(0.5 - reaperFoldLeft.getPosition());
+            reaperFoldRight.setPosition(0.5 - reaperFoldRight.getPosition());
+            canToggleFolder.reset();
+        }
+
+        if (gamepad1.right_trigger == 1  && canToggleDropper.milliseconds() > 500) {
+            dropper.setPosition(1 - dropper.getPosition());
+            canToggleDropper.reset();
         }
 
 
@@ -195,28 +205,33 @@ public class NewNewNewTeleOp extends OpMode {
         }
 
 
-        // where we droppin boys?
-        if (gamepad1.y) {
-            int initialPosition = 0;
-            int finalPosition = 1;
-            if (dropper.getPosition() == initialPosition) {
-                dropper.setPosition(finalPosition);
-            } else {
-                dropper.setPosition(initialPosition);
-            }
-        }
+//        // where we droppin boys?
+//        if (gamepad1.y) {
+//            int initialPosition = 0;
+//            int finalPosition = 1;
+//            if (dropper.getPosition() == initialPosition) {
+//                dropper.setPosition(finalPosition);
+//            } else {
+//                dropper.setPosition(initialPosition);
+//            }
+//        }
 
 
         // toggle dropper
-        if (gamepad1.y && canToggleDropper.milliseconds() > 500) {
-            dropper.setPosition(1 - dropper.getPosition());
-            canToggleDropper.reset();
-        }
+//        if (gamepad1.y && canToggleDropper.milliseconds() > 500) {
+//            dropper.setPosition(1 - dropper.getPosition());
+//            canToggleDropper.reset();
+//        }
 
 
         // toggle locking lift
         if (gamepad1.x && canToggleStopper.milliseconds() > 500) {
             stopper.setPosition(1 - stopper.getPosition());
+            canToggleStopper.reset();
+        }
+
+        if (gamepad1.y && canToggleStopper.milliseconds() > 500) {
+            stopper.setPosition(0.5 - stopper.getPosition());
             canToggleStopper.reset();
         }
 

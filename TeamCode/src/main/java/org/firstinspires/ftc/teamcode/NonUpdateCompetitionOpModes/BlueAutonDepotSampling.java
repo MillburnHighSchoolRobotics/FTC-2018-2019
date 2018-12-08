@@ -35,8 +35,8 @@ public class BlueAutonDepotSampling extends LinearOpMode {
         lb = hardwareMap.dcMotor.get("leftBack");
         rf = hardwareMap.dcMotor.get("rightFront");
         rb = hardwareMap.dcMotor.get("rightBack");
-        liftL = hardwareMap.dcMotor.get("liftL");
-        liftR = hardwareMap.dcMotor.get("liftR");
+        liftL = hardwareMap.dcMotor.get("liftLeft");
+        liftR = hardwareMap.dcMotor.get("liftRight");
         marker = hardwareMap.servo.get("marker");
         marker.setPosition(0);
         waitForStart();
