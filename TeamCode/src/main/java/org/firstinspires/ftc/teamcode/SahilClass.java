@@ -140,6 +140,7 @@ public class SahilClass {
         double max = totalMax/(double)timesRun;
         double min = totalMin/(double)timesRun;
         double widthImage = max-min+1;
+        Log.d("Width of Imaage", "Width: " + widthImage);
         Point centroid = new Point(totalX/(double)timesRun, totalY/(double)timesRun);
 //        Log.d("Width Range", "Width: " + min + " - " + max);
         Log.d("Centroid", "Centroid: " + centroid.toString());
@@ -448,11 +449,12 @@ public class SahilClass {
                     return (int) Math.signum(Imgproc.contourArea(s) - Imgproc.contourArea(matOfPoint));
                 }
             });
-
             Point centroid = new Point();
             centroid.x = 0;
             centroid.y = 0;
             if (contours.size() > 0) {
+
+                Log.d("area", "" + Imgproc.contourArea(contours.get(0)));
                 Moments moments = Imgproc.moments(contours.get(0));
                 if (moments.get_m00() != 0) {
                     centroid.x = moments.get_m10() / moments.get_m00();
@@ -462,6 +464,8 @@ public class SahilClass {
                 totalY += centroid.y;
                 timesRun++;
                 detected = 1;
+            } else {
+                Log.d("area", "lol theres no area");
             }
             for (MatOfPoint mat : contours) {
                 mat.release();
@@ -510,6 +514,6 @@ public class SahilClass {
             erode.release();
 //            goldNotCropped.release();
         }
-        return new int[] {0, widthCamera*timesRun, totalX, totalY, timesRun, detected};
+        return new int[] {widthCamera*timesRun, 0, totalX, totalY, timesRun, detected};
     }
 }
