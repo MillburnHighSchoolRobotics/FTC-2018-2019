@@ -42,8 +42,8 @@ public class SahilTest extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         VuforiaLocalizer.Parameters params = new VuforiaLocalizer.Parameters(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
 
-        params.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
-//        params.cameraName=hardwareMap.get(WebcamName.class, "Whatever the webcam is called");
+//        params.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
+        params.cameraName=hardwareMap.get(WebcamName.class, "Whatever the webcam is called");
 
         params.vuforiaLicenseKey = JeffBot.vuforiaKey;
         VuforiaLocalizerImplSubclass vuforiaInstance = new VuforiaLocalizerImplSubclass(params);
