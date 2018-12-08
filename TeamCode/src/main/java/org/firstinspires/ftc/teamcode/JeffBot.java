@@ -33,6 +33,7 @@ public class JeffBot {
         this.rf = rf;
         this.rb = rb;
     }
+    public JeffBot() {}
     public void translate(double power, int positionChange) throws InterruptedException {
 //        lf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 //        lb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
