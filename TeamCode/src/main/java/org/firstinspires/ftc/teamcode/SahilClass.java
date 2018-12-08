@@ -36,13 +36,13 @@ public class SahilClass {
     private int kSize = 9;
     private int sigmaX = 0;
     private int length;
-    private double ratioDeviation = 0.2; //for 0.2, the size range is form 0.8 to 1.2 exclusive
+    private double ratioDeviation = 0.35; //for 0.2, the size range is form 0.8 to 1.2 exclusive
 //    private Scalar lowerG = new Scalar(0, 49, 210); //this is for webcam
 //    private Scalar upperG = new Scalar(44, 255, 255); //this is for webcam
     private Scalar lowerG = new Scalar(10, 193, 95);
     private Scalar upperG = new Scalar(32, 255, 255);
-    private Scalar lowerW = new Scalar(10, 193, 95);
-    private Scalar upperW = new Scalar(32, 255, 255);
+    private Scalar lowerW = new Scalar(14, 56, 126);
+    private Scalar upperW = new Scalar(36, 223, 255);
     private Scalar lowerBlack = new Scalar(0, 0, 0);
     private Scalar upperBlack = new Scalar(255, 255, 1);
     CTelemetry ctel;
@@ -141,7 +141,7 @@ public class SahilClass {
         double min = totalMin/(double)timesRun;
         double widthImage = max-min+1;
         Point centroid = new Point(totalX/(double)timesRun, totalY/(double)timesRun);
-        Log.d("Width Range", "Width: " + min + " - " + max);
+//        Log.d("Width Range", "Width: " + min + " - " + max);
         Log.d("Centroid", "Centroid: " + centroid.toString());
 
         if (detected == -1) {
@@ -168,7 +168,7 @@ public class SahilClass {
         int totalY = 0;
         int totalMax = 0;
         int totalMin = 0;
-        int detected = 0;
+        int detected = -1;
         while (time.milliseconds() < length && !Thread.currentThread().isInterrupted()) {
             Mat img = new Mat();
             Bitmap bm = Bitmap.createBitmap(widthCamera, heightCamera, Bitmap.Config.RGB_565);
@@ -286,6 +286,7 @@ public class SahilClass {
                 totalX += centroid.x;
                 totalY += centroid.y;
                 timesRun++;
+                detected = 1;
             }
             for (MatOfPoint mat : contours) {
                 mat.release();
@@ -319,7 +320,6 @@ public class SahilClass {
             } catch (IOException e) {
                 e.printStackTrace();
                 Log.e("CTelemetry", "failed gold detection");
-                detected = -1;
             }
             try {
                 ctel.sendImage("Test Gold Detection", goldNotCropped).execute();
@@ -343,7 +343,7 @@ public class SahilClass {
         int totalY = 0;
 //        int totalMax = 0;
 //        int totalMin = 0;
-        int detected = 0;
+        int detected = -1;
         while (time.milliseconds() < length && !Thread.currentThread().isInterrupted()) {
             Mat img = new Mat();
             Bitmap bm = Bitmap.createBitmap(widthCamera, heightCamera, Bitmap.Config.RGB_565);
@@ -355,11 +355,11 @@ public class SahilClass {
             Imgproc.cvtColor(img, rgb, Imgproc.COLOR_BGR2RGB);
             img.release();
 
-            Mat black = new Mat();
-            Core.inRange(hsv, lowerBlack, upperBlack, black);
-            Mat erodeBlack = new Mat();
-            Imgproc.erode(black, erodeBlack, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(10, 10)));
-            black.release();
+//            Mat black = new Mat();
+//            Core.inRange(hsv, lowerBlack, upperBlack, black);
+//            Mat erodeBlack = new Mat();
+//            Imgproc.erode(black, erodeBlack, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(10, 10)));
+//            black.release();
 
 //            int minPrev = -1;
 //            int maxPrev = -1;
@@ -421,12 +421,12 @@ public class SahilClass {
 //            totalMax += max;
 
             Mat gold = new Mat();
-            Mat goldNotCropped = new Mat();
-            Core.inRange(hsv, lowerW, upperW, goldNotCropped);
+//            Mat goldNotCropped = new Mat();
+//            Core.inRange(hsv, lowerW, upperW, goldNotCropped);
             Core.inRange(hsv, lowerW, upperW, gold);
-            Mat cropped = gold;
+//            Mat cropped = gold;
             Mat erode = new Mat();
-            Imgproc.erode(cropped, erode, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(5, 5)));
+            Imgproc.erode(gold, erode, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(5, 5)));
             gold.release();
             hsv.release();
             Mat blur = new Mat();
@@ -461,13 +461,15 @@ public class SahilClass {
                 totalX += centroid.x;
                 totalY += centroid.y;
                 timesRun++;
+                detected = 1;
             }
             for (MatOfPoint mat : contours) {
                 mat.release();
             }
 
-            Mat croppedImage = rgb;//.submat(0, heightCamera, min, max);
-            Imgproc.circle(croppedImage,centroid, 80, new Scalar(255,0,0), 80);
+            Mat rgbcopy = new Mat();
+            rgb.copyTo(rgbcopy);
+            Imgproc.circle(rgbcopy,centroid, 80, new Scalar(255,0,0), 80);
 //            //Imgproc.line(rgb, new Point(min,0), new Point(min,heightCamera), new Scalar(255,0,0), 5);
 //            //Imgproc.line(rgb, new Point(max,0), new Point(max,heightCamera), new Scalar(0,255,0), 5);
 
@@ -478,37 +480,36 @@ public class SahilClass {
                 Log.e("CTelemetry", "failed camera img");
             }
             try {
-                ctel.sendImage("Cropped Image", croppedImage).execute();
+                ctel.sendImage("Cropped Image", rgbcopy).execute();
             } catch (IOException e) {
                 e.printStackTrace();
                 Log.e("CTelemetry", "failed cropped img");
             }
-            try {
-                ctel.sendImage("Camera Outline", erodeBlack).execute();
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.e("CTelemetry", "failed black detection");
-            }
+//            try {
+//                ctel.sendImage("Camera Outline", erodeBlack).execute();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                Log.e("CTelemetry", "failed black detection");
+//            }
             try {
                 ctel.sendImage("Mineral Detection", erode).execute();
             } catch (IOException e) {
                 e.printStackTrace();
                 Log.e("CTelemetry", "failed gold detection");
-                detected = -1;
             }
-            try {
-                ctel.sendImage("Test Gold Detection", goldNotCropped).execute();
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.e("CTelemetry", "failed non cropped gold detection");
-            }
+//            try {
+//                ctel.sendImage("Test Gold Detection", goldNotCropped).execute();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                Log.e("CTelemetry", "failed non cropped gold detection");
+//            }
 
             rgb.release();
-            croppedImage.release();
-            erodeBlack.release();
+//            croppedImage.release();
+//            erodeBlack.release();
             erode.release();
-            goldNotCropped.release();
+//            goldNotCropped.release();
         }
-        return new int[] {-1, -1, totalX, totalY, timesRun, detected};
+        return new int[] {0, widthCamera*timesRun, totalX, totalY, timesRun, detected};
     }
 }
