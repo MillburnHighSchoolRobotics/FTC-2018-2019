@@ -177,7 +177,7 @@ public class NewNewNewTeleOp extends OpMode {
 
 
         // folding stuff
-        if (gamepad1.left_trigger == 1  && canToggleFolder.milliseconds() > 500) {
+        if (MathUtils.equals(gamepad1.left_trigger, 1, 0.1)  && canToggleFolder.milliseconds() > 500) {
             foldCount++;
             reaperFoldLeft.setPosition(foldPositions[foldCount%3]);
             reaperFoldRight.setPosition(foldPositions[foldCount%3]);
@@ -186,7 +186,7 @@ public class NewNewNewTeleOp extends OpMode {
 
 
         // dump truck
-        if (gamepad1.right_trigger == 1  && canToggleDropper.milliseconds() > 500) {
+        if (MathUtils.equals(gamepad1.right_trigger, 1, 0.1)  && canToggleDropper.milliseconds() > 500) {
             dropper.setPosition(1.2 - dropper.getPosition());
             canToggleDropper.reset();
         }

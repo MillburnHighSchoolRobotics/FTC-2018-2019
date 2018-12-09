@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import android.util.Log;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -114,6 +115,30 @@ public class JeffBot {
             rf.setPower(1 * output);
             rb.setPower(1 * output);
             Thread.sleep(5);
+        }
+    }
+
+
+
+    public void circleAround(double r, double speed, double stoppingAngle) throws InterruptedException {
+        double botWidth = 17.75; //inches
+        double c = botWidth/2; //in
+        double wheelWidth = 3; //in
+        double wheelRadius = wheelWidth/2; //in
+        double targetRadius = r; //inches
+        double targetSpeed =speed; //inches/sec
+        double encoderSpeed = (targetSpeed/(2*Math.PI*wheelRadius)) * ticksPerRev; //encoders per sec
+
+        double a = (targetRadius+c)/(targetRadius-c);
+        double v1 = (2*a*encoderSpeed)/(a+1);
+        double v2 = (2*encoderSpeed)/(a+1);
+        int sgn = MathUtils.sgn(stoppingAngle - WatchdogManager.getInstance().getValue("rotation", Double.class));
+        ((DcMotorEx)lf).setVelocity(v2);
+        ((DcMotorEx)lb).setVelocity(v2);
+        ((DcMotorEx)rf).setVelocity(v1);
+        ((DcMotorEx)rb).setVelocity(v1);
+        while (!Thread.currentThread().isInterrupted() && sgn * (stoppingAngle - WatchdogManager.getInstance().getValue("rotation", Double.class)) > 0) {
+            Thread.sleep(10);
         }
     }
 
