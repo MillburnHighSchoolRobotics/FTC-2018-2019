@@ -133,10 +133,10 @@ public class JeffBot {
         double v1 = (2*a*encoderSpeed)/(a+1);
         double v2 = (2*encoderSpeed)/(a+1);
         int sgn = MathUtils.sgn(stoppingAngle - WatchdogManager.getInstance().getValue("rotation", Double.class));
-        ((DcMotorEx)lf).setVelocity(v2);
-        ((DcMotorEx)lb).setVelocity(v2);
-        ((DcMotorEx)rf).setVelocity(v1);
-        ((DcMotorEx)rb).setVelocity(v1);
+        ((DcMotorEx)lf).setVelocity(v1);
+        ((DcMotorEx)lb).setVelocity(v1);
+        ((DcMotorEx)rf).setVelocity(v2);
+        ((DcMotorEx)rb).setVelocity(v2);
         while (!Thread.currentThread().isInterrupted() && sgn * (stoppingAngle - WatchdogManager.getInstance().getValue("rotation", Double.class)) > 0) {
             Thread.sleep(10);
         }

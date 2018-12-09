@@ -24,6 +24,9 @@ public class BlueAutonPitSad extends LinearOpMode {
     DcMotor rb;
     Servo marker;
     Servo stopper;
+    Servo dropper;
+    Servo reaperFoldLeft;
+    Servo reaperFoldRight;
     DigitalChannel magneticLimitSwitch;
 
     DcMotor liftR;
@@ -50,6 +53,13 @@ public class BlueAutonPitSad extends LinearOpMode {
         magneticLimitSwitch = hardwareMap.get(DigitalChannel.class, "Switchy");
         marker = hardwareMap.servo.get("marker");
         stopper = hardwareMap.servo.get("stopper");
+        dropper = hardwareMap.servo.get("dropper");
+        reaperFoldLeft = hardwareMap.servo.get("reaperFoldLeft");
+        reaperFoldRight = hardwareMap.servo.get("reaperFoldRight");
+        dropper.setPosition(1);
+        reaperFoldRight.setDirection(Servo.Direction.REVERSE);
+        reaperFoldRight.setPosition(0);
+        reaperFoldLeft.setPosition(0);
         WatchdogManager wdm = WatchdogManager.getInstance();
         wdm.setHardwareMap(hardwareMap);
         wdm.setCurrentAuton(this);
@@ -70,6 +80,11 @@ public class BlueAutonPitSad extends LinearOpMode {
 
         liftR.setDirection(DcMotorSimple.Direction.REVERSE);
         JeffBot mv = new JeffBot(lf, lb, rf, rb);
+        dropper.setPosition(0.2);
+        Thread.sleep(500);
+        reaperFoldLeft.setPosition(0.6);
+        reaperFoldRight.setPosition(0.6);
+
         liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -82,17 +97,19 @@ public class BlueAutonPitSad extends LinearOpMode {
         liftL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         liftR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         mv.moveUntilPressed(new DcMotor[]{liftL, liftR}, magneticLimitSwitch, mv.POS_POWER_CONST);//Move until limit switch pressed
-        liftL.setPower(0.6);
-        liftR.setPower(0.6);
+        liftL.setPower(0.8);
+        liftR.setPower(0.8);
         ElapsedTime extraLiftTimer = new ElapsedTime();
-        while (extraLiftTimer.milliseconds() < 250) {
+        while (extraLiftTimer.milliseconds() < 750) {
             Thread.sleep(5);
         }
         liftL.setPower(0);
         liftR.setPower(0);
-
         SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000);
         int num = sahilClass.getThreeMineralPosition();
+        reaperFoldLeft.setPosition(0.3);
+        reaperFoldRight.setPosition(0.3);
+
         telemetry.addData("Position", num + "");
         telemetry.update();
         mv.translateDistance(0.7,-12);

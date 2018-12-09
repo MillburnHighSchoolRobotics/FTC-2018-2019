@@ -39,7 +39,7 @@ public class SahilClass {
     private double ratioDeviation = 0.35; //for 0.2, the size range is form 0.8 to 1.2 exclusive
 //    private Scalar lowerG = new Scalar(0, 49, 210); //this is for webcam
 //    private Scalar upperG = new Scalar(44, 255, 255); //this is for webcam
-    private Scalar lowerG = new Scalar(10, 193, 95);
+    private Scalar lowerG = new Scalar(10, 200, 160); //ew Scalar(10, 193, 95);
     private Scalar upperG = new Scalar(32, 255, 255);
     private Scalar lowerW = new Scalar(14, 56, 126);
     private Scalar upperW = new Scalar(36, 223, 255);
@@ -56,12 +56,12 @@ public class SahilClass {
         this.vuforiaInstance = vuforiaInstance;
         widthCamera = vuforiaInstance.rgb.getBufferWidth();
         heightCamera = vuforiaInstance.rgb.getHeight();
-        ctel = new Retrofit.Builder()
-                .baseUrl(BuildConfig.CTELEM_SERVER_IP)
-                .addConverterFactory(MatConverterFactory.create())
-                .build()
-                .create(CTelemetry.class);
-//        ctel = null;
+//        ctel = new Retrofit.Builder()
+//                .baseUrl("http://localhost:3000")
+//                .addConverterFactory(MatConverterFactory.create())
+//                .build()
+//                .create(CTelemetry.class);
+        ctel = null;
         this.length = length;
     }
 
@@ -83,11 +83,12 @@ public class SahilClass {
 
         if (max > min) {
             if ((centroid.x >= 0) && (centroid.x < (widthImage/3))) {
+                position = 2;
+            } else if ((centroid.x >= (widthImage/3)) && (centroid.x < (2*(widthImage/3)))) {
+                position = 1;
+            } else if (centroid.x >= (2*(widthImage/3))) {
                 position = 0;
-            } } else if ((centroid.x >= (widthImage/3)) && (centroid.x < (2*(widthImage/3)))) {
-            position = 1;
-        } else if (centroid.x >= (2*(widthImage/3))) {
-            position = 2;
+            }
             Log.d("Position", "Position: " + position);
         } else {
             Log.d("Position", "uh oh we got a big error determining the max and min");
@@ -224,7 +225,7 @@ public class SahilClass {
             ArrayList<int[]> maxRanges = new ArrayList<>();
 
             for (int w = 0; w < widthCamera; w++) {
-                int h = (int) Math.round(heightCamera/2);
+                int h = (int) Math.round((int)(heightCamera*0.45)/2);
                 double[] data = erodeBlack.get(h,w);
                 if ((data[0] > 0) && (minPrev == -1)) {
                     minPrev = w;
@@ -245,7 +246,7 @@ public class SahilClass {
 
 
             for (int w = (int)(Math.round(widthCamera-1))-1; w >= 0; w--) {
-                int h = (int) Math.round(heightCamera/2);
+                int h = (int) Math.round((int)(heightCamera*0.45)/2);
                 double[] data = erodeBlack.get(h,w);
                 if ((data[0] == 0) && (maxPrev == -1)) {
                     maxPrev = w;
@@ -281,7 +282,7 @@ public class SahilClass {
             Mat goldNotCropped = new Mat();
             Core.inRange(hsv, lowerG, upperG, goldNotCropped);
             Core.inRange(hsv, lowerG, upperG, gold);
-            Mat cropped = gold.submat(0,heightCamera,min,max);
+            Mat cropped = gold.submat(0,(int)(heightCamera*0.45),min,max);
             gold.release();
             Mat erode = new Mat();
             Imgproc.erode(cropped, erode, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(5, 5)));
@@ -324,41 +325,41 @@ public class SahilClass {
                 mat.release();
             }
 
-            Mat croppedImage = rgb.submat(0, heightCamera, min, max);
+            Mat croppedImage = rgb.submat(0, (int)(heightCamera*0.45), min, max);
             Imgproc.circle(croppedImage,centroid, 80, new Scalar(255,0,0), 80);
-            Imgproc.line(rgb, new Point(min,0), new Point(min,heightCamera), new Scalar(255,0,0), 5);
-            Imgproc.line(rgb, new Point(max,0), new Point(max,heightCamera), new Scalar(0,255,0), 5);
+            Imgproc.line(rgb, new Point(min,0), new Point(min,(int)(heightCamera*0.45)), new Scalar(255,0,0), 5);
+            Imgproc.line(rgb, new Point(max,0), new Point(max,(int)(heightCamera*0.45)), new Scalar(0,255,0), 5);
 
-            try {
-                ctel.sendImage("Camera Image", rgb).execute();
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.e("CTelemetry", "failed camera img");
-            }
-            try {
-                ctel.sendImage("Cropped Image", croppedImage).execute();
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.e("CTelemetry", "failed cropped img");
-            }
-            try {
-                ctel.sendImage("Camera Outline", erodeBlack).execute();
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.e("CTelemetry", "failed black detection");
-            }
-            try {
-                ctel.sendImage("Mineral Detection", erode).execute();
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.e("CTelemetry", "failed gold detection");
-            }
-            try {
-                ctel.sendImage("Test Gold Detection", goldNotCropped).execute();
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.e("CTelemetry", "failed non cropped gold detection");
-            }
+//            try {
+//                ctel.sendImage("Camera Image", rgb).execute();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                Log.e("CTelemetry", "failed camera img");
+//            }
+//            try {
+//                ctel.sendImage("Cropped Image", croppedImage).execute();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                Log.e("CTelemetry", "failed cropped img");
+//            }
+//            try {
+//                ctel.sendImage("Camera Outline", erodeBlack).execute();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                Log.e("CTelemetry", "failed black detection");
+//            }
+//            try {
+//                ctel.sendImage("Mineral Detection", erode).execute();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                Log.e("CTelemetry", "failed gold detection");
+//            }
+//            try {
+//                ctel.sendImage("Test Gold Detection", goldNotCropped).execute();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                Log.e("CTelemetry", "failed non cropped gold detection");
+//            }
 
             rgb.release();
             croppedImage.release();
@@ -508,30 +509,30 @@ public class SahilClass {
 //            //Imgproc.line(rgb, new Point(min,0), new Point(min,heightCamera), new Scalar(255,0,0), 5);
 //            //Imgproc.line(rgb, new Point(max,0), new Point(max,heightCamera), new Scalar(0,255,0), 5);
 
-            try {
-                ctel.sendImage("Camera Image", rgb).execute();
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.e("CTelemetry", "failed camera img");
-            }
-            try {
-                ctel.sendImage("Cropped Image", rgbcopy).execute();
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.e("CTelemetry", "failed cropped img");
-            }
 //            try {
-//                ctel.sendImage("Camera Outline", erodeBlack).execute();
+//                ctel.sendImage("Camera Image", rgb).execute();
 //            } catch (IOException e) {
 //                e.printStackTrace();
-//                Log.e("CTelemetry", "failed black detection");
+//                Log.e("CTelemetry", "failed camera img");
 //            }
-            try {
-                ctel.sendImage("Mineral Detection", erode).execute();
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.e("CTelemetry", "failed gold detection");
-            }
+//            try {
+//                ctel.sendImage("Cropped Image", rgbcopy).execute();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                Log.e("CTelemetry", "failed cropped img");
+//            }
+////            try {
+////                ctel.sendImage("Camera Outline", erodeBlack).execute();
+////            } catch (IOException e) {
+////                e.printStackTrace();
+////                Log.e("CTelemetry", "failed black detection");
+////            }
+//            try {
+//                ctel.sendImage("Mineral Detection", erode).execute();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                Log.e("CTelemetry", "failed gold detection");
+//            }
 //            try {
 //                ctel.sendImage("Test Gold Detection", goldNotCropped).execute();
 //            } catch (IOException e) {

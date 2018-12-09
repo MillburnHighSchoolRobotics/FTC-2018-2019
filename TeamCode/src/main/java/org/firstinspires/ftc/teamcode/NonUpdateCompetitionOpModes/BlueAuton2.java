@@ -25,6 +25,9 @@ public class BlueAuton2 extends LinearOpMode {
     DcMotor rb;
     Servo marker;
     Servo stopper;
+    Servo dropper;
+    Servo reaperFoldLeft;
+    Servo reaperFoldRight;
     DigitalChannel magneticLimitSwitch;
 
 
@@ -45,6 +48,13 @@ public class BlueAuton2 extends LinearOpMode {
         magneticLimitSwitch = hardwareMap.get(DigitalChannel.class, "Switchy");
         marker = hardwareMap.servo.get("marker");
         stopper = hardwareMap.servo.get("stopper");
+        dropper = hardwareMap.servo.get("dropper");
+        reaperFoldLeft = hardwareMap.servo.get("reaperFoldLeft");
+        reaperFoldRight = hardwareMap.servo.get("reaperFoldRight");
+        dropper.setPosition(1);
+        reaperFoldRight.setDirection(Servo.Direction.REVERSE);
+        reaperFoldRight.setPosition(0);
+        reaperFoldLeft.setPosition(0);
         WatchdogManager wdm = WatchdogManager.getInstance();
         wdm.setHardwareMap(hardwareMap);
         wdm.setCurrentAuton(this);
@@ -81,6 +91,12 @@ public class BlueAuton2 extends LinearOpMode {
         //sampling
      //   int meme = 0;
         JeffBot mv = new JeffBot(lf, lb, rf, rb);
+
+        dropper.setPosition(0.2);
+        Thread.sleep(500);
+        reaperFoldLeft.setPosition(0.6);
+        reaperFoldRight.setPosition(0.6);
+
 //        TFODTest tfod = new TFODTest(hardwareMap);
         liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -95,14 +111,20 @@ public class BlueAuton2 extends LinearOpMode {
         mv.moveUntilPressed(new DcMotor[]{liftL, liftR}, magneticLimitSwitch, mv.POS_POWER_CONST);//Move until limit switch pressed
 //        liftL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 //        liftR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        liftL.setPower(0.6);
-        liftR.setPower(0.6);
+        liftL.setPower(0.8);
+        liftR.setPower(0.8);
         ElapsedTime extraLiftTimer = new ElapsedTime();
-        while (extraLiftTimer.milliseconds() < 250) {
+        while (extraLiftTimer.milliseconds() < 750) {
             Thread.sleep(5);
         }
         liftL.setPower(0);
         liftR.setPower(0);
+        SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000);
+
+
+        int pos = sahilClass.getThreeMineralPosition();
+        reaperFoldLeft.setPosition(0.3);
+        reaperFoldRight.setPosition(0.3);
         //mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {-0.8, 0.8}, new int[] {10700+100, 10700+100});
 //        Thread.sleep(100);
 
@@ -114,10 +136,6 @@ public class BlueAuton2 extends LinearOpMode {
 //        Thread.sleep(100);
 
         //sampling
-        SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000);
-
-
-        int pos = sahilClass.getThreeMineralPosition();
         mv.translateDistance(0.7,-15);
 
 //        mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {-0.8, 0.8}, new int[] {600, 600});
@@ -166,16 +184,16 @@ public class BlueAuton2 extends LinearOpMode {
         mv.rotateTo(90);
 //        Thread.sleep(100);
 //        Thread.sleep(100);
-       mv.translateDistance(0.7, -48);//TODO:See above immortal TODO
+       mv.translateDistance(0.7, -36*Math.sqrt(2));//TODO:See above immortal TODO
 //        Thread.sleep(100);
        mv.rotateTo(135);
 //        Thread.sleep(100);
-       mv.translateDistance(0.7, -53);
+       mv.translateDistance(0.7, -36);
+       mv.rotateTo(90);
 //        Thread.sleep(100);
 //        mv.rotateDegrees(0.7, -60);
 //        Thread.sleep(100);
-        mv.rotateTo(135-90);
-        marker.setPosition(0);
+        marker.setPosition(1);
         Thread.sleep(1000);
         marker.setPosition(0.5);
         mv.rotateTo(135);

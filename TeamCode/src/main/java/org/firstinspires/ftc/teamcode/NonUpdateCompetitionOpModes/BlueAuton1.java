@@ -81,7 +81,7 @@ public class BlueAuton1 extends LinearOpMode {
 
         params.vuforiaLicenseKey = JeffBot.vuforiaKey;
 
-//        VuforiaLocalizerImplSubclass vuforiaInstance = new VuforiaLocalizerImplSubclass(params);
+        VuforiaLocalizerImplSubclass vuforiaInstance = new VuforiaLocalizerImplSubclass(params);
         waitForStart();
         rf.setDirection(DcMotorSimple.Direction.REVERSE);
         rb.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -125,6 +125,8 @@ public class BlueAuton1 extends LinearOpMode {
         }
         liftL.setPower(0);
         liftR.setPower(0);
+        SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000); //this only loops once after 1000 millis but keep this constraint just in case
+        int num = sahilClass.getThreeMineralPosition();
         reaperFoldLeft.setPosition(0.3);
         reaperFoldRight.setPosition(0.3);
         //mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {-0.8, 0.8}, new int[] {10700+100, 10700+100});
@@ -140,9 +142,7 @@ public class BlueAuton1 extends LinearOpMode {
 //        mv.rotateTo(0);
 
 
-//        SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000); //this only loops once after 1000 millis but keep this constraint just in case
 //        while (!Thread.currentThread().isInterrupted()) {
-        int num = 2;//sahilClass.getThreeMineralPosition();
         telemetry.addData("Position", num + "");
         telemetry.update();
         mv.translateDistance(0.7,-12);
@@ -162,7 +162,7 @@ public class BlueAuton1 extends LinearOpMode {
                 break;
             case 0:
                 mv.rotateTo(45);
-                mv.translateDistance(0.7,-36);
+                mv.translateDistance(0.7,-30);
 //                mv.rotateTo(-90);
 //                mv.rotateTo(45);
                 mv.rotateTo(-52);
@@ -195,11 +195,15 @@ public class BlueAuton1 extends LinearOpMode {
 
 //        sampleThisShit(mv, tfod);
             Thread.sleep(100);
-            marker.setPosition(0);
+            marker.setPosition(1);
             Thread.sleep(1000);
 //            mv.rotateTo(135);
             marker.setPosition(0.5);
             mv.translateDistance(0.7, 75);
+//        lf.setPower(0.5);
+//        rf.setPower(0.5);
+//        lb.setPower(0.5);
+//        rb.setPower(0.5)
 
         wdm.clean();
     }
