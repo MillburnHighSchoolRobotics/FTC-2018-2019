@@ -49,6 +49,10 @@ public class BlueAuton1 extends LinearOpMode {
         }
     }
 
+    private Servo dropper;
+    private Servo reaperFoldLeft;
+    private Servo reaperFoldRight;
+
     @Override
     public void runOpMode() throws InterruptedException {
         lf = hardwareMap.dcMotor.get("leftFront");
@@ -60,6 +64,13 @@ public class BlueAuton1 extends LinearOpMode {
         magneticLimitSwitch = hardwareMap.get(DigitalChannel.class, "Switchy");
         marker = hardwareMap.servo.get("marker");
         stopper = hardwareMap.servo.get("stopper");
+        dropper = hardwareMap.servo.get("dropper");
+        reaperFoldLeft = hardwareMap.servo.get("reaperFoldLeft");
+        reaperFoldRight = hardwareMap.servo.get("reaperFoldRight");
+        dropper.setPosition(1);
+        reaperFoldRight.setDirection(Servo.Direction.REVERSE);
+        reaperFoldLeft.setPosition(0.3);
+        reaperFoldRight.setPosition(0.3);
         WatchdogManager wdm = WatchdogManager.getInstance();
         wdm.setCurrentAuton(this);
         wdm.setHardwareMap(hardwareMap);
@@ -70,7 +81,7 @@ public class BlueAuton1 extends LinearOpMode {
 
         params.vuforiaLicenseKey = JeffBot.vuforiaKey;
 
-        VuforiaLocalizerImplSubclass vuforiaInstance = new VuforiaLocalizerImplSubclass(params);
+//        VuforiaLocalizerImplSubclass vuforiaInstance = new VuforiaLocalizerImplSubclass(params);
         waitForStart();
         rf.setDirection(DcMotorSimple.Direction.REVERSE);
         rb.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -85,6 +96,9 @@ public class BlueAuton1 extends LinearOpMode {
         int initL = liftL.getCurrentPosition();
         int initR = liftR.getCurrentPosition();
         JeffBot mv = new JeffBot(lf, lb, rf, rb);
+
+        reaperFoldLeft.setPosition(0.9);
+        reaperFoldRight.setPosition(0.9);
         TFODTest tfod = new TFODTest(hardwareMap);
         liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -122,9 +136,9 @@ public class BlueAuton1 extends LinearOpMode {
 //        mv.rotateTo(0);
 
 
-        SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000); //this only loops once after 1000 millis but keep this constraint just in case
+//        SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000); //this only loops once after 1000 millis but keep this constraint just in case
 //        while (!Thread.currentThread().isInterrupted()) {
-        int num = sahilClass.getThreeMineralPosition();
+        int num = 0;//sahilClass.getThreeMineralPosition();
         telemetry.addData("Position", num + "");
         telemetry.update();
         mv.translateDistance(0.7,-12);

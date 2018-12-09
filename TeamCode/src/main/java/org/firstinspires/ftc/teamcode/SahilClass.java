@@ -94,6 +94,38 @@ public class SahilClass {
         }
         return position;
     }
+
+
+    public int getThreeWebMineralPosition() {
+        int[] data = getWebMineralLocation();
+        int totalMax = data[0];
+        int totalMin = data[1];
+        int totalX = data[2];
+        int totalY = data[3];
+        int timesRun = data[4];
+
+        int position = -1;
+        double max = totalMax/(double)timesRun;
+        double min = totalMin/(double)timesRun;
+        double widthImage = max-min+1;
+        Point centroid = new Point(totalX/(double)timesRun, totalY/(double)timesRun);
+        Log.d("Width Range", "Width: " + min + " - " + max);
+        Log.d("Centroid", "Centroid: " + centroid.toString());
+
+        if (max > min) {
+            if ((centroid.x >= 0) && (centroid.x < (widthImage/3))) {
+                position = 0;
+            } } else if ((centroid.x >= (widthImage/3)) && (centroid.x < (2*(widthImage/3)))) {
+            position = 1;
+        } else if (centroid.x >= (2*(widthImage/3))) {
+            position = 2;
+            Log.d("Position", "Position: " + position);
+        } else {
+            Log.d("Position", "uh oh we got a big error determining the max and min");
+        }
+        return position;
+    }
+
     public int getTwoMineralPosition() {
         int[] data = getMineralLocation();
         int totalMax = data[0];

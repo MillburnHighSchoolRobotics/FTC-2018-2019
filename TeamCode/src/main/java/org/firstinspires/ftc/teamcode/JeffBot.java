@@ -14,9 +14,9 @@ import virtualRobot.utils.MathUtils;
 public class JeffBot {
     public final double POS_POWER_CONST = 0.7;
     public final double NEG_POWER_CONST = -0.7;
-    final double kP = 0.0225;
-    final double kI = 0.0035;
-    final double kD = 0.0175; //0.012
+    final double kP = 0.015; //0.0225
+    final double kI = 0; //0.0035
+    final double kD = 0.0125; //0.0175
     DcMotor lf;
     DcMotor lb;
     DcMotor rf;
@@ -100,7 +100,7 @@ public class JeffBot {
         double lastTime = -1;
         while (!Thread.currentThread().isInterrupted()) {
             double output = pidController.getPIDOutput(WatchdogManager.getInstance().getValue("rotation", Double.class));
-            if (Math.abs(WatchdogManager.getInstance().getValue("rotation", Double.class) - target) < 1) {
+            if (Math.abs(WatchdogManager.getInstance().getValue("rotation", Double.class) - target) < 3) {
                 if (lastTime < 0) lastTime = time.milliseconds();
                 else if (time.milliseconds() - lastTime > 100) {
                     stop();

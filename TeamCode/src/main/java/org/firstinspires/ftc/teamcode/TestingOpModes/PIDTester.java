@@ -48,4 +48,9 @@ public class PIDTester extends OpMode {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void stop() {
+        WatchdogManager.getInstance().clean();
+    }
 }
