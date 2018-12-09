@@ -112,10 +112,9 @@ public class SahilClass {
         Log.d("Width Range", "Width: " + min + " - " + max);
         Log.d("Centroid", "Centroid: " + centroid.toString());
 
-        if (max > min) {
-            if ((centroid.x >= 0) && (centroid.x < (widthImage/3))) {
-                position = 0;
-            } } else if ((centroid.x >= (widthImage/3)) && (centroid.x < (2*(widthImage/3)))) {
+        if ((centroid.x >= 0) && (centroid.x < (widthImage/3))) {
+            position = 0;
+        } else if ((centroid.x >= (widthImage/3)) && (centroid.x < (2*(widthImage/3)))) {
             position = 1;
         } else if (centroid.x >= (2*(widthImage/3))) {
             position = 2;
