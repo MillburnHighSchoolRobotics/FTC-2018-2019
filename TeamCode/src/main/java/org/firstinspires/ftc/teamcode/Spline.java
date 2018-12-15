@@ -150,10 +150,14 @@ public class Spline {
         double angle = Math.toDegrees(Math.atan2(yDerivative,xDerivative));
         return angle;
     }
-    public static double getVelocity(double time) {
-       int d = getDomain(time);
-       double timeDiff = Math.abs(domain[d][0]-domain[d][1]);
-
+    public static double getAcceleration(double time) {
+        int d = getDomain(time);
+        double xd1 = 3*x_interpolant[d][0]*Math.pow(time,2) + 2*x_interpolant[d][1]*time + x_interpolant[d][2];
+        double yd1 = 3*y_interpolant[d][0]*Math.pow(time,2) + 2*y_interpolant[d][1]*time + y_interpolant[d][2];
+        double xd2 = 6*x_interpolant[d][0]*time + 2*x_interpolant[d][1];
+        double yd2 = 6*y_interpolant[d][0]*time + 2*y_interpolant[d][1];
+        double a = ((xd1*yd2)-(yd1*xd2))/(Math.pow(xd1,2));
+        return a;
     }
     public static double[][] getDomain() {
         return domain;
