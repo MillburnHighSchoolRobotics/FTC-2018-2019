@@ -10,6 +10,8 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.JeffBot;
+import org.opencv.core.Mat;
+
 import virtualRobot.utils.MathUtils;
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 
@@ -94,6 +96,7 @@ public class NewNewNewTeleOp extends OpMode {
         lb.setDirection(REVERSE);
         liftRight.setDirection(REVERSE);
         reaperFoldRight.setDirection(Servo.Direction.REVERSE);
+        reaperRight.setDirection(REVERSE);
 
         lf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lb.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -114,7 +117,7 @@ public class NewNewNewTeleOp extends OpMode {
         reaperRight.setPower(0);
         reaperSpin.setPower(0);
         stopper.setPosition(1);
-        dropper.setPosition(1);
+        dropper.setPosition(0.9);
         marker.setPosition(0.5);
         reaperFoldLeft.setPosition(foldPositions[foldCount]);
         reaperFoldRight.setPosition(foldPositions[foldCount]);
@@ -176,25 +179,31 @@ public class NewNewNewTeleOp extends OpMode {
         }
 
 
-        // folding stuff
-        if (MathUtils.equals(gamepad1.left_trigger, 1, 0.1)  && canToggleFolder.milliseconds() > 500) {
+        if (gamepad1.y && canToggleFolder.milliseconds() > 250) {
             foldCount++;
+            reaperFoldLeft.setPosition(foldPositions[foldCount%3]);
+            reaperFoldRight.setPosition(foldPositions[foldCount%3]);
+            canToggleFolder.reset();
+        }
+        if (gamepad1.a && canToggleFolder.milliseconds() > 250) {
+            foldCount--;
             reaperFoldLeft.setPosition(foldPositions[foldCount%3]);
             reaperFoldRight.setPosition(foldPositions[foldCount%3]);
             canToggleFolder.reset();
         }
 
 
+
         // dump truck
-        if (MathUtils.equals(gamepad1.right_trigger, 1, 0.1)  && canToggleDropper.milliseconds() > 500) {
-            dropper.setPosition(1.2 - dropper.getPosition());
+        if (gamepad1.b  && canToggleDropper.milliseconds() > 500) {
+            dropper.setPosition(1.1 - dropper.getPosition());
             canToggleDropper.reset();
         }
 
 
 
         // reset pls
-        if (gamepad1.a) {
+        if (gamepad1.x) {
             lf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             lb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             rf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -215,14 +224,14 @@ public class NewNewNewTeleOp extends OpMode {
 
 
         // toggle locking lift
-        if (gamepad1.x && canToggleStopper.milliseconds() > 500) {
+        if (MathUtils.equals(gamepad1.left_trigger, 1, 0.05) && canToggleStopper.milliseconds() > 500) {
             stopper.setPosition(1 - stopper.getPosition());
             canToggleStopper.reset();
         }
 
 
         // marker bc why not
-        if (gamepad1.y && canToggleMarker.milliseconds() > 500) {
+        if (MathUtils.equals(gamepad1.right_trigger, 1, 0.05) && canToggleMarker.milliseconds() > 500) {
             marker.setPosition(1.5 - marker.getPosition());
             canToggleMarker.reset();
         }
