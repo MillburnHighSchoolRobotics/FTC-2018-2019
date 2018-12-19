@@ -158,11 +158,11 @@ public class NewNewNewTeleOp extends OpMode {
 
         // reaper extension
         if (gamepad1.dpad_left) {
-            reaperLeft.setPower(1 * gearing);
-            reaperRight.setPower(1 * gearing);
-        } else if (gamepad1.dpad_right) {
             reaperLeft.setPower(-1 * gearing);
             reaperRight.setPower(-1 * gearing);
+        } else if (gamepad1.dpad_right) {
+            reaperLeft.setPower(1 * gearing);
+            reaperRight.setPower(1 * gearing);
         } else {
             reaperLeft.setPower(0);
             reaperRight.setPower(0);
@@ -181,12 +181,14 @@ public class NewNewNewTeleOp extends OpMode {
 
         if (gamepad1.y && canToggleFolder.milliseconds() > 250) {
             foldCount++;
+            if (foldCount > foldPositions.length) foldCount = foldPositions.length;
             reaperFoldLeft.setPosition(foldPositions[foldCount%3]);
             reaperFoldRight.setPosition(foldPositions[foldCount%3]);
             canToggleFolder.reset();
         }
         if (gamepad1.a && canToggleFolder.milliseconds() > 250) {
             foldCount--;
+            if (foldCount < 0) foldCount = 0;
             reaperFoldLeft.setPosition(foldPositions[foldCount%3]);
             reaperFoldRight.setPosition(foldPositions[foldCount%3]);
             canToggleFolder.reset();
