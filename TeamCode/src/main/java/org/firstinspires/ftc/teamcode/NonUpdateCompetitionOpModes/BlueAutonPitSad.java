@@ -105,7 +105,7 @@ public class BlueAutonPitSad extends LinearOpMode {
         }
         liftL.setPower(0);
         liftR.setPower(0);
-        SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000);
+        SahilClass sahilClass = new SahilClass(vuforiaInstance);
         int num = sahilClass.getThreeMineralPosition();
         reaperFoldLeft.setPosition(0.3);
         reaperFoldRight.setPosition(0.3);

@@ -48,7 +48,7 @@ public class SahilTest extends LinearOpMode {
         params.vuforiaLicenseKey = JeffBot.vuforiaKey;
         VuforiaLocalizerImplSubclass vuforiaInstance = new VuforiaLocalizerImplSubclass(params);
         waitForStart();
-        SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000); //this only loops once after 1000 millis but keep this constraint just in case
+        SahilClass sahilClass = new SahilClass(vuforiaInstance); //this only loops once after 1000 millis but keep this constraint just in case
         int pos = sahilClass.getThreeMineralPosition();
         telemetry.addData("Position", pos + "");
         telemetry.update();

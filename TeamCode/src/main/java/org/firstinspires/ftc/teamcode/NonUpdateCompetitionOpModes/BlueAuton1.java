@@ -125,7 +125,7 @@ public class BlueAuton1 extends LinearOpMode {
         }
         liftL.setPower(0);
         liftR.setPower(0);
-        SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000); //this only loops once after 1000 millis but keep this constraint just in case
+        SahilClass sahilClass = new SahilClass(vuforiaInstance);
         int num = sahilClass.getThreeMineralPosition();
         reaperFoldLeft.setPosition(0.3);
         reaperFoldRight.setPosition(0.3);
