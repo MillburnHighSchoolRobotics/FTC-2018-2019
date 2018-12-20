@@ -8,7 +8,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
 import org.opencv.core.Core;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfInt;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
@@ -203,10 +205,11 @@ public class SahilClass {
         int totalMin = 0;
         int detected = -1;
         while (time.milliseconds() < length && !Thread.currentThread().isInterrupted()) {
-            Mat img = new Mat();
+            Mat camera = new Mat();
             Bitmap bm = Bitmap.createBitmap(widthCamera, heightCamera, Bitmap.Config.RGB_565);
             bm.copyPixelsFromBuffer(vuforiaInstance.rgb.getPixels());
-            Utils.bitmapToMat(bm, img);
+            Utils.bitmapToMat(bm, camera);
+            Mat img = balance(camera);
             Mat hsv = new Mat();
             Imgproc.cvtColor(img, hsv, Imgproc.COLOR_RGB2HSV);
             Mat rgb = new Mat();
@@ -547,5 +550,34 @@ public class SahilClass {
 //            goldNotCropped.release();
         }
         return new int[] {widthCamera*timesRun, 0, totalX, totalY, timesRun, detected};
+    }
+    private Mat balance(Mat img) {
+        Mat lab = new Mat(); //no pun intended
+        Imgproc.cvtColor(img, lab, Imgproc.COLOR_BGR2Lab);
+        double a = 0;
+        double b = 0;
+        int count = 0;
+        for (int x = 0; x < lab.rows(); x++) {
+            for (int y = 0; y < lab.cols(); y++) {
+                a += lab.get(x,y)[1];
+                b += lab.get(x,y)[2];
+                count++;
+            }
+        }
+        a /= count;
+        b /= count;
+        for (int x = 0; x < lab.rows(); x++) {
+            for (int y = 0; y < lab.cols(); y++) {
+                double[] data = lab.get(x,y);
+                double[] newData = new double[3];
+                newData[0] = data[0];
+                newData[1] = data[1] - Math.round((a-128)*(data[0]/255.0));
+                newData[2] = data[2] - Math.round((b-128)*(data[0]/255.0));
+                lab.put(x,y,newData);
+            }
+        }
+        Mat balancedImage = new Mat();
+        Imgproc.cvtColor(lab, balancedImage, Imgproc.COLOR_Lab2BGR);
+        return balancedImage;
     }
 }
