@@ -21,10 +21,10 @@ Joystick left - forward/backward
 Joystick right - left/right
 Dpad up and down - lift
 Dpad left and right - reaper extends forward/backward
-a - reset every damn thing
-x - toggle locking lift
-y - toggle marker
 right/left bumper - hold to spin reaper forward/backward
+a - position of fold ++
+y - position of fold --
+x - reset every damn thing
 trigger left - folding reaper forward/backward
 trigger right - dumping mineral servo
  */
@@ -117,7 +117,7 @@ public class NewNewNewTeleOp extends OpMode {
         reaperRight.setPower(0);
         reaperSpin.setPower(0);
         stopper.setPosition(1);
-        dropper.setPosition(0.9);
+        dropper.setPosition(0.95);
         marker.setPosition(0.5);
         reaperFoldLeft.setPosition(foldPositions[foldCount]);
         reaperFoldRight.setPosition(foldPositions[foldCount]);
@@ -158,11 +158,11 @@ public class NewNewNewTeleOp extends OpMode {
 
         // reaper extension
         if (gamepad1.dpad_left) {
-            reaperLeft.setPower(-1 * gearing);
-            reaperRight.setPower(-1 * gearing);
+            reaperLeft.setPower(-0.5 * gearing);
+            reaperRight.setPower(-0.5 * gearing);
         } else if (gamepad1.dpad_right) {
-            reaperLeft.setPower(1 * gearing);
-            reaperRight.setPower(1 * gearing);
+            reaperLeft.setPower(0.5 * gearing);
+            reaperRight.setPower(0.5 * gearing);
         } else {
             reaperLeft.setPower(0);
             reaperRight.setPower(0);
@@ -198,7 +198,7 @@ public class NewNewNewTeleOp extends OpMode {
 
         // dump truck
         if (gamepad1.b  && canToggleDropper.milliseconds() > 500) {
-            dropper.setPosition(1.1 - dropper.getPosition());
+            dropper.setPosition(1.15 - dropper.getPosition());
             canToggleDropper.reset();
         }
 
