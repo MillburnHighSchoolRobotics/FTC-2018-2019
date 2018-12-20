@@ -181,7 +181,7 @@ public class NewNewNewTeleOp extends OpMode {
 
         if (gamepad1.y && canToggleFolder.milliseconds() > 250) {
             foldCount++;
-            if (foldCount > foldPositions.length) foldCount = foldPositions.length;
+            if (foldCount >= foldPositions.length) foldCount = foldPositions.length - 1;
             reaperFoldLeft.setPosition(foldPositions[foldCount%3]);
             reaperFoldRight.setPosition(foldPositions[foldCount%3]);
             canToggleFolder.reset();
