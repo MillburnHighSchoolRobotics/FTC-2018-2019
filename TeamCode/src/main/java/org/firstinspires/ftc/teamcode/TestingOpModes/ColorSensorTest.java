@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.TestingOpModes;
 
 import com.qualcomm.hardware.adafruit.AdafruitI2cColorSensor;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 
@@ -10,6 +11,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
  */
 
 @Autonomous(name="Sensor: Color Sensor Test", group="Sensor")
+@Disabled
 public class ColorSensorTest extends OpMode {
     ColorSensor sensorRGB;
 

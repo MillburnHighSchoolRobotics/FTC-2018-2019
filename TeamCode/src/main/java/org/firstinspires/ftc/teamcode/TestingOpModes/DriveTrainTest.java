@@ -10,8 +10,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 /**
  * Created by Mehmet on 10/25/2017.
  */
-@Disabled
 @TeleOp(name="DriveTrainTest", group="Testing")
+@Disabled
 public class DriveTrainTest extends OpMode {
     DcMotor leftFront,rightFront,leftBack,rightBack;
     float threshold = 0.1f;

@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.SerialNumber;
@@ -28,6 +29,7 @@ import virtualRobot.VuforiaLocalizerImplSubclass;
 import virtualRobot.utils.BetterLog;
 
 @Autonomous(name = "Sahil Test", group = "Testing")
+@Disabled
 public class SahilTest extends LinearOpMode {
 
     static {

@@ -9,8 +9,8 @@ import com.qualcomm.robotcore.hardware.DigitalChannelController;
 /**
  * Created by ethachu19 on 11/1/2016.
  */
-@Disabled
 @Autonomous(name = "Sensor: Test Digital Channel", group = "Sensor")
+@Disabled
 public class DigitalChannelTest extends OpMode {
     DigitalChannel channel;
     @Override

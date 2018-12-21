@@ -11,8 +11,8 @@ import virtualRobot.PIDController;
 /**
  * Created by shant on 2/14/2016.
  */
-@Disabled
 @TeleOp(name = "Test: Whole Lift", group = "Tests")
+@Disabled
 public class LiftTestBoth extends OpMode {
     DcMotor liftLeft;
     DcMotor liftRight;

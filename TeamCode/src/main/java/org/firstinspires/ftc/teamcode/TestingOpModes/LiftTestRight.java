@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 /**
  * Created by shant on 2/13/2016.
  */
-@Disabled
 @TeleOp(name = "Test: Right Lift", group = "Tests")
+@Disabled
 public class LiftTestRight extends OpMode {
     DcMotor motor1;
     double initMotorEncoder;

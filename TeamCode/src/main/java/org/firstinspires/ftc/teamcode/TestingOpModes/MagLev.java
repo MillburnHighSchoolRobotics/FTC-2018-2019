@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode.TestingOpModes;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -8,6 +9,7 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 import org.firstinspires.ftc.teamcode.JeffBot;
 
 @TeleOp(name = "MagLev", group = "Testing")
+@Disabled
 public class MagLev extends LinearOpMode {
     DcMotor lf;
     DcMotor lb;

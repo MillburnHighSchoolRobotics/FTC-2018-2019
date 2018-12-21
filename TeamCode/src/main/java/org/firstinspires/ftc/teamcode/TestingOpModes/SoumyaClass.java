@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 /**
  * Created by david on 10/26/17.
  */
-@Disabled
 @Autonomous( name="SoumyaClass", group="memes" )
+@Disabled
 public class SoumyaClass extends OpMode {
     Servo clawLeft, clawRight, gll, glr;
     double pos;

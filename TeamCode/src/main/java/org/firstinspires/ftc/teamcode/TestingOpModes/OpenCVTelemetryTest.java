@@ -23,8 +23,8 @@ import virtualRobot.telemetry.MatConverterFactory;
 /**
  * Created by david on 11/7/17.
  */
-@Disabled
 @TeleOp( name="OpenCVTelemetryTest", group="Testing" )
+@Disabled
 public class OpenCVTelemetryTest extends LinearOpMode {
 
     VuforiaLocalizerImplSubclass vuforiaInstance;

@@ -10,8 +10,8 @@ import virtualRobot.logicThreads.testing.TestBackendLogic;
 /**
  * Created by Ethan Mak on 8/28/2017.
  */
-@Disabled
 @Autonomous(name="Testing: Test Backend", group="Testing")
+@Disabled
 public class TestBackendUpdate extends ReflectionUpdateThread {
     @Override
     public void setLogicThread() {

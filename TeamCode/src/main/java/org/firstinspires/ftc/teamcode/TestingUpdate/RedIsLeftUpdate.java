@@ -10,8 +10,8 @@ import virtualRobot.logicThreads.testing.RedIsLeftLogic;
 /**
  * Created by david on 11/15/17.
  */
-@Disabled
 @Autonomous( name="RedIsLeftTester", group="Testing" )
+@Disabled
 public class RedIsLeftUpdate extends ReflectionUpdateThread {
     @Override
     public void setLogicThread() {

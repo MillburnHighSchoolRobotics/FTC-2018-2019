@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 /**
  * Created by david on 1/26/18.
  */
-@Disabled
 @TeleOp(name = "Jewel Hitter Test", group = "Testing")
+@Disabled
 public class JewelHitterTest extends OpMode {
     Servo hitter;
     @Override

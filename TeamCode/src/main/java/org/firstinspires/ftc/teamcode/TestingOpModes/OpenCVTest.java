@@ -39,8 +39,8 @@ import virtualRobot.telemetry.MatConverterFactory;
 /**
  * Created by Ethan Mak on 8/31/2017.
  */
-@Disabled
 @Autonomous(name = "Testing: OpenCV Test", group = "Testing")
+@Disabled
 public class OpenCVTest extends LinearOpMode {
     ElapsedTime time = new ElapsedTime();
 //    CameraDevice cap;

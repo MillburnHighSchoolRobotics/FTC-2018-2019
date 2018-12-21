@@ -9,8 +9,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 /**
  * Created by david on 1/16/18.
  */
-@Disabled
 @Autonomous(name = "Rotate Test", group = "Testing")
+@Disabled
 public class RotateTest extends OpMode {
     DcMotor LF, RF, LB, RB;
     int lf, rf, lb, rb;

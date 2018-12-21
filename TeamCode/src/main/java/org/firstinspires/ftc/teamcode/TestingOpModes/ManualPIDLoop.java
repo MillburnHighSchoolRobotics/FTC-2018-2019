@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.TestingOpModes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -13,6 +14,7 @@ import virtualRobot.PIDController;
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 
 @TeleOp(name = "Manual PID Tuning", group = "testing")
+@Disabled
 public class ManualPIDLoop extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {

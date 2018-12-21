@@ -12,6 +12,7 @@ import virtualRobot.logicThreads.testing.PIDTesterLogic;
  */
 //@Disabled
     @Autonomous(name="Testing: PID Tester", group="Testing")
+@Disabled
 public class PIDTesterUpdate extends ReflectionUpdateThread {
     @Override
     public void setLogicThread() {

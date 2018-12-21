@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.TestingOpModes;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -16,6 +17,7 @@ import virtualRobot.hardware.IMU;
  */
 
 @Autonomous(name="Sensor: Test Wrapper IMU", group="Sensor")
+@Disabled
 public class WrapperIMUTest extends OpMode {
     BNO055IMU imu;
     IMU vIMU = new IMU();

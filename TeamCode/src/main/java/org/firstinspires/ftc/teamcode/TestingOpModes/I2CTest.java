@@ -13,8 +13,8 @@ import com.qualcomm.robotcore.hardware.I2cDeviceSynchSimple;
 /**
  * Created by ethachu19 on 11/3/2016.
  */
-@Disabled
 @Autonomous(name = "Sensor: I2CTest", group = "Sensor")
+@Disabled
 public class I2CTest extends OpMode {
     I2cDeviceSynchSimple device;
     @Override

@@ -53,8 +53,8 @@ import java.text.DecimalFormat;
  * For more information on Yaw drift, please see the online help at:
  * http://navx-micro.kauailabs.com/guidance/yaw-drift/
  */
-@Disabled
 @TeleOp(name = "Concept: navX Zero Yaw", group = "Concept")
+@Disabled
 // @Disabled Comment this in to remove this from the Driver Station OpMode List
 public class ConceptNavXZeroYawOp extends OpMode {
 

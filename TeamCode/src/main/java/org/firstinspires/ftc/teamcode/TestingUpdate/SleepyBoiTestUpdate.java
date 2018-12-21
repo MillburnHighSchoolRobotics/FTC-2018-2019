@@ -10,8 +10,8 @@ import virtualRobot.logicThreads.testing.SleepyBoiTestLogic;
 /**
  * Created by david on 12/2/17.
  */
-@Disabled
 @Autonomous( name="Sleepy Boi Test", group = "Testing" )
+@Disabled
 public class SleepyBoiTestUpdate extends ReflectionUpdateThread {
     @Override
     public void setLogicThread() {

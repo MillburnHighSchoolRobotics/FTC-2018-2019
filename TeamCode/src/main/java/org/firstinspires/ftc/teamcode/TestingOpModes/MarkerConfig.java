@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.TestingOpModes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name="markerConfig", group="testing")
+@Disabled
 public class MarkerConfig extends LinearOpMode {
     Servo marker;
     @Override

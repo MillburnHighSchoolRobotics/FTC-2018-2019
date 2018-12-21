@@ -14,6 +14,7 @@ import virtualRobot.logicThreads.ExampleLogic;
  */
 //@Disabled
 @Autonomous(name="Example: Test", group="Example")
+@Disabled
 public class ExampleUpdate extends ReflectionUpdateThread {
     @Override
     public void setLogicThread() {

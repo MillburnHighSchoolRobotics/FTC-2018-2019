@@ -9,8 +9,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 /**
  * Created by david on 2/9/18.
  */
-@Disabled
 @TeleOp(name = "Jewel Arm Full Motion", group = "Testing")
+@Disabled
 public class JewelArmFullMotion extends OpMode {
     private Servo vertical;
     private Servo horizontal;

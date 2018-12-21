@@ -14,8 +14,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 /**
  * Created by Mehmet on 10/27/2017.
  */
-@Disabled
 @Autonomous(name="Blue Near Jewel Park", group="DumbComp")
+@Disabled
 public class BlueNearAuton extends LinearOpMode {
     private DcMotor leftFront,rightFront,leftBack,rightBack;
     private Servo glyphLiftLeft, glyphLiftRight, clawLeft, clawRight, jewelArm;

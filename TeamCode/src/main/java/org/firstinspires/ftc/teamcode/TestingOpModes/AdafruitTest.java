@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 /**
  * Created by Ethan Mak on 12/16/2017.
  */
-@Disabled
 @Autonomous(name="Sensor: Adafruit Color Sensor", group = "Sensor")
+@Disabled
 public class AdafruitTest extends OpMode {
     AdafruitI2cColorSensor sensor;
     @Override

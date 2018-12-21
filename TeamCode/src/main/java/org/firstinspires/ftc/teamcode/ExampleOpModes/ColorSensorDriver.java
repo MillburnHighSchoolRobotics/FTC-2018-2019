@@ -43,8 +43,8 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 import com.qualcomm.robotcore.hardware.LED;
 import com.qualcomm.robotcore.hardware.TouchSensor;
-@Disabled
 @Autonomous(name ="Sensor: QUALCOMM COLOR TEST", group="Sensor")
+@Disabled
 public class ColorSensorDriver extends LinearOpMode {
 
   public enum ColorSensorDevice {ADAFRUIT, HITECHNIC_NXT, MODERN_ROBOTICS_I2C}

@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.TestingOpModes;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -21,6 +22,7 @@ import java.util.Set;
  */
 
 @Autonomous(name = "Sensor: Sensor Test NO BACKEND",group = "Sensor")
+@Disabled
 public class SensorsTest extends OpMode {
     String data;
     Set<Map.Entry<String, DcMotor>> motors;

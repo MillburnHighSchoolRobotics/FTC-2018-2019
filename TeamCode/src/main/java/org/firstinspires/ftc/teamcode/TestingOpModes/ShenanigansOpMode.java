@@ -15,8 +15,8 @@ import com.qualcomm.robotcore.hardware.configuration.LynxUsbDeviceConfiguration;
  *
  * Used to test the LynxModule object and the command system for the module
  */
-@Disabled
 @Autonomous(name="Shenanigans", group = "Testing")
+@Disabled
 public class ShenanigansOpMode extends OpMode {
     byte purple = (byte) 153;
     byte black = (byte) 0;

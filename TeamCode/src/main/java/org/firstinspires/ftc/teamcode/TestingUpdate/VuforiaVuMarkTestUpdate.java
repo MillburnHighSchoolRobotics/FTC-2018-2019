@@ -12,6 +12,7 @@ import virtualRobot.logicThreads.testing.VuforiaVuMarkTestLogic;
  */
 //@Disabled
 @Autonomous(name = "Vuforia Tester", group = "Testing")
+@Disabled
 public class VuforiaVuMarkTestUpdate extends ReflectionUpdateThread {
     @Override
     public void setLogicThread() {

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.NonUpdateCompetitionOpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -11,6 +12,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import virtualRobot.utils.MathUtils;
 
 @Autonomous(name = "YayCircles", group = "testing")
+@Disabled
 public class YayCircles extends OpMode {
     private DcMotorEx lf;
     private DcMotorEx lb;

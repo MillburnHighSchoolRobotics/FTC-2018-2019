@@ -10,8 +10,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /**
  * Created by Yanjun on 11/24/2015.
  */
-@Disabled
 @Autonomous(name ="Sensor: Testing IMU", group="Sensor")
+@Disabled
 public class IMUTest extends OpMode {
 
     //MPU9250 imu;

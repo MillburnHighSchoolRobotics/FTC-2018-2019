@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.NonUpdateCompetitionOpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @Autonomous(name = "dumb dumb dumb")
+@Disabled
 public class DumbDumbAutonPit extends LinearOpMode {
     DcMotor lf;
     DcMotor lb;

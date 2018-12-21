@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 /**
  * Created by Yanjun on 2/6/2016.
  */
-@Disabled
 @TeleOp(name = "ServoTest", group = "Test Components")
+@Disabled
 public class ServoCal extends OpMode {
 
     Servo servo;

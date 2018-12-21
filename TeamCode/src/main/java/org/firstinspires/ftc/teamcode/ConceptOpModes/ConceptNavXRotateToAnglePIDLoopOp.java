@@ -54,8 +54,8 @@ import java.text.DecimalFormat;
  * Note that for the best accuracy, a reasonably high update rate
  * for the navX-Model sensor should be used.
  */
-@Disabled
 @TeleOp(name = "Concept: navX Rotate to Angle PID - Loop", group = "Concept")
+@Disabled
 // @Disabled Comment this in to remove this from the Driver Station OpMode List
 public class ConceptNavXRotateToAnglePIDLoopOp extends OpMode {
     DcMotor leftMotor;

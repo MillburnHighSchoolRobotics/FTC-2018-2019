@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 /**
  * Created by david on 9/29/17.
  */
-@Disabled
 @Autonomous(name = "Testing: Wheel Direction", group = "Testing")
+@Disabled
 public class WheelDirectionTest extends OpMode {
     private DcMotor LF, RF, LB, RB;
     public void init() {

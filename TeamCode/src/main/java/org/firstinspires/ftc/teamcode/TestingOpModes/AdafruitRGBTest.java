@@ -9,8 +9,8 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
  * Created by david on 12/14/17.
  * class made by mehmet for weird adafruit stuff
  */
-@Disabled
 @Autonomous(name = "Autonomous: adafruitRGBTest", group = "Testing")
+@Disabled
 public class AdafruitRGBTest extends OpMode{
     AdafruitI2cColorSensor sensorRGB;
 

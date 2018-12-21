@@ -14,8 +14,8 @@ import virtualRobot.utils.MathUtils;
  * Created by ethan on 10/5/17.
  */
 
-@Disabled
 @TeleOp(name="MainTeleop", group="LALALA")
+@Disabled
 public class TestLiftOpMode extends OpMode {
     DcMotor motor1;
     DcMotor motor2;

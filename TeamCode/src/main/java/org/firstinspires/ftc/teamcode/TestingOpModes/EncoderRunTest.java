@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  */
 //@Disabled
 @Autonomous(name = "Sensor: Motor Run Using Encoders", group = "Sensor")
+@Disabled
 public class EncoderRunTest extends OpMode {
     DcMotor motor;
     double lastSpeed;

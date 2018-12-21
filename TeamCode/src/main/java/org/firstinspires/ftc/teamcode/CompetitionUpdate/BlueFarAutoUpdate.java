@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.CompetitionUpdate;
 import android.provider.Settings;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.ReflectionUpdateThread;
 
@@ -15,6 +16,7 @@ import virtualRobot.utils.GlobalUtils;
  */
 
 @Autonomous(name = "Autonomous: Blue Far Full", group = "Competition")
+@Disabled
 public class BlueFarAutoUpdate extends ReflectionUpdateThread {
     @Override
     public void setLogicThread() {

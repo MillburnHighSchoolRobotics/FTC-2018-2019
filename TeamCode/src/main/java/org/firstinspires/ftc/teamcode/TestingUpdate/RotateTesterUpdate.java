@@ -10,8 +10,8 @@ import virtualRobot.logicThreads.testing.RotateTesterLogic;
 /**
  * Created by david on 1/16/18.
  */
-@Disabled
 @Autonomous(name="Rotate Tester Loop", group="Testing")
+@Disabled
 public class RotateTesterUpdate extends ReflectionUpdateThread {
     @Override
     public void setLogicThread() {

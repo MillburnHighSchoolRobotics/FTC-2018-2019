@@ -13,8 +13,8 @@ import virtualRobot.utils.MathUtils;
 /**
  * Created by david on 10/9/17.
  */
-@Disabled
 @TeleOp(name="AldenTeleop", group="LALALA")
+@Disabled
 public class AldenTeleOpThingy extends OpMode {
 //    DcMotor motor1;
 //    DcMotor motor2;

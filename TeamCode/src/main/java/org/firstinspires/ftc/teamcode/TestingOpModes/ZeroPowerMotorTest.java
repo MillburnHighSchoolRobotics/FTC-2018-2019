@@ -4,11 +4,13 @@ package org.firstinspires.ftc.teamcode.TestingOpModes;
 import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 @Autonomous(name = "Zero Power Motor Test", group = "Testing")
+@Disabled
 public class ZeroPowerMotorTest extends OpMode {
     @Override
     public void init() {

@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 /**
  * Created by Yanjun on 1/16/2016.
  */
-@Disabled
 @Autonomous(name = "Testing: WheelTest", group = "Testing")
+@Disabled
 public class WheelTest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {

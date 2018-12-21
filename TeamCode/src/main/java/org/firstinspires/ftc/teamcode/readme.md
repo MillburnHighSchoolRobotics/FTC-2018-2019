@@ -66,6 +66,7 @@ Each OpMode sample class begins with several lines of code like the ones shown b
 
 ```
  @TeleOp(name="Template: Linear OpMode", group="Linear Opmode")
+@Disabled
  @Disabled
 ```
 

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.TestingOpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -9,6 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  */
 
 @Autonomous(name = "Testing: Servo Test", group = "Testing")
+@Disabled
 public class ServoTest extends OpMode {
     Servo left;
 //    Servo right;

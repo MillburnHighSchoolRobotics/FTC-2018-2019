@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  * Created by ethachu19 on 10/21/2016.
  */
 @TeleOp(name = "CRServoTest", group = "Test Components")
+@Disabled
 public class CRServoTest extends OpMode {
 
     CRServo servo;

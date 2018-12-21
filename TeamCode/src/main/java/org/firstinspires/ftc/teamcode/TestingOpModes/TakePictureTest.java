@@ -27,8 +27,8 @@ import virtualRobot.commands.DavidClass;
  * Created by mehme_000 on 10/7/2016.
  */
 
-@Disabled
 @Autonomous(name ="Sensor: CameraNoBackend", group="Sensor")
+@Disabled
 public class TakePictureTest extends LinearOpMode {
     //private TakePictureTestGod tp;
     private AtomicBoolean redisLeft = new AtomicBoolean();

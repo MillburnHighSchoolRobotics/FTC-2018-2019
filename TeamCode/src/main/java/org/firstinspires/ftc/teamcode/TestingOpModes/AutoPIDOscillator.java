@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.TestingOpModes;
 import android.util.Log;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 
 @TeleOp(name = "AutoPID", group="testing")
+@Disabled
 //@Disabled
 public class AutoPIDOscillator extends LinearOpMode {
     private final double power = 1;

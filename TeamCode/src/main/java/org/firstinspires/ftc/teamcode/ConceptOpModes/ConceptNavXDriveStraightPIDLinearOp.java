@@ -59,8 +59,8 @@ import java.text.DecimalFormat;
  * the default update rate (50Hz), which may be lowered in order
  * to reduce the frequency of the updates to the drive system.
  */
-@Disabled
 @TeleOp(name = "Concept: navX Drive Straight PID - Linear", group = "Concept")
+@Disabled
 // @Disabled Comment this in to remove this from the Driver Station OpMode List
 public class ConceptNavXDriveStraightPIDLinearOp extends LinearOpMode {
     DcMotor leftMotor;

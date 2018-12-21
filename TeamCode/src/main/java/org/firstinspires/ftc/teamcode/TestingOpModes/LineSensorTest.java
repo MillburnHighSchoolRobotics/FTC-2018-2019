@@ -13,8 +13,8 @@ import com.qualcomm.robotcore.hardware.*;
  * Created by 17osullivand on 10/5/16.
  */
 //note that to test componenets just create a basic OpMode
-@Disabled
 @Autonomous(name ="Sensor: Testing All Sensors", group="Sensor")
+@Disabled
 public class LineSensorTest extends OpMode {
     ColorSensor linetest;
     UltrasonicSensor sonar1, sonar2;
