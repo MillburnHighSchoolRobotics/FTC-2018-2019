@@ -158,11 +158,11 @@ public class NewNewNewTeleOp extends OpMode {
 
         // reaper extension
         if (gamepad1.dpad_left) {
-            reaperLeft.setPower(-0.5 * gearing);
-            reaperRight.setPower(-0.5 * gearing);
+            reaperLeft.setPower(-0.75 * gearing);
+            reaperRight.setPower(-0.75 * gearing);
         } else if (gamepad1.dpad_right) {
-            reaperLeft.setPower(0.5 * gearing);
-            reaperRight.setPower(0.5 * gearing);
+            reaperLeft.setPower(0.75 * gearing);
+            reaperRight.setPower(0.75 * gearing);
         } else {
             reaperLeft.setPower(0);
             reaperRight.setPower(0);
@@ -227,7 +227,7 @@ public class NewNewNewTeleOp extends OpMode {
 
         // toggle locking lift
         if (MathUtils.equals(gamepad1.left_trigger, 1, 0.05) && canToggleStopper.milliseconds() > 500) {
-            stopper.setPosition(1 - stopper.getPosition());
+            stopper.setPosition(1.1 - stopper.getPosition());
             canToggleStopper.reset();
         }
 
@@ -257,7 +257,7 @@ public class NewNewNewTeleOp extends OpMode {
 
     @Override
     public void stop() {
-        stopper.setPosition(0);
+        stopper.setPosition(0.1);
         try {
             Thread.sleep(750);
         } catch (InterruptedException e) {
