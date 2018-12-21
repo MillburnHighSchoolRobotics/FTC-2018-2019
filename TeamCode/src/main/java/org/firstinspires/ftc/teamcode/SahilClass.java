@@ -95,8 +95,6 @@ public class SahilClass {
         return position;
     }
 
-
-
     private Object[] crop(Mat camera) {
         Mat hsvNotBalanced = new Mat();
         Imgproc.cvtColor(camera, hsvNotBalanced, Imgproc.COLOR_RGB2HSV);
@@ -184,7 +182,9 @@ public class SahilClass {
         Imgproc.line(rgbCamera, new Point(min,heightCamera), new Point(min,heightCameraOriginal), new Scalar(255,0,0), 5);
         Imgproc.line(rgbCamera, new Point(max,heightCamera), new Point(max,heightCameraOriginal), new Scalar(0,255,0), 5);
 
-        Mat bgr = balance(bgrCropped);
+        Mat[] whiteData = trueWhite(bgrCropped);
+        Mat bgr = whiteData[0];
+        Mat white = whiteData[1];
         Mat hsv = new Mat();
         Imgproc.cvtColor(bgr, hsv, Imgproc.COLOR_RGB2HSV);
         Mat rgb = new Mat();
@@ -259,6 +259,12 @@ public class SahilClass {
             Log.e("CTelemetry", "failed lens overlap");
         }
         try {
+            ctel.sendImage("White Detection", white).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("CTelemetry", "failed white detection");
+        }
+        try {
             ctel.sendImage("Balanced Image", balanced).execute();
         } catch (IOException e) {
             e.printStackTrace();
@@ -275,6 +281,7 @@ public class SahilClass {
         rgbCamera.release();
         rgbCropped.release();
         bgrCropped.release();
+        white.release();
         bgr.release();
         hsv.release();
         rgb.release();
@@ -285,7 +292,7 @@ public class SahilClass {
         return new double[] {min, max, centroid.x, centroid.y};
     }
 
-    private Mat balance(Mat img) {
+    private Mat grayWorldAssumption(Mat img) {
         Mat lab = new Mat(); //no pun intended
         Imgproc.cvtColor(img, lab, Imgproc.COLOR_BGR2Lab);
         double a = 0;
@@ -316,6 +323,35 @@ public class SahilClass {
         Imgproc.cvtColor(lab, balancedImage, Imgproc.COLOR_Lab2BGR);
         Log.d("SahilClass", "balanced!");
         return balancedImage;
+    }
+    private Mat[] trueWhite(Mat bgr) {
+        Mat gray = new Mat();
+        Imgproc.cvtColor(bgr, gray, Imgproc.COLOR_RGB2GRAY);
+        Mat blur = new Mat();
+        Imgproc.GaussianBlur(gray, blur, new Size(kSize, kSize), sigmaX);
+        blur.release();
+        Core.MinMaxLocResult locationData = Core.minMaxLoc(gray);
+        Mat lab = new Mat();
+        Imgproc.cvtColor(bgr, lab, Imgproc.COLOR_RGB2Lab);
+        Imgproc.circle(gray,locationData.minLoc, 80, new Scalar(255,0,0), 80);
+        double[] whiteData = lab.get((int)Math.round(locationData.minLoc.x),(int)Math.round(locationData.minLoc.y));
+        whiteData[0] *= 2.55;
+        whiteData[1] -= 128;
+        whiteData[2] -= 128;
+        Log.d("SahilClass", "L - " + whiteData[0]);
+        Log.d("SahilClass", "a - " + whiteData[1]);
+        Log.d("SahilClass", "b - " + whiteData[2]);
+        for (int x = 0; x < lab.rows(); x++) {
+            for (int y = 0; y < lab.cols(); y++) {
+                double[] data = lab.get(x,y);
+                double[] newData = new double[3];
+                newData[0] = data[0];
+                newData[1] = data[1] - Math.round((whiteData[1])*(data[0]/255.0));
+                newData[2] = data[2] - Math.round((whiteData[2])*(data[0]/255.0));
+                lab.put(x,y,newData);
+            }
+        }
+        return new Mat[] {lab, gray};
     }
 
 
