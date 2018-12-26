@@ -44,8 +44,8 @@ public class SahilClass {
 //    private Scalar upperG = new Scalar(44, 255, 255); //this is for webcam
     private Scalar lowerG = new Scalar(10, 193, 95); //ew Scalar(10, 193, 95);
     private Scalar upperG = new Scalar(32, 255, 255);
-//    private Scalar lowerW = new Scalar(14, 56, 126);
-//    private Scalar upperW = new Scalar(36, 223, 255);
+    private Scalar lowerW = new Scalar(190, 0, 0);
+    private Scalar upperW = new Scalar(255, 256, 256);
     private Scalar lowerBlack = new Scalar(0, 0, 0);
     private Scalar upperBlack = new Scalar(255, 255, 1);
     private CTelemetry ctel;
@@ -324,34 +324,62 @@ public class SahilClass {
         Log.d("SahilClass", "balanced!");
         return balancedImage;
     }
-    private Mat[] trueWhite(Mat bgr) {
-        Mat gray = new Mat();
-        Imgproc.cvtColor(bgr, gray, Imgproc.COLOR_RGB2GRAY);
-        Mat blur = new Mat();
-        Imgproc.GaussianBlur(gray, blur, new Size(kSize, kSize), sigmaX);
-        blur.release();
-        Core.MinMaxLocResult locationData = Core.minMaxLoc(gray);
+    private Mat[] trueWhite(Mat img) {
         Mat lab = new Mat();
-        Imgproc.cvtColor(bgr, lab, Imgproc.COLOR_RGB2Lab);
-        Imgproc.circle(gray,locationData.minLoc, 80, new Scalar(255,0,0), 80);
-        double[] whiteData = lab.get((int)Math.round(locationData.minLoc.x),(int)Math.round(locationData.minLoc.y));
-        whiteData[0] *= 2.55;
-        whiteData[1] -= 128;
-        whiteData[2] -= 128;
-        Log.d("SahilClass", "L - " + whiteData[0]);
-        Log.d("SahilClass", "a - " + whiteData[1]);
-        Log.d("SahilClass", "b - " + whiteData[2]);
-        for (int x = 0; x < lab.rows(); x++) {
-            for (int y = 0; y < lab.cols(); y++) {
-                double[] data = lab.get(x,y);
-                double[] newData = new double[3];
-                newData[0] = data[0];
-                newData[1] = data[1] - Math.round((whiteData[1])*(data[0]/255.0));
-                newData[2] = data[2] - Math.round((whiteData[2])*(data[0]/255.0));
-                lab.put(x,y,newData);
+        Imgproc.cvtColor(img, lab, Imgproc.COLOR_BGR2Lab);
+        Mat gray = new Mat();
+        Core.inRange(lab, lowerG, upperG, gray);
+        Mat erode = new Mat();
+        Imgproc.erode(gray, erode, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(5, 5)));
+        Mat blur = new Mat();
+        Imgproc.GaussianBlur(erode, blur, new Size(kSize, kSize), sigmaX);
+
+        List<MatOfPoint> contoursUnbound = new LinkedList<>();
+        Imgproc.findContours(blur, contoursUnbound, new Mat(), Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_NONE);
+        List<MatOfPoint> contours = new LinkedList<>();
+        for (int a = 0; a < contoursUnbound.size(); a++) {
+            Rect r = Imgproc.boundingRect(contoursUnbound.get(a));
+            double ratio = Math.max(r.width,r.height)/Math.min(r.width,r.height);
+            if ((ratio < (1+ratioDeviation)) && (ratio > (1-ratioDeviation))) {
+                contours.add(contoursUnbound.get(a));
             }
         }
-        return new Mat[] {lab, gray};
+        Collections.sort(contours, new Comparator<MatOfPoint>() {
+            @Override
+            public int compare(MatOfPoint matOfPoint, MatOfPoint s) {
+                return (int) Math.signum(Imgproc.contourArea(s) - Imgproc.contourArea(matOfPoint));
+            }
+        });
+        Point centroid = new Point();
+        centroid.x = 0;
+        centroid.y = 0;
+
+        if (contours.size() > 0) {
+            Moments moments = Imgproc.moments(contours.get(0));
+            if (moments.get_m00() != 0) {
+                centroid.x = moments.get_m10() / moments.get_m00();
+                centroid.y = moments.get_m01() / moments.get_m00();
+            }
+        }
+        for (MatOfPoint mat : contours) {
+            mat.release();
+        }
+        double[] white = lab.get((int)Math.round(centroid.y),(int)Math.round(centroid.x)).clone();
+        for (int y = 0; y < lab.rows(); y++) {
+            for (int x = 0; x < lab.row(x).cols(); x++) {
+                double[] data = lab.get(y,x);
+                double[] newData = new double[3];
+                newData[0] = data[0];
+                newData[1] = Math.round(data[1] - ((white[1]-128)*(data[0]/255.0)));
+                newData[2] = Math.round(data[2] - ((white[2]-128)*(data[0]/255.0)));
+                lab.put(y,x,newData);
+            }
+        }
+        Mat bgr = new Mat();
+        Imgproc.cvtColor(lab, bgr, Imgproc.COLOR_Lab2BGR);
+        Imgproc.circle(bgr,centroid, 10, new Scalar(255,0,0), 5);
+        Log.d("SahilClass", "balanced!");
+        return new Mat[] {bgr, gray};
     }
 
 
