@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -17,13 +18,17 @@ import org.firstinspires.ftc.teamcode.watchdog.WatchdogManager;
 
 import virtualRobot.VuforiaLocalizerImplSubclass;
 
-@Autonomous(name = "Blue Auton Pit", group = "competition")
-public class BlueAutonPit extends LinearOpMode {
+import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
+
+@Autonomous(name = "Blue Auton Pit Double Mineral", group = "competition")
+public class BlueAutonPitDoubleMineral extends LinearOpMode {
     //TODO: Synchronize hardwaremap
     DcMotor lf;
     DcMotor lb;
     DcMotor rf;
     DcMotor rb;
+    DcMotorEx reaperLeft;
+    DcMotorEx reaperRight;
     Servo marker;
     Servo stopper;
     Servo dropper;
@@ -44,6 +49,8 @@ public class BlueAutonPit extends LinearOpMode {
         lb = hardwareMap.dcMotor.get("leftBack");
         rf = hardwareMap.dcMotor.get("rightFront");
         rb = hardwareMap.dcMotor.get("rightBack");
+        reaperLeft = (DcMotorEx)hardwareMap.dcMotor.get("horizLeft");
+        reaperRight = (DcMotorEx)hardwareMap.dcMotor.get("horizRight");
         liftL = hardwareMap.dcMotor.get("liftLeft");
         liftR = hardwareMap.dcMotor.get("liftRight");
         magneticLimitSwitch = hardwareMap.get(DigitalChannel.class, "Switchy");
@@ -54,6 +61,11 @@ public class BlueAutonPit extends LinearOpMode {
         reaperFoldRight = hardwareMap.servo.get("reaperFoldRight");
         dropper.setPosition(1);
         reaperFoldRight.setDirection(Servo.Direction.REVERSE);
+        reaperRight.setDirection(REVERSE);
+        reaperLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        reaperRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        reaperLeft.setPower(0);
+        reaperRight.setPower(0);
         reaperFoldRight.setPosition(0.3);
         reaperFoldLeft.setPosition(0.3);
         WatchdogManager wdm = WatchdogManager.getInstance();
@@ -93,7 +105,7 @@ public class BlueAutonPit extends LinearOpMode {
 //        Thread.sleep(100);
 
         //sampling
-     //   int meme = 0;
+        //   int meme = 0;
         JeffBot mv = new JeffBot(lf, lb, rf, rb);
 
         reaperFoldLeft.setPosition(0.95);
@@ -165,39 +177,56 @@ public class BlueAutonPit extends LinearOpMode {
 //
 //
 
-
+        int reaperInitL = reaperLeft.getCurrentPosition();
+        int reaperInitR = reaperRight.getCurrentPosition();
         switch (pos) {
             case 0:
                 mv.rotateTo(45);
-                mv.translateDistance(1,-24);
-                mv.translateDistance(1,24);
+                reaperFoldLeft.setPosition(0.95);
+                reaperFoldRight.setPosition(0.95);;
+                mv.moveToPosition(new DcMotor[] {reaperLeft, reaperRight}, new double[] {0.75, 0.75}, new int[] {3000-reaperInitL, 3000-reaperInitR});
+                Thread.sleep(250);
+                reaperFoldLeft.setPosition(0.3);
+                reaperFoldRight.setPosition(0.3);
+                mv.moveToPosition(new DcMotor[] {reaperLeft, reaperRight}, new double[] {-0.75, -0.75}, new int[] {3000-reaperInitL, 3000-reaperInitR});
                 mv.rotateTo(0);
                 break;
             case 2:
                 mv.rotateTo(-45);
-                mv.translateDistance(1,-24);
-                mv.translateDistance(1,24);
+                reaperFoldLeft.setPosition(0.95);
+                reaperFoldRight.setPosition(0.95);;
+                mv.moveToPosition(new DcMotor[] {reaperLeft, reaperRight}, new double[] {0.75, 0.75}, new int[] {3000-reaperInitL, 3000-reaperInitR});
+                Thread.sleep(250);
+                reaperFoldLeft.setPosition(0.3);
+                reaperFoldRight.setPosition(0.3);
+                mv.moveToPosition(new DcMotor[] {reaperLeft, reaperRight}, new double[] {-0.75, -0.75}, new int[] {3000-reaperInitL, 3000-reaperInitR});
                 mv.rotateTo(0);
                 break;
             default:
             case 1:
-                mv.translateDistance(1,-16);
-                mv.translateDistance(1,16);
+                reaperFoldLeft.setPosition(0.95);
+                reaperFoldRight.setPosition(0.95);;
+                mv.moveToPosition(new DcMotor[] {reaperLeft, reaperRight}, new double[] {0.75, 0.75}, new int[] {3000-reaperInitL, 3000-reaperInitR});
+                Thread.sleep(250);
+                reaperFoldLeft.setPosition(0.3);
+                reaperFoldRight.setPosition(0.3);
+                mv.moveToPosition(new DcMotor[] {reaperLeft, reaperRight}, new double[] {-0.75, -0.75}, new int[] {3000-reaperInitL, 3000-reaperInitR});
                 break;
         }
-//        Thread.sleep(100);
+
+        Thread.sleep(100);
 //       mv.rotateDegrees(0.5,90);//TODO:Add global variable for speed
 
         mv.translateDistance(0.7,-3);
         mv.rotateTo(90);
 //        Thread.sleep(100);
 //        Thread.sleep(100);
-       mv.translateDistance(1, -36*Math.sqrt(2));//TODO:See above immortal TODO
+        mv.translateDistance(1, -36*Math.sqrt(2));//TODO:See above immortal TODO
 //        Thread.sleep(100);
-       mv.rotateTo(135);
+        mv.rotateTo(135);
 //        Thread.sleep(100);
-       mv.translateDistance(1, -36);
-       mv.rotateTo(90);
+        mv.translateDistance(1, -36);
+        mv.rotateTo(90);
 //        Thread.sleep(100);
 //        mv.rotateDegrees(0.7, -60);
 //        Thread.sleep(100);
@@ -209,7 +238,7 @@ public class BlueAutonPit extends LinearOpMode {
 //        mv.rotateDegrees(0.7, 60);
 //        Thread.sleep(100);
 //       mv.rotate(-0.5,-1);
-       mv.translateDistance(1,85);
+        mv.translateDistance(1,85);
     }
     public void initializeMotor(DcMotor[] motors) {
         for (DcMotor motor : motors) {
