@@ -29,7 +29,7 @@ import virtualRobot.VuforiaLocalizerImplSubclass;
 import virtualRobot.utils.BetterLog;
 
 @Autonomous(name = "Sahil Test", group = "Testing")
-@Disabled
+//@Disabled
 public class SahilTest extends LinearOpMode {
 
     static {

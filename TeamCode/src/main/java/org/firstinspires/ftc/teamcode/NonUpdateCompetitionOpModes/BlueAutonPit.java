@@ -54,8 +54,8 @@ public class BlueAutonPit extends LinearOpMode {
         reaperFoldRight = hardwareMap.servo.get("reaperFoldRight");
         dropper.setPosition(1);
         reaperFoldRight.setDirection(Servo.Direction.REVERSE);
-        reaperFoldRight.setPosition(0);
-        reaperFoldLeft.setPosition(0);
+        reaperFoldRight.setPosition(0.3);
+        reaperFoldLeft.setPosition(0.3);
         WatchdogManager wdm = WatchdogManager.getInstance();
         wdm.setHardwareMap(hardwareMap);
         wdm.setCurrentAuton(this);
@@ -93,10 +93,10 @@ public class BlueAutonPit extends LinearOpMode {
      //   int meme = 0;
         JeffBot mv = new JeffBot(lf, lb, rf, rb);
 
-        dropper.setPosition(0.2);
+        reaperFoldLeft.setPosition(0.95);
+        reaperFoldRight.setPosition(0.95);
         Thread.sleep(500);
-        reaperFoldLeft.setPosition(0.6);
-        reaperFoldRight.setPosition(0.6);
+        dropper.setPosition(0.2);
 
 //        TFODTest tfod = new TFODTest(hardwareMap);
         liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -120,10 +120,13 @@ public class BlueAutonPit extends LinearOpMode {
         }
         liftL.setPower(0);
         liftR.setPower(0);
+        Thread.sleep(250);
         SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000);
 
 
         int pos = sahilClass.getThreeMineralPosition();
+        telemetry.addData("Position", pos);
+        telemetry.update();
         reaperFoldLeft.setPosition(0.3);
         reaperFoldRight.setPosition(0.3);
         //mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {-0.8, 0.8}, new int[] {10700+100, 10700+100});
@@ -137,7 +140,7 @@ public class BlueAutonPit extends LinearOpMode {
 //        Thread.sleep(100);
 
         //sampling
-        mv.translateDistance(0.7,-15);
+        mv.translateDistance(1,-12);
 
 //        mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {-0.8, 0.8}, new int[] {600, 600});
         liftL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -163,33 +166,34 @@ public class BlueAutonPit extends LinearOpMode {
         switch (pos) {
             case 0:
                 mv.rotateTo(45);
-                mv.translateDistance(0.7,-24);
-                mv.translateDistance(0.7,24);
+                mv.translateDistance(1,-24);
+                mv.translateDistance(1,24);
                 mv.rotateTo(0);
                 break;
             case 2:
                 mv.rotateTo(-45);
-                mv.translateDistance(0.7,-24);
-                mv.translateDistance(0.7,24);
+                mv.translateDistance(1,-24);
+                mv.translateDistance(1,24);
                 mv.rotateTo(0);
                 break;
             default:
             case 1:
-                mv.translateDistance(0.7,16);
-                mv.translateDistance(0.7,-16);
+                mv.translateDistance(1,-16);
+                mv.translateDistance(1,16);
                 break;
         }
 //        Thread.sleep(100);
 //       mv.rotateDegrees(0.5,90);//TODO:Add global variable for speed
 
+        mv.translateDistance(0.7,-3);
         mv.rotateTo(90);
 //        Thread.sleep(100);
 //        Thread.sleep(100);
-       mv.translateDistance(0.7, -36*Math.sqrt(2));//TODO:See above immortal TODO
+       mv.translateDistance(1, -36*Math.sqrt(2));//TODO:See above immortal TODO
 //        Thread.sleep(100);
        mv.rotateTo(135);
 //        Thread.sleep(100);
-       mv.translateDistance(0.7, -36);
+       mv.translateDistance(1, -36);
        mv.rotateTo(90);
 //        Thread.sleep(100);
 //        mv.rotateDegrees(0.7, -60);
@@ -197,12 +201,12 @@ public class BlueAutonPit extends LinearOpMode {
         marker.setPosition(1);
         Thread.sleep(1000);
         marker.setPosition(0.5);
-        mv.rotateTo(135);
+        mv.rotateTo(145);
 //        Thread.sleep(100);
 //        mv.rotateDegrees(0.7, 60);
 //        Thread.sleep(100);
 //       mv.rotate(-0.5,-1);
-       mv.translateDistance(0.9,95);
+       mv.translateDistance(1,85);
     }
     public void initializeMotor(DcMotor[] motors) {
         for (DcMotor motor : motors) {

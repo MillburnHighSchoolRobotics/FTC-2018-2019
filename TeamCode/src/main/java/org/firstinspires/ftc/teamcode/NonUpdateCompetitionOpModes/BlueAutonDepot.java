@@ -33,11 +33,11 @@ public class BlueAutonDepot extends LinearOpMode {
     Servo stopper;
     DigitalChannel magneticLimitSwitch;
 
-    final float botWidth = 16.5f; //inches
-    final float botRadiuxs = botWidth/2; //in
-    final float wheelWidth = 3; //in
-    final float wheelRadius = wheelWidth/2; //in
-    final int ticksPerRev = 680; //ticks per rev
+//    final float botWidth = 16.5f; //inches
+//    final float botRadiuxs = botWidth/2; //in
+//    final float wheelWidth = 3; //in
+//    final float wheelRadius = wheelWidth/2; //in
+//    final int ticksPerRev = 680; //ticks per rev
 //    final float targetRadius = 10+c; //inches
 //    final double targetSpeed =4; //inches/sec
 //    final double encoderSpeed = (targetSpeed/(2*Math.PI*wheelRadius)) * ticksPerRev; //encoders per sec
@@ -98,11 +98,11 @@ public class BlueAutonDepot extends LinearOpMode {
         int initR = liftR.getCurrentPosition();
         JeffBot mv = new JeffBot(lf, lb, rf, rb);
 
-        dropper.setPosition(0.2);
+        reaperFoldLeft.setPosition(0.95);
+        reaperFoldRight.setPosition(0.95);
         Thread.sleep(500);
-        reaperFoldLeft.setPosition(0.6);
-        reaperFoldRight.setPosition(0.6);
-        TFODTest tfod = new TFODTest(hardwareMap);
+        dropper.setPosition(0.2);
+//        TFODTest tfod = new TFODTest(hardwareMap);
         liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -126,6 +126,7 @@ public class BlueAutonDepot extends LinearOpMode {
         }
         liftL.setPower(0);
         liftR.setPower(0);
+        Thread.sleep(250);
         SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000); //this only loops once after 1000 millis but keep this constraint just in case
         int num = sahilClass.getThreeMineralPosition();
         reaperFoldLeft.setPosition(0.3);

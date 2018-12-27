@@ -118,7 +118,7 @@ public class NewNewNewTeleOp extends OpMode {
         reaperRight.setPower(0);
         reaperSpin.setPower(0);
         stopper.setPosition(1);
-        dropper.setPosition(0.95);
+        dropper.setPosition(0.9);
         marker.setPosition(0.5);
         reaperFoldLeft.setPosition(foldPositions[foldCount]);
         reaperFoldRight.setPosition(foldPositions[foldCount]);
@@ -199,7 +199,7 @@ public class NewNewNewTeleOp extends OpMode {
 
         // dump truck
         if (gamepad1.b  && canToggleDropper.milliseconds() > 500) {
-            dropper.setPosition(1.15 - dropper.getPosition());
+            dropper.setPosition(1.1 - dropper.getPosition());
             canToggleDropper.reset();
         }
 
