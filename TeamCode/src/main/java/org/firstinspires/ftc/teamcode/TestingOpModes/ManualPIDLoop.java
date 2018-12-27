@@ -14,7 +14,7 @@ import virtualRobot.PIDController;
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 
 @TeleOp(name = "Manual PID Tuning", group = "testing")
-@Disabled
+//@Disabled
 public class ManualPIDLoop extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {

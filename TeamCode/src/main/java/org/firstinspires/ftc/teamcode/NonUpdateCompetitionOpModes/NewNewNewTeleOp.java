@@ -61,6 +61,9 @@ public class NewNewNewTeleOp extends OpMode {
     int foldCount = 2;
     double[] foldPositions = {0.95,0.7,0.3};
 
+    boolean dropperIsUp = false;
+    double[] dropperPositions = {0.9, 0.2};
+
     @Override
     public void init() {
         canToggleStopper = new ElapsedTime();
@@ -118,7 +121,7 @@ public class NewNewNewTeleOp extends OpMode {
         reaperRight.setPower(0);
         reaperSpin.setPower(0);
         stopper.setPosition(1);
-        dropper.setPosition(0.9);
+        dropper.setPosition(dropperPositions[dropperIsUp ? 1 : 0]);
         marker.setPosition(0.5);
         reaperFoldLeft.setPosition(foldPositions[foldCount]);
         reaperFoldRight.setPosition(foldPositions[foldCount]);
@@ -185,6 +188,10 @@ public class NewNewNewTeleOp extends OpMode {
             if (foldCount >= foldPositions.length) foldCount = foldPositions.length - 1;
             reaperFoldLeft.setPosition(foldPositions[foldCount%3]);
             reaperFoldRight.setPosition(foldPositions[foldCount%3]);
+            if (foldCount == foldPositions.length - 1) {
+                dropperPositions[0] = 0.95;
+                dropper.setPosition(dropperPositions[dropperIsUp ? 1 : 0]);
+            }
             canToggleFolder.reset();
         }
         if (gamepad1.a && canToggleFolder.milliseconds() > 250) {
@@ -192,6 +199,10 @@ public class NewNewNewTeleOp extends OpMode {
             if (foldCount < 0) foldCount = 0;
             reaperFoldLeft.setPosition(foldPositions[foldCount%3]);
             reaperFoldRight.setPosition(foldPositions[foldCount%3]);
+            if (foldCount != foldPositions.length - 1) {
+                dropperPositions[0] = 0.9;
+                dropper.setPosition(dropperPositions[dropperIsUp ? 1 : 0]);
+            }
             canToggleFolder.reset();
         }
 
@@ -199,7 +210,8 @@ public class NewNewNewTeleOp extends OpMode {
 
         // dump truck
         if (gamepad1.b  && canToggleDropper.milliseconds() > 500) {
-            dropper.setPosition(1.1 - dropper.getPosition());
+            dropperIsUp = !dropperIsUp;
+            dropper.setPosition(dropperPositions[dropperIsUp ? 1 : 0]);
             canToggleDropper.reset();
         }
 

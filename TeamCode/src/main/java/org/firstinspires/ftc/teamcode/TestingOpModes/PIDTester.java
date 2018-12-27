@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.watchdog.WatchdogManager;
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 
 @TeleOp(name = "PIDTester", group = "testing")
-@Disabled
+//@Disabled
 public class PIDTester extends OpMode {
     private DcMotor lf;
     private DcMotor rf;

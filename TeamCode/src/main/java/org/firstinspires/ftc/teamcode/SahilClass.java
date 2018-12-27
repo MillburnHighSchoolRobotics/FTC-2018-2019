@@ -45,6 +45,7 @@ public class SahilClass {
     private Scalar upperW = new Scalar(36, 223, 255);
     private Scalar lowerBlack = new Scalar(0, 0, 0);
     private Scalar upperBlack = new Scalar(255, 255, 1);
+    private static final double croppingConstant = 0.3;
     CTelemetry ctel;
 
 
@@ -225,7 +226,7 @@ public class SahilClass {
             ArrayList<int[]> maxRanges = new ArrayList<>();
 
             for (int w = 0; w < widthCamera; w++) {
-                int h = (int) Math.round((int)(heightCamera*0.45)/2);
+                int h = (int) Math.round((int)(heightCamera*croppingConstant)/2);
                 double[] data = erodeBlack.get(h,w);
                 if ((data[0] > 0) && (minPrev == -1)) {
                     minPrev = w;
@@ -246,7 +247,7 @@ public class SahilClass {
 
 
             for (int w = (int)(Math.round(widthCamera-1))-1; w >= 0; w--) {
-                int h = (int) Math.round((int)(heightCamera*0.45)/2);
+                int h = (int) Math.round((int)(heightCamera*croppingConstant)/2);
                 double[] data = erodeBlack.get(h,w);
                 if ((data[0] == 0) && (maxPrev == -1)) {
                     maxPrev = w;
@@ -282,7 +283,7 @@ public class SahilClass {
             Mat goldNotCropped = new Mat();
             Core.inRange(hsv, lowerG, upperG, goldNotCropped);
             Core.inRange(hsv, lowerG, upperG, gold);
-            Mat cropped = gold.submat(0,(int)(heightCamera*0.45),min,max);
+            Mat cropped = gold.submat(0,(int)(heightCamera*croppingConstant),min,max);
             gold.release();
             Mat erode = new Mat();
             Imgproc.erode(cropped, erode, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(5, 5)));
@@ -325,10 +326,10 @@ public class SahilClass {
                 mat.release();
             }
 
-            Mat croppedImage = rgb.submat(0, (int)(heightCamera*0.45), min, max);
+            Mat croppedImage = rgb.submat(0, (int)(heightCamera*croppingConstant), min, max);
             Imgproc.circle(croppedImage,centroid, 80, new Scalar(255,0,0), 80);
-            Imgproc.line(rgb, new Point(min,0), new Point(min,(int)(heightCamera*0.45)), new Scalar(255,0,0), 5);
-            Imgproc.line(rgb, new Point(max,0), new Point(max,(int)(heightCamera*0.45)), new Scalar(0,255,0), 5);
+            Imgproc.line(rgb, new Point(min,0), new Point(min,(int)(heightCamera*croppingConstant)), new Scalar(255,0,0), 5);
+            Imgproc.line(rgb, new Point(max,0), new Point(max,(int)(heightCamera*croppingConstant)), new Scalar(0,255,0), 5);
             if (ctel != null) {
                 try {
                     ctel.sendImage("Camera Image", rgb).execute();

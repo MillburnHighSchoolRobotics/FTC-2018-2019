@@ -65,8 +65,11 @@ public class BlueAutonPit extends LinearOpMode {
         params.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
 
         params.vuforiaLicenseKey = JeffBot.vuforiaKey;
-
+        telemetry.addData("Vuforia Status: ", "Loading...");
+        telemetry.update();
         VuforiaLocalizerImplSubclass vuforiaInstance = new VuforiaLocalizerImplSubclass(params);
+        telemetry.addData("Vuforia Status: ", "Loaded!");
+        telemetry.update();
         waitForStart();
         Thread.sleep(3000);
         rf.setDirection(DcMotorSimple.Direction.REVERSE);

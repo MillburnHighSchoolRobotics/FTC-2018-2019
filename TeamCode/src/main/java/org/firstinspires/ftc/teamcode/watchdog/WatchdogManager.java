@@ -63,14 +63,14 @@ public class WatchdogManager {
     }
 
     public synchronized void setValue(String name, Object obj) {
-        Log.d(TAG, "Owners: " + Arrays.asList(owners) + ", Thread: " + Thread.currentThread());
+//        Log.d(TAG, "Owners: " + Arrays.asList(owners) + ", Thread: " + Thread.currentThread());
         if (!values.containsKey(name)) {
             if (!watchdogs.containsValue((Watchdog)Thread.currentThread())) {
                 Log.e(TAG, "Unable to set new value " + name + ": thread " + Thread.currentThread() + " is not a registered Watchdog.");
             } else {
                 values.put(name, obj);
                 owners.put(name, Thread.currentThread());
-                Log.d(TAG, "SetNewThread: " + Thread.currentThread());
+                Log.d(TAG, "Setting new thread as owner of " + name + ": " + Thread.currentThread());
             }
         } else if (owners.get(name) == Thread.currentThread()) {
             values.put(name, obj);
