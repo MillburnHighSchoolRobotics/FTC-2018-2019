@@ -330,6 +330,9 @@ public class SahilClass {
             Imgproc.circle(croppedImage,centroid, 80, new Scalar(255,0,0), 80);
             Imgproc.line(rgb, new Point(min,0), new Point(min,(int)(heightCamera*croppingConstant)), new Scalar(255,0,0), 5);
             Imgproc.line(rgb, new Point(max,0), new Point(max,(int)(heightCamera*croppingConstant)), new Scalar(0,255,0), 5);
+            Imgproc.line(rgb, new Point(((max-min)/3)+min,0), new Point(((max-min)/3)+min,(int)(heightCamera*croppingConstant)), new Scalar(0,0,255), 5);
+            Imgproc.line(rgb, new Point((2*(max-min)/3)+min,0), new Point((2*(max-min)/3)+min,(int)(heightCamera*croppingConstant)), new Scalar(0,0,255), 5);
+
             if (ctel != null) {
                 try {
                     ctel.sendImage("Camera Image", rgb).execute();

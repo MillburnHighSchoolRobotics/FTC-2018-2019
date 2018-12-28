@@ -81,8 +81,11 @@ public class BlueAutonDepot extends LinearOpMode {
         params.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
 
         params.vuforiaLicenseKey = JeffBot.vuforiaKey;
-
+        telemetry.addData("Vuforia Status: ", "Loading...");
+        telemetry.update();
         VuforiaLocalizerImplSubclass vuforiaInstance = new VuforiaLocalizerImplSubclass(params);
+        telemetry.addData("Vuforia Status: ", "Loaded!");
+        telemetry.update();
         waitForStart();
         rf.setDirection(DcMotorSimple.Direction.REVERSE);
         rb.setDirection(DcMotorSimple.Direction.REVERSE);
