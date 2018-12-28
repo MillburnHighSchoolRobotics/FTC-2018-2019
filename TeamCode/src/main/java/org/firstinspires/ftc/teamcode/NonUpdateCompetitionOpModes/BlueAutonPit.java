@@ -3,7 +3,9 @@ package org.firstinspires.ftc.teamcode.NonUpdateCompetitionOpModes;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -36,6 +38,9 @@ public class BlueAutonPit extends LinearOpMode {
     DcMotor liftL;
 
     int meme = 0;
+    private DcMotorEx reaperLeft;
+    private DcMotorEx reaperRight;
+    private CRServo reaperSpin;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -46,12 +51,16 @@ public class BlueAutonPit extends LinearOpMode {
         rb = hardwareMap.dcMotor.get("rightBack");
         liftL = hardwareMap.dcMotor.get("liftLeft");
         liftR = hardwareMap.dcMotor.get("liftRight");
+        reaperSpin = hardwareMap.crservo.get("reaper");
         magneticLimitSwitch = hardwareMap.get(DigitalChannel.class, "Switchy");
         marker = hardwareMap.servo.get("marker");
         stopper = hardwareMap.servo.get("stopper");
         dropper = hardwareMap.servo.get("dropper");
         reaperFoldLeft = hardwareMap.servo.get("reaperFoldLeft");
         reaperFoldRight = hardwareMap.servo.get("reaperFoldRight");
+
+        reaperLeft = (DcMotorEx)hardwareMap.dcMotor.get("horizLeft");
+        reaperRight = (DcMotorEx)hardwareMap.dcMotor.get("horizRight");
         dropper.setPosition(1);
         reaperFoldRight.setDirection(Servo.Direction.REVERSE);
         reaperFoldRight.setPosition(0.3);
@@ -109,16 +118,16 @@ public class BlueAutonPit extends LinearOpMode {
         liftL.setPower(-0.5);
         liftR.setPower(-0.5);
         ElapsedTime time = new ElapsedTime();
-        Thread.sleep(500);
+        Thread.sleep(250);
         stopper.setPosition(1);
-        Thread.sleep(1000);
-        mv.moveUntilPressed(new DcMotor[]{liftL, liftR}, magneticLimitSwitch, mv.POS_POWER_CONST);//Move until limit switch pressed
+        Thread.sleep(500);
+        mv.moveUntilPressed(new DcMotor[]{liftL, liftR}, magneticLimitSwitch, 1);//Move until limit switch pressed
 //        liftL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 //        liftR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         liftL.setPower(0.8);
         liftR.setPower(0.8);
         ElapsedTime extraLiftTimer = new ElapsedTime();
-        while (extraLiftTimer.milliseconds() < 750) {
+        while (extraLiftTimer.milliseconds() < 350) {
             Thread.sleep(5);
         }
         liftL.setPower(0);
@@ -165,16 +174,51 @@ public class BlueAutonPit extends LinearOpMode {
 //
 //
 
-
+        reaperLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        reaperLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         switch (pos) {
             case 0:
+//                reaperFoldLeft.setPosition(0.7);
+//                reaperFoldRight.setPosition(0.7);
+//                reaperSpin.setPower(0.6);
+//                reaperLeft.setTargetPosition(1000);
+//                reaperLeft.setPower(1);
                 mv.rotateTo(45);
+//                reaperFoldRight.setPosition(0.9);
+//                reaperFoldLeft.setPosition(0.9);
+//                reaperLeft.setTargetPosition(2050);
+//                while (reaperLeft.isBusy()) {
+//                    Thread.sleep(5);
+//                }
+//                reaperSpin.setPower(0);
+//                reaperFoldRight.setPosition(0.3);
+//                reaperFoldLeft.setPosition(0.3);
+//                reaperLeft.setTargetPosition(0);
+//                reaperLeft.setPower(0.6);
+//                Thread.sleep(500);
                 mv.translateDistance(1,-24);
                 mv.translateDistance(1,24);
                 mv.rotateTo(0);
                 break;
             case 2:
+//                reaperFoldLeft.setPosition(0.7);
+//                reaperFoldRight.setPosition(0.7);
+//                reaperSpin.setPower(0.6);
+//                reaperLeft.setTargetPosition(1000);
+//                reaperLeft.setPower(1);
                 mv.rotateTo(-45);
+//                reaperFoldRight.setPosition(0.9);
+//                reaperFoldLeft.setPosition(0.9);
+//                reaperLeft.setTargetPosition(2050);
+//                while (reaperLeft.isBusy()) {
+//                    Thread.sleep(5);
+//                }
+//                reaperSpin.setPower(0);
+//                reaperFoldRight.setPosition(0.3);
+//                reaperFoldLeft.setPosition(0.3);
+//                reaperLeft.setTargetPosition(0);
+//                reaperLeft.setPower(0.6);
+//                Thread.sleep(500);
                 mv.translateDistance(1,-24);
                 mv.translateDistance(1,24);
                 mv.rotateTo(0);

@@ -121,16 +121,16 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
         liftL.setPower(-0.5);
         liftR.setPower(-0.5);
         ElapsedTime time = new ElapsedTime();
-        Thread.sleep(500);
+        Thread.sleep(250);
         stopper.setPosition(1);
-        Thread.sleep(1000);
-        mv.moveUntilPressed(new DcMotor[]{liftL, liftR}, magneticLimitSwitch, mv.POS_POWER_CONST);//Move until limit switch pressed
+        Thread.sleep(500);
+        mv.moveUntilPressed(new DcMotor[]{liftL, liftR}, magneticLimitSwitch, 1);//Move until limit switch pressed
 //        liftL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 //        liftR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         liftL.setPower(0.8);
         liftR.setPower(0.8);
         ElapsedTime extraLiftTimer = new ElapsedTime();
-        while (extraLiftTimer.milliseconds() < 750) {
+        while (extraLiftTimer.milliseconds() < 350) {
             Thread.sleep(5);
         }
         liftL.setPower(0);
