@@ -45,7 +45,7 @@ public class SahilClass {
     private Scalar lowerW = new Scalar(190, 0, 0);
     private Scalar upperW = new Scalar(255, 256, 256);
     private Scalar lowerBlack = new Scalar(0, 0, 0);
-    private Scalar upperBlack = new Scalar(255, 255, 1);
+    private Scalar upperBlack = new Scalar(255, 255, 25);
     private static final double croppingConstant = 0.3;
     CTelemetry ctel;
 

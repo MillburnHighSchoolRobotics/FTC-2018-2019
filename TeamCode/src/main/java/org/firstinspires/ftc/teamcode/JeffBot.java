@@ -1,12 +1,17 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.app.Activity;
 import android.util.Log;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.internal.opmode.OpModeManagerImpl;
+import org.firstinspires.ftc.robotcore.internal.system.AppUtil;
 import org.firstinspires.ftc.teamcode.watchdog.WatchdogManager;
 
 import virtualRobot.PIDController;
@@ -94,12 +99,15 @@ public class JeffBot {
 
     public void rotateTo(double target) throws InterruptedException {
         ElapsedTime time = new ElapsedTime();
-        while (!Thread.currentThread().isInterrupted() && WatchdogManager.getInstance().getValue("rotation") == null) {
+        while (!shouldStop() && !Thread.currentThread().isInterrupted() && WatchdogManager.getInstance().getValue("rotation") == null) {
             Thread.sleep(5);
         }
         PIDController pidController = new PIDController(kP, kI, kD, 1, target);
         double lastTime = -1;
-        while (!Thread.currentThread().isInterrupted()) {
+        while (!shouldStop()) {
+            if (Thread.currentThread().isInterrupted()) {
+                throw new InterruptedException();
+            }
             double output = pidController.getPIDOutput(WatchdogManager.getInstance().getValue("rotation", Double.class));
             if (Math.abs(WatchdogManager.getInstance().getValue("rotation", Double.class) - target) < 3) {
                 if (lastTime < 0) lastTime = time.milliseconds();
@@ -137,7 +145,7 @@ public class JeffBot {
         ((DcMotorEx)lb).setVelocity(v1);
         ((DcMotorEx)rf).setVelocity(v2);
         ((DcMotorEx)rb).setVelocity(v2);
-        while (!Thread.currentThread().isInterrupted() && sgn * (stoppingAngle - WatchdogManager.getInstance().getValue("rotation", Double.class)) > 0) {
+        while (!shouldStop() && !Thread.currentThread().isInterrupted() && sgn * (stoppingAngle - WatchdogManager.getInstance().getValue("rotation", Double.class)) > 0) {
             Thread.sleep(10);
         }
     }
@@ -150,7 +158,7 @@ public class JeffBot {
             motors[x].setPower(power);
             motors[x].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
-        while (true) {
+        while (!shouldStop()) {
             if (Thread.currentThread().isInterrupted()) {
                 throw new InterruptedException();
             }
@@ -173,7 +181,7 @@ public class JeffBot {
             motors[x].setTargetPosition(position[x]);
             motors[x].setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
-        while (true) {
+        while (!shouldStop()) {
             if (Thread.currentThread().isInterrupted()) {
                 throw new InterruptedException();
             }
@@ -197,7 +205,7 @@ public class JeffBot {
         }
         if (flag) {
             ElapsedTime et = new ElapsedTime();
-            while (et.milliseconds() < 100) {
+            while (!shouldStop() && et.milliseconds() < 100) {
                 boolean flag2 = false;
                 for (DcMotor motor : motors) {
                     flag2 = flag2 || motor.isBusy();
@@ -227,5 +235,13 @@ public class JeffBot {
     public static int rotateToEncoder(double rad) {
         double dist = botRadius*rad;
         return distToEncoder(dist);
+    }
+    public static boolean shouldStop() {
+        Activity currActivity = AppUtil.getInstance().getActivity();
+        OpModeManagerImpl manager = OpModeManagerImpl.getOpModeManagerOfActivity(currActivity);
+        OpMode currentOpMode = manager.getActiveOpMode();
+        return currentOpMode instanceof LinearOpMode &&
+                ((LinearOpMode) currentOpMode).isStarted() &&
+                ((LinearOpMode) currentOpMode).isStopRequested();
     }
 }

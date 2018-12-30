@@ -176,57 +176,74 @@ public class BlueAutonPit extends LinearOpMode {
 
         reaperLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         reaperLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        pos = 0;
+
         switch (pos) {
             case 0:
-//                reaperFoldLeft.setPosition(0.7);
-//                reaperFoldRight.setPosition(0.7);
-//                reaperSpin.setPower(0.6);
-//                reaperLeft.setTargetPosition(1000);
-//                reaperLeft.setPower(1);
+                reaperFoldLeft.setPosition(0.7);
+                reaperFoldRight.setPosition(0.7);
+                reaperSpin.setPower(0.6);
+                reaperLeft.setTargetPosition(1000);
+                reaperLeft.setPower(1);
                 mv.rotateTo(45);
-//                reaperFoldRight.setPosition(0.9);
-//                reaperFoldLeft.setPosition(0.9);
-//                reaperLeft.setTargetPosition(2050);
-//                while (reaperLeft.isBusy()) {
-//                    Thread.sleep(5);
-//                }
-//                reaperSpin.setPower(0);
-//                reaperFoldRight.setPosition(0.3);
-//                reaperFoldLeft.setPosition(0.3);
-//                reaperLeft.setTargetPosition(0);
-//                reaperLeft.setPower(0.6);
-//                Thread.sleep(500);
-                mv.translateDistance(1,-24);
-                mv.translateDistance(1,24);
+                reaperFoldRight.setPosition(0.9);
+                reaperFoldLeft.setPosition(0.9);
+                reaperLeft.setTargetPosition(2050);
+                while (reaperLeft.isBusy()) {
+                    Thread.sleep(5);
+                }
+                reaperSpin.setPower(0);
+                reaperFoldRight.setPosition(0.3);
+                reaperFoldLeft.setPosition(0.3);
+                reaperLeft.setTargetPosition(0);
+                reaperLeft.setPower(0.6);
+                Thread.sleep(500);
+//                mv.translateDistance(1,-24);
+//                mv.translateDistance(1,24);
                 mv.rotateTo(0);
                 break;
             case 2:
-//                reaperFoldLeft.setPosition(0.7);
-//                reaperFoldRight.setPosition(0.7);
-//                reaperSpin.setPower(0.6);
-//                reaperLeft.setTargetPosition(1000);
-//                reaperLeft.setPower(1);
+                reaperFoldLeft.setPosition(0.7);
+                reaperFoldRight.setPosition(0.7);
+                reaperSpin.setPower(0.6);
+                reaperLeft.setTargetPosition(1000);
+                reaperLeft.setPower(1);
                 mv.rotateTo(-45);
-//                reaperFoldRight.setPosition(0.9);
-//                reaperFoldLeft.setPosition(0.9);
-//                reaperLeft.setTargetPosition(2050);
-//                while (reaperLeft.isBusy()) {
-//                    Thread.sleep(5);
-//                }
-//                reaperSpin.setPower(0);
-//                reaperFoldRight.setPosition(0.3);
-//                reaperFoldLeft.setPosition(0.3);
-//                reaperLeft.setTargetPosition(0);
-//                reaperLeft.setPower(0.6);
-//                Thread.sleep(500);
-                mv.translateDistance(1,-24);
-                mv.translateDistance(1,24);
+                reaperFoldRight.setPosition(0.9);
+                reaperFoldLeft.setPosition(0.9);
+                reaperLeft.setTargetPosition(2050);
+                while (reaperLeft.isBusy()) {
+                    Thread.sleep(5);
+                }
+                reaperSpin.setPower(0);
+                reaperFoldRight.setPosition(0.3);
+                reaperFoldLeft.setPosition(0.3);
+                reaperLeft.setTargetPosition(0);
+                reaperLeft.setPower(0.6);
+                Thread.sleep(500);
+//                mv.translateDistance(1,-24);
+//                mv.translateDistance(1,24);
                 mv.rotateTo(0);
                 break;
             default:
             case 1:
-                mv.translateDistance(1,-16);
-                mv.translateDistance(1,16);
+                reaperFoldRight.setPosition(0.9);
+                reaperFoldLeft.setPosition(0.9);
+                reaperSpin.setPower(0.6);
+                reaperLeft.setTargetPosition(1250);
+                reaperLeft.setPower(1);
+                while (reaperLeft.isBusy()) {
+                    Thread.sleep(5);
+                }
+                reaperFoldLeft.setPosition(0.3);
+                reaperFoldRight.setPosition(0.3);
+                reaperSpin.setPower(0);
+                reaperLeft.setTargetPosition(0);
+                reaperLeft.setPower(0.6);
+                Thread.sleep(500);
+//                mv.translateDistance(1,-16);
+//                mv.translateDistance(1,16);
                 break;
         }
 //        Thread.sleep(100);
