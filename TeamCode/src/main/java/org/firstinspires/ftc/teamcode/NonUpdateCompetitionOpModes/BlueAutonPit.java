@@ -184,9 +184,9 @@ public class BlueAutonPit extends LinearOpMode {
                 reaperFoldLeft.setPosition(0.7);
                 reaperFoldRight.setPosition(0.7);
                 reaperSpin.setPower(0.6);
-                reaperLeft.setTargetPosition(700);
+                reaperLeft.setTargetPosition(400);
                 reaperLeft.setPower(1);
-                mv.rotateTo(-45);
+                mv.rotateTo(45);
                 reaperFoldRight.setPosition(0.9);
                 reaperFoldLeft.setPosition(0.9);
                 reaperLeft.setTargetPosition(2050);
@@ -207,9 +207,9 @@ public class BlueAutonPit extends LinearOpMode {
                 reaperFoldLeft.setPosition(0.7);
                 reaperFoldRight.setPosition(0.7);
                 reaperSpin.setPower(0.6);
-                reaperLeft.setTargetPosition(700);
+                reaperLeft.setTargetPosition(400);
                 reaperLeft.setPower(1);
-                mv.rotateTo(45);
+                mv.rotateTo(-45);
                 reaperFoldRight.setPosition(0.9);
                 reaperFoldLeft.setPosition(0.9);
                 reaperLeft.setTargetPosition(2050);
@@ -230,6 +230,7 @@ public class BlueAutonPit extends LinearOpMode {
             case 1:
                 reaperFoldRight.setPosition(0.9);
                 reaperFoldLeft.setPosition(0.9);
+                Thread.sleep(500);
                 reaperSpin.setPower(0.6);
                 reaperLeft.setTargetPosition(1250);
                 reaperLeft.setPower(1);
@@ -249,23 +250,23 @@ public class BlueAutonPit extends LinearOpMode {
 //        Thread.sleep(100);
 //       mv.rotateDegrees(0.5,90);//TODO:Add global variable for speed
 
-        mv.translateDistance(0.7,-3);
-        mv.rotateTo(90);
+        mv.translateDistance(0.7,9);
+        mv.rotateTo(45);
 //        Thread.sleep(100);
 //        Thread.sleep(100);
-       mv.translateDistance(1, -36*Math.sqrt(2));//TODO:See above immortal TODO
+       mv.translateDistance(1, -44);//-36*Math.sqrt(2));//TODO:See above immortal TODO
 //        Thread.sleep(100);
-       mv.rotateTo(135);
+       mv.rotateTo(130);
 //        Thread.sleep(100);
-       mv.translateDistance(1, -36);
-       mv.rotateTo(90);
+       mv.translateDistance(1, -24*3);
+       mv.rotateTo(60);
 //        Thread.sleep(100);
 //        mv.rotateDegrees(0.7, -60);
 //        Thread.sleep(100);
         marker.setPosition(1);
         Thread.sleep(1000);
         marker.setPosition(0.5);
-        mv.rotateTo(145);
+        mv.rotateTo(135);
 //        Thread.sleep(100);
 //        mv.rotateDegrees(0.7, 60);
 //        Thread.sleep(100);
