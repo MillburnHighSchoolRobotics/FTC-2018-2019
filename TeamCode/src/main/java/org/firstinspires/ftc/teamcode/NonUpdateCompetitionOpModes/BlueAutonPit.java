@@ -177,16 +177,16 @@ public class BlueAutonPit extends LinearOpMode {
         reaperLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         reaperLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        pos = 0;
+//        pos = 0;
 
         switch (pos) {
             case 0:
                 reaperFoldLeft.setPosition(0.7);
                 reaperFoldRight.setPosition(0.7);
                 reaperSpin.setPower(0.6);
-                reaperLeft.setTargetPosition(1000);
+                reaperLeft.setTargetPosition(700);
                 reaperLeft.setPower(1);
-                mv.rotateTo(45);
+                mv.rotateTo(-45);
                 reaperFoldRight.setPosition(0.9);
                 reaperFoldLeft.setPosition(0.9);
                 reaperLeft.setTargetPosition(2050);
@@ -207,9 +207,9 @@ public class BlueAutonPit extends LinearOpMode {
                 reaperFoldLeft.setPosition(0.7);
                 reaperFoldRight.setPosition(0.7);
                 reaperSpin.setPower(0.6);
-                reaperLeft.setTargetPosition(1000);
+                reaperLeft.setTargetPosition(700);
                 reaperLeft.setPower(1);
-                mv.rotateTo(-45);
+                mv.rotateTo(45);
                 reaperFoldRight.setPosition(0.9);
                 reaperFoldLeft.setPosition(0.9);
                 reaperLeft.setTargetPosition(2050);
