@@ -40,13 +40,6 @@ public class SahilClass {
     private double ratioDeviation = 0.35;
 
 
-    // A PHONE
-//    private Scalar lowerG = new Scalar(10, 193, 95);
-//    private Scalar upperG = new Scalar(32, 255, 255);
-//    private Scalar lowerW = new Scalar(190, 0, 0);
-//    private Scalar upperW = new Scalar(255, 256, 256);
-
-    // FANCY PHONE
     private Scalar lowerG = new Scalar(10, 193, 95);
     private Scalar upperG = new Scalar(32, 255, 255);
     private Scalar lowerW = new Scalar(190, 0, 0);
