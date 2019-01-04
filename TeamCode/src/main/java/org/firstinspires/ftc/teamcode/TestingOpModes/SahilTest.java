@@ -30,7 +30,7 @@ import virtualRobot.utils.BetterLog;
 
 @Autonomous(name = "Sahil Test", group = "Testing")
 //@Disabled
-public class SahilTest extends LinearOpMode {
+public class SahilTest extends LinearOpMode{
 
     static {
         if(OpenCVLoader.initDebug()) {
@@ -57,7 +57,11 @@ public class SahilTest extends LinearOpMode {
         telemetry.update();
         waitForStart();
         SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000); //this only loops once after 1000 millis but keep this constraint just in case
-        int pos = sahilClass.getThreeMineralPosition();
+        int pos = -1;
+        try {
+            pos = sahilClass.getThreeMineralPosition();
+        }
+        catch(Exception e){e.printStackTrace();}
         telemetry.addData("Position", pos + "");
         telemetry.update();
 //        }

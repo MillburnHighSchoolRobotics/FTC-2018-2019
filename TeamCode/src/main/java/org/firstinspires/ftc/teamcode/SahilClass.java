@@ -59,16 +59,16 @@ public class SahilClass {
         widthCamera = vuforiaInstance.rgb.getBufferWidth();
         heightCameraOriginal = vuforiaInstance.rgb.getHeight();
         heightCamera = (int) Math.round(croppingConstant*heightCameraOriginal);
-        ctel = new Retrofit.Builder()
-                .baseUrl(BuildConfig.CTELEM_SERVER_IP)
-                .addConverterFactory(MatConverterFactory.create())
-                .build()
-                .create(CTelemetry.class);
-//        ctel = null;
+//        ctel = new Retrofit.Builder()
+//                .baseUrl(BuildConfig.CTELEM_SERVER_IP)
+//                .addConverterFactory(MatConverterFactory.create())
+//                .build()
+//                .create(CTelemetry.class);
+        ctel = null;
         this.length = length;
     }
 
-    public int getThreeMineralPosition() {
+    public int getThreeMineralPosition() throws IOException {
         int[] data = getMineralLocationNotCorrected();
         int totalMax = data[0];
         int totalMin = data[1];
@@ -98,7 +98,7 @@ public class SahilClass {
         }
         return position;
     }
-    public int getThreeMineralPositionCorrected() {
+    public int getThreeMineralPositionCorrected() throws IOException {
         double[] data = getMineralLocationCorrected();
         int min = (int) data[0];
         int max = (int) data[1];
@@ -125,7 +125,7 @@ public class SahilClass {
     }
 
 
-    private int[] getMineralLocationNotCorrected() {
+    private int[] getMineralLocationNotCorrected() throws IOException {
         ElapsedTime time = new ElapsedTime();
         int timesRun = 0;
         int totalX = 0;
@@ -262,7 +262,11 @@ public class SahilClass {
             Imgproc.line(rgb, new Point(max,0), new Point(max,(int)(heightCameraOriginal*croppingConstant)), new Scalar(0,255,0), 5);
             Imgproc.line(rgb, new Point(((max-min)/3)+min,0), new Point(((max-min)/3)+min,(int)(heightCameraOriginal*croppingConstant)), new Scalar(0,0,255), 5);
             Imgproc.line(rgb, new Point((2*(max-min)/3)+min,0), new Point((2*(max-min)/3)+min,(int)(heightCameraOriginal*croppingConstant)), new Scalar(0,0,255), 5);
-
+            FileWrite.recordImg(rgb, "Camera Image");
+            FileWrite.recordImg(croppedImage, "Cropped Image");
+            FileWrite.recordImg(erodeBlack, "Camera Outline");
+            FileWrite.recordImg(erode, "Mineral Detection");
+            FileWrite.recordImg(goldNotCropped, "Test Gold Detection");
             if (ctel != null) {
                 try {
                     ctel.sendImage("Camera Image", rgb).execute();
@@ -367,7 +371,7 @@ public class SahilClass {
 
         return new Object[] {min,max,erodeBlack};
     }
-    private double[] getMineralLocationCorrected() {
+    private double[] getMineralLocationCorrected() throws IOException {
         ElapsedTime time = new ElapsedTime();
         Mat camera = new Mat();
         Bitmap bm = Bitmap.createBitmap(widthCamera, heightCameraOriginal, Bitmap.Config.RGB_565);
@@ -442,7 +446,13 @@ public class SahilClass {
 
         Imgproc.circle(rgb,centroid, 80, new Scalar(255,0,0), 80);
         Log.d("SahilClass", "Centroid: " + centroid.toString());
-
+        FileWrite.recordImg(rgb, "Main Image");
+        FileWrite.recordImg(rgbCamera, "Camera Image");
+        FileWrite.recordImg(erodeBlack, "Lens Overlap");
+        FileWrite.recordImg(rgbCropped, "Cropped Image");
+        FileWrite.recordImg(white, "White Detection");
+        FileWrite.recordImg(balanced, "Balanced Image");
+        FileWrite.recordImg(erodeGold, "Mineral Detection");
         try {
             ctel.sendImage("Main Image", rgb).execute();
         } catch (IOException e) {

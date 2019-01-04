@@ -134,9 +134,11 @@ public class BlueAutonPit extends LinearOpMode {
         liftR.setPower(0);
         Thread.sleep(250);
         SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000);
-
-
-        int pos = sahilClass.getThreeMineralPosition();
+        int pos=-1;
+        try {
+            pos = sahilClass.getThreeMineralPosition();
+        }
+        catch(Exception e){}
         telemetry.addData("Position", pos);
         telemetry.update();
         reaperFoldLeft.setPosition(0.55);
