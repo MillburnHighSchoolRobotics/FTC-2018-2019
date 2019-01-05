@@ -87,7 +87,7 @@ public class SahilClass {
         Log.d("Width Range", "Width: " + min + " - " + max);
         Log.d("Centroid", "Centroid: " + centroid.toString());
 
-        if (max > min) {
+//        if (max > min) {
             if ((centroid.x >= 0) && (centroid.x < (widthImage/3))) {
                 position = 2;
             } else if ((centroid.x >= (widthImage/3)) && (centroid.x < (2*(widthImage/3)))) {
@@ -96,9 +96,9 @@ public class SahilClass {
                 position = 0;
             }
             Log.d("Position", "Position: " + position);
-        } else {
-            Log.d("Position", "uh oh we got a big error determining the max and min");
-        }
+//        } else {
+//            Log.d("Position", "uh oh we got a big error determining the max and min");
+//        }
         return position;
     }
     public int getThreeMineralPositionCorrected() {
@@ -203,10 +203,13 @@ public class SahilClass {
             Log.d("good", "maximum - " + max);
 
             if (max <= min) {
-                hsv.release();
-                rgb.release();
-                erodeBlack.release();
-                continue;
+//                hsv.release();
+//                rgb.release();
+//                erodeBlack.release();
+//                continue;
+                max = widthCamera-1;
+                min = 0;
+                Log.d("good", "fucjka sidogfhasklejfgnv");
             }
 
             totalMin += min;

@@ -64,7 +64,7 @@ public class NewNewNewTeleOp extends OpMode {
 
 
     int foldCount = 2;
-    double[] foldPositions = {0.95,0.7,0.3};
+    double[] foldPositions = {0.925,0.5,0};
 
     boolean dropperIsUp = false;
     double[] dropperPositions = {0.9, 0.2};
