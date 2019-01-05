@@ -259,19 +259,19 @@ public class BlueAutonPit extends LinearOpMode {
        mv.rotateTo(130);
 //        Thread.sleep(100);
        mv.translateDistance(1, -24*2.5);
-       mv.rotateTo(90);
+       mv.rotateTo(45);
 //        Thread.sleep(100);
 //        mv.rotateDegrees(0.7, -60);
 //        Thread.sleep(100);
         marker.setPosition(1);
         Thread.sleep(1000);
         marker.setPosition(0.5);
-        mv.rotateTo(140);
+        mv.rotateTo(-45);
 //        Thread.sleep(100);
 //        mv.rotateDegrees(0.7, 60);
 //        Thread.sleep(100);
 //       mv.rotate(-0.5,-1);
-       mv.translateDistance(1,85);
+       mv.translateDistance(1,-85);
     }
     public void initializeMotor(DcMotor[] motors) {
         for (DcMotor motor : motors) {
