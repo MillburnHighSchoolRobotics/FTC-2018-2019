@@ -37,13 +37,15 @@ public class SahilClass {
     private int kSize = 9;
     private int sigmaX = 0;
     private int length;
-    private double ratioDeviation = 0.35; //for 0.2, the size range is form 0.8 to 1.2 exclusive
-//    private Scalar lowerG = new Scalar(0, 49, 210); //this is for webcam
-//    private Scalar upperG = new Scalar(44, 255, 255); //this is for webcam
-    private Scalar lowerG = new Scalar(10, 193, 95); //(10, 200, 160);
+    private double ratioDeviation = 0.35;
+
+
+    private Scalar lowerG = new Scalar(10, 193, 95);
     private Scalar upperG = new Scalar(32, 255, 255);
     private Scalar lowerW = new Scalar(190, 0, 0);
     private Scalar upperW = new Scalar(255, 256, 256);
+
+
     private Scalar lowerBlack = new Scalar(0, 0, 0);
     private Scalar upperBlack = new Scalar(255, 255, 25);
     private static final double croppingConstant = 0.3;
@@ -81,48 +83,19 @@ public class SahilClass {
         double min = totalMin/(double)timesRun;
         double widthImage = max-min+1;
         Point centroid = new Point(totalX/(double)timesRun, totalY/(double)timesRun);
-        Log.d("Width Range", "Width: " + min + " - " + max);
-        Log.d("Centroid", "Centroid: " + centroid.toString());
+        Log.d("SahilClass", "Centroid: " + centroid.toString());
 
-        if (max > min) {
-            if ((centroid.x >= 0) && (centroid.x < (widthImage/3))) {
-                position = 2;
-            } else if ((centroid.x >= (widthImage/3)) && (centroid.x < (2*(widthImage/3)))) {
-                position = 1;
-            } else if (centroid.x >= (2*(widthImage/3))) {
-                position = 0;
-            }
-            Log.d("Position", "Position: " + position);
-        } else {
-            Log.d("Position", "uh oh we got a big error determining the max and min");
+        if ((centroid.x >= 0) && (centroid.x < (widthImage/3))) {
+            position = 2;
+        } else if ((centroid.x >= (widthImage/3)) && (centroid.x < (2*(widthImage/3)))) {
+            position = 1;
+        } else if (centroid.x >= (2*(widthImage/3))) {
+            position = 0;
         }
+        Log.d("SahilClass", "Position: " + position);
         return position;
     }
-    public int getThreeMineralPositionCorrected() {
-        double[] data = getMineralLocationCorrected();
-        int min = (int) data[0];
-        int max = (int) data[1];
-        double x = data[2];
-        double y = data[3];
 
-        int position = -1;
-        double widthImage = max-min+1;
-        Point centroid = new Point(x,y);
-
-        if (max > min) {
-            if ((centroid.x >= 0) && (centroid.x < (widthImage/3))) {
-                position = 2;
-            } else if ((centroid.x >= (widthImage/3)) && (centroid.x < (2*(widthImage/3)))) {
-                position = 1;
-            } else if (centroid.x >= (2*(widthImage/3))) {
-                position = 0;
-            }
-            Log.d("SahilClass", "Position: " + position);
-        } else {
-            Log.d("SahilClass", "uh oh we got a big error determining the max and min");
-        }
-        return position;
-    }
 
 
     private int[] getMineralLocationNotCorrected() {
@@ -175,7 +148,6 @@ public class SahilClass {
                 }
             }
 
-
             for (int w = (int)(Math.round(widthCamera-1))-1; w >= 0; w--) {
                 int h = (int) Math.round((int)(heightCameraOriginal*croppingConstant)/2);
                 double[] data = erodeBlack.get(h,w);
@@ -195,16 +167,20 @@ public class SahilClass {
                     max = maxRanges.get(a)[0];
                 }
             }
-
-            Log.d("good", "minimum - " + min);
-            Log.d("good", "maximum - " + max);
-
-            if (max <= min) {
-                hsv.release();
-                rgb.release();
-                erodeBlack.release();
-                continue;
+            if (min >= max) {
+                min = 0;
+                max = (int)(Math.round(widthCamera-1));
+                Log.d("SahilClass", "lens cropping failed");
             }
+            Log.d("SahilClass", "minimum - " + min);
+            Log.d("SahilClass", "maximum - " + max);
+
+//            if (max <= min) {
+//                hsv.release();
+//                rgb.release();
+//                erodeBlack.release();
+//                continue;
+//            }
 
             totalMin += min;
             totalMax += max;
@@ -304,68 +280,63 @@ public class SahilClass {
         }
         return new int[] {totalMax, totalMin, totalX, totalY, timesRun, detected};
     }
-    private Object[] crop(Mat camera) {
-        Mat hsvNotBalanced = new Mat();
-        Imgproc.cvtColor(camera, hsvNotBalanced, Imgproc.COLOR_RGB2HSV);
-
-        Mat black = new Mat();
-        Core.inRange(hsvNotBalanced, lowerBlack, upperBlack, black);
-        Mat erodeBlack = new Mat();
-        Imgproc.erode(black, erodeBlack, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(10, 10)));
-        black.release();
-        hsvNotBalanced.release();
 
 
-        int minPrev = -1;
-        int maxPrev = -1;
-        ArrayList<int[]> minRanges = new ArrayList<>();
-        ArrayList<int[]> maxRanges = new ArrayList<>();
 
-        for (int w = 0; w < widthCamera; w++) {
-            int h = (int) Math.round(heightCamera/2);
-            double[] data = erodeBlack.get(h,w);
-            if ((data[0] > 0) && (minPrev == -1)) {
-                minPrev = w;
-            } else if ((data[0] == 0)  && (minPrev != -1)) {
-                minRanges.add(new int[] {minPrev, w});
-                minPrev = -1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // WHITE BALANCED IMAGE:
+
+    public int getThreeMineralPositionCorrected() {
+        double[] data = getMineralLocationCorrected();
+        int min = (int) data[0];
+        int max = (int) data[1];
+        double x = data[2];
+        double y = data[3];
+
+        int position = -1;
+        double widthImage = max-min+1;
+        Point centroid = new Point(x,y);
+
+        if (max > min) {
+            if ((centroid.x >= 0) && (centroid.x < (widthImage/3))) {
+                position = 2;
+            } else if ((centroid.x >= (widthImage/3)) && (centroid.x < (2*(widthImage/3)))) {
+                position = 1;
+            } else if (centroid.x >= (2*(widthImage/3))) {
+                position = 0;
             }
+            Log.d("SahilClass", "Position: " + position);
+        } else {
+            Log.d("SahilClass", "uh oh we got a big error determining the max and min");
         }
-        int minLength = 0;
-        int min = 0;
-        for (int a = 0; a < minRanges.size(); a++) {
-            int minLengthNew = Math.abs(minRanges.get(a)[1] - minRanges.get(a)[0]);
-            if (minLengthNew > minLength) {
-                minLength = minLengthNew;
-                min = minRanges.get(a)[1];
-            }
-        }
-
-
-        for (int w = (int)(Math.round(widthCamera-1))-1; w >= 0; w--) {
-            int h = (int) Math.round(heightCamera/2);
-            double[] data = erodeBlack.get(h,w);
-            if ((data[0] == 0) && (maxPrev == -1)) {
-                maxPrev = w;
-            } else if ((data[0] > 0)  && (maxPrev != -1)) {
-                maxRanges.add(new int[] {maxPrev, w});
-                maxPrev = -1;
-            }
-        }
-        int maxLength = 0;
-        int max = 0;
-        for (int a = 0; a < maxRanges.size(); a++) {
-            int maxLengthNew = Math.abs(maxRanges.get(a)[0] - maxRanges.get(a)[1]);
-            if (maxLengthNew > maxLength) {
-                maxLength = maxLengthNew;
-                max = maxRanges.get(a)[0];
-            }
-        }
-
-        Log.d("SahilClass", "minimum - " + min);
-        Log.d("SahilClass", "maximum - " + max);
-
-        return new Object[] {min,max,erodeBlack};
+        return position;
     }
     private double[] getMineralLocationCorrected() {
         ElapsedTime time = new ElapsedTime();
@@ -589,6 +560,70 @@ public class SahilClass {
         Imgproc.circle(bgr,centroid, 10, new Scalar(255,0,0), 5);
         Log.d("SahilClass", "balanced!");
         return new Mat[] {bgr, gray};
+    }
+
+    private Object[] crop(Mat camera) {
+        Mat hsvNotBalanced = new Mat();
+        Imgproc.cvtColor(camera, hsvNotBalanced, Imgproc.COLOR_RGB2HSV);
+
+        Mat black = new Mat();
+        Core.inRange(hsvNotBalanced, lowerBlack, upperBlack, black);
+        Mat erodeBlack = new Mat();
+        Imgproc.erode(black, erodeBlack, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(10, 10)));
+        black.release();
+        hsvNotBalanced.release();
+
+
+        int minPrev = -1;
+        int maxPrev = -1;
+        ArrayList<int[]> minRanges = new ArrayList<>();
+        ArrayList<int[]> maxRanges = new ArrayList<>();
+
+        for (int w = 0; w < widthCamera; w++) {
+            int h = (int) Math.round(heightCamera/2);
+            double[] data = erodeBlack.get(h,w);
+            if ((data[0] > 0) && (minPrev == -1)) {
+                minPrev = w;
+            } else if ((data[0] == 0)  && (minPrev != -1)) {
+                minRanges.add(new int[] {minPrev, w});
+                minPrev = -1;
+            }
+        }
+        int minLength = 0;
+        int min = 0;
+        for (int a = 0; a < minRanges.size(); a++) {
+            int minLengthNew = Math.abs(minRanges.get(a)[1] - minRanges.get(a)[0]);
+            if (minLengthNew > minLength) {
+                minLength = minLengthNew;
+                min = minRanges.get(a)[1];
+            }
+        }
+
+
+        for (int w = (int)(Math.round(widthCamera-1))-1; w >= 0; w--) {
+            int h = (int) Math.round(heightCamera/2);
+            double[] data = erodeBlack.get(h,w);
+            if ((data[0] == 0) && (maxPrev == -1)) {
+                maxPrev = w;
+            } else if ((data[0] > 0)  && (maxPrev != -1)) {
+                maxRanges.add(new int[] {maxPrev, w});
+                maxPrev = -1;
+            }
+        }
+        int maxLength = 0;
+        int max = 0;
+        for (int a = 0; a < maxRanges.size(); a++) {
+            int maxLengthNew = Math.abs(maxRanges.get(a)[0] - maxRanges.get(a)[1]);
+            if (maxLengthNew > maxLength) {
+                maxLength = maxLengthNew;
+                max = maxRanges.get(a)[0];
+            }
+        }
+
+        Log.d("SahilClass", "minimum - " + min);
+        Log.d("SahilClass", "maximum - " + max);
+
+        return new Object[] {min,max,erodeBlack};
     }
 //    public int getThreeWebMineralPosition() {
 //        int[] data = getWebMineralLocation();
