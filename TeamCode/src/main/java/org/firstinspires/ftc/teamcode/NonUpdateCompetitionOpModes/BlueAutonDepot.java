@@ -161,8 +161,9 @@ public class BlueAutonDepot extends LinearOpMode {
         //TODO: SWITCH TO ROTATETO
         switch (num) {
             case 2:
+                mv.translateDistance(0.7, -1);
                 mv.rotateTo(-90);
-                mv.circleAround(12*Math.sqrt(2)-6, -15, 90);
+                mv.circleAround(12*Math.sqrt(2)-1, -25, 90);
                 mv.rotateTo(0);
                 mv.translateDistance(0.7, -16);
 //                mv.rotateTo(0);

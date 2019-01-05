@@ -63,8 +63,8 @@ public class BlueAutonPit extends LinearOpMode {
         reaperRight = (DcMotorEx)hardwareMap.dcMotor.get("horizRight");
         dropper.setPosition(0.9);
         reaperFoldRight.setDirection(Servo.Direction.REVERSE);
-        reaperFoldRight.setPosition(0.55);
-        reaperFoldLeft.setPosition(0.55);
+        reaperFoldRight.setPosition(0.3);
+        reaperFoldLeft.setPosition(0.3);
         WatchdogManager wdm = WatchdogManager.getInstance();
         wdm.setHardwareMap(hardwareMap);
         wdm.setCurrentAuton(this);
