@@ -84,7 +84,6 @@ public class BlueAutonDepotDAVIDISAWAFER extends LinearOpMode {
         telemetry.addData("Vuforia Status: ", "Loaded!");
         telemetry.update();
         waitForStart();
-        Thread.sleep(1000);
         rf.setDirection(DcMotorSimple.Direction.REVERSE);
         rb.setDirection(DcMotorSimple.Direction.REVERSE);
         lf.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -186,11 +185,11 @@ public class BlueAutonDepotDAVIDISAWAFER extends LinearOpMode {
                 reaperFoldLeft.setPosition(0.7);
                 reaperFoldRight.setPosition(0.7);
                 reaperSpin.setPower(0.6);
-                reaperLeft.setTargetPosition(400);
+                reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(1);
                 mv.rotateTo(45);
-                reaperFoldRight.setPosition(0.9);
-                reaperFoldLeft.setPosition(0.9);
+                reaperFoldRight.setPosition(0.95);
+                reaperFoldLeft.setPosition(0.95);
                 reaperLeft.setTargetPosition(2050);
                 while (reaperLeft.isBusy()) {
                     Thread.sleep(5);
@@ -209,11 +208,11 @@ public class BlueAutonDepotDAVIDISAWAFER extends LinearOpMode {
                 reaperFoldLeft.setPosition(0.7);
                 reaperFoldRight.setPosition(0.7);
                 reaperSpin.setPower(0.6);
-                reaperLeft.setTargetPosition(400);
+                reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(1);
                 mv.rotateTo(-45);
-                reaperFoldRight.setPosition(0.9);
-                reaperFoldLeft.setPosition(0.9);
+                reaperFoldRight.setPosition(0.95);
+                reaperFoldLeft.setPosition(0.95);
                 reaperLeft.setTargetPosition(2050);
                 while (reaperLeft.isBusy()) {
                     Thread.sleep(5);
@@ -253,14 +252,14 @@ public class BlueAutonDepotDAVIDISAWAFER extends LinearOpMode {
 //       mv.rotateDegrees(0.5,90);//TODO:Add global variable for speed
 
         mv.translateDistance(0.7,9);
-        mv.rotateTo(45);
+        mv.rotateTo(51);
         reaperFoldLeft.setPosition(0.3);
         reaperFoldRight.setPosition(0.3);
 //        Thread.sleep(100);
 //        Thread.sleep(100);
         mv.translateDistance(1, -44);//-36*Math.sqrt(2));//TODO:See above immortal TODO
 //        Thread.sleep(100);
-        mv.rotateTo(-40);
+        mv.rotateTo(-45);
 //        Thread.sleep(100);
         mv.translateDistance(1, -24*1.5);
         mv.rotateTo(-60);
