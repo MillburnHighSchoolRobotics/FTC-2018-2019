@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
 import org.opencv.imgcodecs.Imgcodecs;
@@ -13,6 +14,9 @@ import java.util.Date;
 import java.util.Random;
 
 public class FileWrite {
+    static {
+        OpenCVLoader.initDebug();
+    }
     public static void recordImg(Mat mat, String name) throws IOException {
         Random rand = new Random();
 //        File file = new File("/sdcard/8405Logging/",Integer.toString(rand.nextInt())+".jpeg");

@@ -16,11 +16,15 @@ import org.firstinspires.ftc.teamcode.JeffBot;
 import org.firstinspires.ftc.teamcode.SahilClass;
 import org.firstinspires.ftc.teamcode.watchdog.IMUWatchdog;
 import org.firstinspires.ftc.teamcode.watchdog.WatchdogManager;
+import org.opencv.android.OpenCVLoader;
 
 import virtualRobot.VuforiaLocalizerImplSubclass;
 
 @Autonomous(name = "Blue Auton Pit", group = "competition")
 public class BlueAutonPit extends LinearOpMode {
+    static {
+        OpenCVLoader.initDebug();
+    }
     //TODO: Synchronize hardwaremap
     DcMotor lf;
     DcMotor lb;

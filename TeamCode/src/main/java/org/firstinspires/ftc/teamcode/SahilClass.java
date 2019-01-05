@@ -30,6 +30,9 @@ import virtualRobot.telemetry.CTelemetry;
 import virtualRobot.telemetry.MatConverterFactory;
 
 public class SahilClass {
+    static {
+        OpenCVLoader.initDebug();
+    }
     VuforiaLocalizerImplSubclass vuforiaInstance;
     private int widthCamera;
     private int heightCamera;

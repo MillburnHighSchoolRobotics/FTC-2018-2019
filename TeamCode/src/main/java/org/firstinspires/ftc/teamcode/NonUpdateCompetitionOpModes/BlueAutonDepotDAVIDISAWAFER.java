@@ -16,11 +16,15 @@ import org.firstinspires.ftc.teamcode.JeffBot;
 import org.firstinspires.ftc.teamcode.SahilClass;
 import org.firstinspires.ftc.teamcode.watchdog.IMUWatchdog;
 import org.firstinspires.ftc.teamcode.watchdog.WatchdogManager;
+import org.opencv.android.OpenCVLoader;
 
 import virtualRobot.VuforiaLocalizerImplSubclass;
 
 @Autonomous(name = "Blue Auton Depot that actually works", group = "competition")
 public class BlueAutonDepotDAVIDISAWAFER extends LinearOpMode {
+    static {
+        OpenCVLoader.initDebug();
+    }
     //TODO: Synchronize hardwaremap
     DcMotor lf;
     DcMotor lb;
