@@ -57,11 +57,7 @@ public class SahilTest extends LinearOpMode{
         telemetry.update();
         waitForStart();
         SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000); //this only loops once after 1000 millis but keep this constraint just in case
-        int pos = -1;
-        try {
-            pos = sahilClass.getThreeMineralPosition();
-        }
-        catch(Exception e){e.printStackTrace();}
+        int pos = sahilClass.getThreeMineralPosition();
         telemetry.addData("Position", pos + "");
         telemetry.update();
 //        }

@@ -132,10 +132,7 @@ public class BlueAutonDepot extends LinearOpMode {
         Thread.sleep(250);
         SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000); //this only loops once after 1000 millis but keep this constraint just in case
         int num=-1;
-        try {
-            num = sahilClass.getThreeMineralPosition();
-        }
-        catch(Exception e){}
+        num = sahilClass.getThreeMineralPosition();
         reaperFoldLeft.setPosition(0.3);
         reaperFoldRight.setPosition(0.3);
         Thread.sleep(500);

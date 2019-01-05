@@ -68,7 +68,7 @@ public class SahilClass {
         this.length = length;
     }
 
-    public int getThreeMineralPosition() throws IOException {
+    public int getThreeMineralPosition() {
         int[] data = getMineralLocationNotCorrected();
         int totalMax = data[0];
         int totalMin = data[1];
@@ -98,7 +98,7 @@ public class SahilClass {
         }
         return position;
     }
-    public int getThreeMineralPositionCorrected() throws IOException {
+    public int getThreeMineralPositionCorrected() {
         double[] data = getMineralLocationCorrected();
         int min = (int) data[0];
         int max = (int) data[1];
@@ -125,7 +125,7 @@ public class SahilClass {
     }
 
 
-    private int[] getMineralLocationNotCorrected() throws IOException {
+    private int[] getMineralLocationNotCorrected() {
         ElapsedTime time = new ElapsedTime();
         int timesRun = 0;
         int totalX = 0;
@@ -262,11 +262,6 @@ public class SahilClass {
             Imgproc.line(rgb, new Point(max,0), new Point(max,(int)(heightCameraOriginal*croppingConstant)), new Scalar(0,255,0), 5);
             Imgproc.line(rgb, new Point(((max-min)/3)+min,0), new Point(((max-min)/3)+min,(int)(heightCameraOriginal*croppingConstant)), new Scalar(0,0,255), 5);
             Imgproc.line(rgb, new Point((2*(max-min)/3)+min,0), new Point((2*(max-min)/3)+min,(int)(heightCameraOriginal*croppingConstant)), new Scalar(0,0,255), 5);
-            FileWrite.recordImg(rgb, "Camera Image");
-            FileWrite.recordImg(croppedImage, "Cropped Image");
-            FileWrite.recordImg(erodeBlack, "Camera Outline");
-            FileWrite.recordImg(erode, "Mineral Detection");
-            FileWrite.recordImg(goldNotCropped, "Test Gold Detection");
             if (ctel != null) {
                 try {
                     ctel.sendImage("Camera Image", rgb).execute();
@@ -297,6 +292,16 @@ public class SahilClass {
                 } catch (IOException e) {
                     e.printStackTrace();
                     Log.e("CTelemetry", "failed non cropped gold detection");
+                }
+            } else {
+                try {
+                    FileWrite.recordImg(rgb, "Camera Image");
+                    FileWrite.recordImg(croppedImage, "Cropped Image");
+                    FileWrite.recordImg(erodeBlack, "Camera Outline");
+                    FileWrite.recordImg(erode, "Mineral Detection");
+                    FileWrite.recordImg(goldNotCropped, "Test Gold Detection");
+                } catch (IOException e) {
+                    Log.e("CTelemetry", "failed image logging", e);
                 }
             }
 
@@ -371,7 +376,7 @@ public class SahilClass {
 
         return new Object[] {min,max,erodeBlack};
     }
-    private double[] getMineralLocationCorrected() throws IOException {
+    private double[] getMineralLocationCorrected() {
         ElapsedTime time = new ElapsedTime();
         Mat camera = new Mat();
         Bitmap bm = Bitmap.createBitmap(widthCamera, heightCameraOriginal, Bitmap.Config.RGB_565);
@@ -446,54 +451,61 @@ public class SahilClass {
 
         Imgproc.circle(rgb,centroid, 80, new Scalar(255,0,0), 80);
         Log.d("SahilClass", "Centroid: " + centroid.toString());
-        FileWrite.recordImg(rgb, "Main Image");
-        FileWrite.recordImg(rgbCamera, "Camera Image");
-        FileWrite.recordImg(erodeBlack, "Lens Overlap");
-        FileWrite.recordImg(rgbCropped, "Cropped Image");
-        FileWrite.recordImg(white, "White Detection");
-        FileWrite.recordImg(balanced, "Balanced Image");
-        FileWrite.recordImg(erodeGold, "Mineral Detection");
-        try {
-            ctel.sendImage("Main Image", rgb).execute();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.e("CTelemetry", "failed main image");
-        }
-        try {
-            ctel.sendImage("Camera Image", rgbCamera).execute();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.e("CTelemetry", "failed camera image");
-        }
-        try {
-            ctel.sendImage("Cropped Image", rgbCropped).execute();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.e("CTelemetry", "failed cropped image");
-        }
-        try {
-            ctel.sendImage("Lens Overlap", erodeBlack).execute();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.e("CTelemetry", "failed lens overlap");
-        }
-        try {
-            ctel.sendImage("White Detection", white).execute();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.e("CTelemetry", "failed white detection");
-        }
-        try {
-            ctel.sendImage("Balanced Image", balanced).execute();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.e("CTelemetry", "failed balanced image");
-        }
-        try {
-            ctel.sendImage("Mineral Detection", erodeGold).execute();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.e("CTelemetry", "failed mineral detection");
+        if (ctel != null) {
+            try {
+                ctel.sendImage("Main Image", rgb).execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.e("CTelemetry", "failed main image");
+            }
+            try {
+                ctel.sendImage("Camera Image", rgbCamera).execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.e("CTelemetry", "failed camera image");
+            }
+            try {
+                ctel.sendImage("Cropped Image", rgbCropped).execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.e("CTelemetry", "failed cropped image");
+            }
+            try {
+                ctel.sendImage("Lens Overlap", erodeBlack).execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.e("CTelemetry", "failed lens overlap");
+            }
+            try {
+                ctel.sendImage("White Detection", white).execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.e("CTelemetry", "failed white detection");
+            }
+            try {
+                ctel.sendImage("Balanced Image", balanced).execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.e("CTelemetry", "failed balanced image");
+            }
+            try {
+                ctel.sendImage("Mineral Detection", erodeGold).execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.e("CTelemetry", "failed mineral detection");
+            }
+        } else {
+            try {
+                FileWrite.recordImg(rgb, "Main Image");
+                FileWrite.recordImg(rgbCamera, "Camera Image");
+                FileWrite.recordImg(erodeBlack, "Lens Overlap");
+                FileWrite.recordImg(rgbCropped, "Cropped Image");
+                FileWrite.recordImg(white, "White Detection");
+                FileWrite.recordImg(balanced, "Balanced Image");
+                FileWrite.recordImg(erodeGold, "Mineral Detection");
+            } catch (IOException e) {
+                Log.e("CTelemetry", "failed image logging", e);
+            }
         }
         camera.release();
         erodeBlack.release();
