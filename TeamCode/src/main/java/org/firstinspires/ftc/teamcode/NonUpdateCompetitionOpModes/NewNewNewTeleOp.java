@@ -10,10 +10,14 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.robotcore.internal.android.dx.rop.code.RegisterSpecSet;
 import org.firstinspires.ftc.teamcode.JeffBot;
 import org.opencv.core.Mat;
 
 import virtualRobot.utils.MathUtils;
+
+import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_TO_POSITION;
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 
 /*
@@ -46,6 +50,7 @@ public class NewNewNewTeleOp extends OpMode {
     private Servo marker;
     private Servo reaperFoldLeft;
     private Servo reaperFoldRight;
+    private DigitalChannel bottomSwitch;
 //    private JeffBot mv;
 
 
@@ -85,6 +90,8 @@ public class NewNewNewTeleOp extends OpMode {
         marker = hardwareMap.servo.get("marker");
         reaperFoldLeft = hardwareMap.servo.get("reaperFoldLeft");
         reaperFoldRight = hardwareMap.servo.get("reaperFoldRight");
+        bottomSwitch = hardwareMap.get(DigitalChannel.class, "bottom");
+
 
 
         lf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -149,15 +156,53 @@ public class NewNewNewTeleOp extends OpMode {
         }
 
         // lift movement
-        if(gamepad1.dpad_up) {
+        if(gamepad1.dpad_up || gamepad2.dpad_up) {
+            if (liftLeft.getMode().equals(RUN_TO_POSITION)) {
+                liftLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            }
+            if (liftRight.getMode().equals(RUN_TO_POSITION)) {
+                liftRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            }
             liftLeft.setPower(1 * gearing);
             liftRight.setPower(1 * gearing);
-        } else if (gamepad1.dpad_down) {
+        } else if (gamepad1.dpad_down || gamepad2.dpad_down) {
+            if (liftLeft.getMode().equals(RUN_TO_POSITION)) {
+                liftLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            }
+            if (liftRight.getMode().equals(RUN_TO_POSITION)) {
+                liftRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            }
             liftLeft.setPower(-1 * gearing);
             liftRight.setPower(-1 * gearing);
         } else {
-            liftLeft.setPower(0);
-            liftRight.setPower(0);
+            if (!liftLeft.getMode().equals(RUN_TO_POSITION) || !liftRight.getMode().equals(RUN_TO_POSITION)) {
+                liftLeft.setPower(0);
+                liftRight.setPower(0);
+            }
+        }
+
+        //auto lift movement
+        if (gamepad2.y) {
+            liftLeft.setMode(RUN_TO_POSITION);
+            liftRight.setMode(RUN_TO_POSITION);
+            liftLeft.setTargetPosition(3400);
+            liftRight.setTargetPosition(3400);
+            liftLeft.setPower(1);
+            liftRight.setPower(1);
+        } else if (gamepad2.b) {
+            liftLeft.setMode(RUN_TO_POSITION);
+            liftRight.setMode(RUN_TO_POSITION);
+            liftLeft.setTargetPosition(2650);
+            liftRight.setTargetPosition(2650);
+            liftLeft.setPower(1);
+            liftRight.setPower(1);
+        } else if (gamepad2.a) {
+            liftLeft.setMode(RUN_TO_POSITION);
+            liftRight.setMode(RUN_TO_POSITION);
+            liftLeft.setTargetPosition(0);
+            liftRight.setTargetPosition(0);
+            liftLeft.setPower(1);
+            liftRight.setPower(1);
         }
 
         // reaper extension
@@ -251,6 +296,12 @@ public class NewNewNewTeleOp extends OpMode {
             canToggleMarker.reset();
         }
 
+        if (!bottomSwitch.getState() && !(liftLeft.getMode().equals(RUN_TO_POSITION) || liftRight.getMode().equals(RUN_TO_POSITION))) {
+            liftLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            liftRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            liftLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            liftRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
 
 
         telemetry.addData("lf", lf.getCurrentPosition() + "");

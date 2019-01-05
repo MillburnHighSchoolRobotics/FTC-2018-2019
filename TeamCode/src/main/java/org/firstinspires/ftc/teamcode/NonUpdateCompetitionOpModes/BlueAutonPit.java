@@ -141,7 +141,7 @@ public class BlueAutonPit extends LinearOpMode {
         catch(Exception e){}
         telemetry.addData("Position", pos);
         telemetry.update();
-        reaperFoldLeft.setPosition(0.55);
+        reaperFoldLeft.setPosition(0.625);
         reaperFoldRight.setPosition(0.625);
         //mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {-0.8, 0.8}, new int[] {10700+100, 10700+100});
 //        Thread.sleep(100);
