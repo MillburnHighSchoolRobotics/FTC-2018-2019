@@ -134,6 +134,7 @@ public class BlueAutonDepot extends LinearOpMode {
         int num = sahilClass.getThreeMineralPosition();
         reaperFoldLeft.setPosition(0.3);
         reaperFoldRight.setPosition(0.3);
+        Thread.sleep(500);
         //mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {-0.8, 0.8}, new int[] {10700+100, 10700+100});
 //        Thread.sleep(100);
 //
@@ -160,9 +161,9 @@ public class BlueAutonDepot extends LinearOpMode {
         switch (num) {
             case 2:
                 mv.rotateTo(-90);
-                mv.circleAround(12*Math.sqrt(2), -15, 90);
+                mv.circleAround(12*Math.sqrt(2)-6, -15, 90);
                 mv.rotateTo(0);
-                mv.translateDistance(0.7, -12);
+                mv.translateDistance(0.7, -16);
 //                mv.rotateTo(0);
                 break;
             case 0:
@@ -184,7 +185,7 @@ public class BlueAutonDepot extends LinearOpMode {
 
 
 
-            mv.rotateTo(-52);
+            mv.rotateTo(-48);
             mv.translateDistance(0.7, 12);
         }
 //        mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {-0.8, 0.8}, new int[] {600, 600});
