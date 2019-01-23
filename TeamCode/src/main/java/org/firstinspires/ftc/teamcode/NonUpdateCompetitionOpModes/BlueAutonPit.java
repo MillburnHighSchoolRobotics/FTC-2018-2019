@@ -196,7 +196,7 @@ public class BlueAutonPit extends LinearOpMode {
                 while (reaperLeft.isBusy()) {
                     Thread.sleep(5);
                 }
-                reaperSpin.setPower(0);a
+                reaperSpin.setPower(0);
                 reaperFoldRight.setPosition(0.625);
                 reaperFoldLeft.setPosition(0.625);
                 reaperLeft.setTargetPosition(0);

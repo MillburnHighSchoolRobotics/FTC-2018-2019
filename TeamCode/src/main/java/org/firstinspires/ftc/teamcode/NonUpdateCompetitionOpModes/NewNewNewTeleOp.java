@@ -67,7 +67,7 @@ public class NewNewNewTeleOp extends OpMode {
     double[] foldPositions = {1,0.825,0.45};
 
     boolean dropperIsUp = false;
-    double[] dropperPositions = {0.8, 0.2};
+    double[] dropperPositions = {0.7, 0};
 
     @Override
     public void init() {
@@ -234,7 +234,7 @@ public class NewNewNewTeleOp extends OpMode {
             reaperFoldLeft.setPosition(foldPositions[foldCount%3]);
             reaperFoldRight.setPosition(foldPositions[foldCount%3]);
             if (foldCount == foldPositions.length - 1) {
-                dropperPositions[0] = 0.95;
+                dropperPositions[0] = 0.8;
                 dropper.setPosition(dropperPositions[dropperIsUp ? 1 : 0]);
             }
             canToggleFolder.reset();
@@ -245,7 +245,7 @@ public class NewNewNewTeleOp extends OpMode {
             reaperFoldLeft.setPosition(foldPositions[foldCount%3]);
             reaperFoldRight.setPosition(foldPositions[foldCount%3]);
             if (foldCount != foldPositions.length - 1) {
-                dropperPositions[0] = 0.8;
+                dropperPositions[0] = 0.7;
                 dropper.setPosition(dropperPositions[dropperIsUp ? 1 : 0]);
             }
             canToggleFolder.reset();
