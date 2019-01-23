@@ -64,10 +64,10 @@ public class NewNewNewTeleOp extends OpMode {
 
 
     int foldCount = 2;
-    double[] foldPositions = {0.95,0.7,0.3};
+    double[] foldPositions = {1,0.825,0.45};
 
     boolean dropperIsUp = false;
-    double[] dropperPositions = {0.9, 0.2};
+    double[] dropperPositions = {0.8, 0.2};
 
     @Override
     public void init() {
@@ -207,11 +207,11 @@ public class NewNewNewTeleOp extends OpMode {
 
         // reaper extension
         if (gamepad1.dpad_left) {
-            reaperLeft.setPower(-0.75 * gearing);
-            reaperRight.setPower(-0.75 * gearing);
+            reaperLeft.setPower(-0.8 * gearing);
+            reaperRight.setPower(-0.8 * gearing);
         } else if (gamepad1.dpad_right) {
-            reaperLeft.setPower(0.75 * gearing);
-            reaperRight.setPower(0.75 * gearing);
+            reaperLeft.setPower(0.8 * gearing);
+            reaperRight.setPower(0.8 * gearing);
         } else {
             reaperLeft.setPower(0);
             reaperRight.setPower(0);
@@ -245,7 +245,7 @@ public class NewNewNewTeleOp extends OpMode {
             reaperFoldLeft.setPosition(foldPositions[foldCount%3]);
             reaperFoldRight.setPosition(foldPositions[foldCount%3]);
             if (foldCount != foldPositions.length - 1) {
-                dropperPositions[0] = 0.9;
+                dropperPositions[0] = 0.8;
                 dropper.setPosition(dropperPositions[dropperIsUp ? 1 : 0]);
             }
             canToggleFolder.reset();
