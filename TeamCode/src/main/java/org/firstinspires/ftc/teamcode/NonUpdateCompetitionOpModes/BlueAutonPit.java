@@ -73,7 +73,7 @@ public class BlueAutonPit extends LinearOpMode {
         wdm.setHardwareMap(hardwareMap);
         wdm.setCurrentAuton(this);
         wdm.provision("IMUWatch", IMUWatchdog.class, "imu 1");
-        marker.setPosition(0.5);
+        marker.setPosition(0.7);
         VuforiaLocalizer.Parameters params = new VuforiaLocalizer.Parameters(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
         params.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
 
@@ -192,7 +192,7 @@ public class BlueAutonPit extends LinearOpMode {
                 mv.rotateTo(45);
                 reaperFoldRight.setPosition(1);
                 reaperFoldLeft.setPosition(1);
-                reaperLeft.setTargetPosition(2050);
+                reaperLeft.setTargetPosition(2250);
                 while (reaperLeft.isBusy()) {
                     Thread.sleep(5);
                 }
@@ -215,7 +215,7 @@ public class BlueAutonPit extends LinearOpMode {
                 mv.rotateTo(-45);
                 reaperFoldRight.setPosition(1);
                 reaperFoldLeft.setPosition(1);
-                reaperLeft.setTargetPosition(2050);
+                reaperLeft.setTargetPosition(2250);
                 while (reaperLeft.isBusy()) {
                     Thread.sleep(5);
                 }
@@ -235,7 +235,7 @@ public class BlueAutonPit extends LinearOpMode {
                 reaperFoldLeft.setPosition(0.95);
                 Thread.sleep(500);
                 reaperSpin.setPower(0.6);
-                reaperLeft.setTargetPosition(1250);
+                reaperLeft.setTargetPosition(1450);
                 reaperLeft.setPower(1);
                 while (reaperLeft.isBusy()) {
                     Thread.sleep(5);
@@ -264,13 +264,13 @@ public class BlueAutonPit extends LinearOpMode {
        mv.rotateTo(130);
 //        Thread.sleep(100);
        mv.translateDistance(1, -24*2.5);
-       mv.rotateTo(45);
+//       mv.rotateTo(45);
 //        Thread.sleep(100);
 //        mv.rotateDegrees(0.7, -60);
 //        Thread.sleep(100);
-        marker.setPosition(1);
+        marker.setPosition(0);
         Thread.sleep(1000);
-        marker.setPosition(0.5);
+        marker.setPosition(0.7);
         mv.rotateTo(-45);
 //        Thread.sleep(100);
 //        mv.rotateDegrees(0.7, 60);

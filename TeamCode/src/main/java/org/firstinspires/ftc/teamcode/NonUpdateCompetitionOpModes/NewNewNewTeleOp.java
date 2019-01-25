@@ -129,7 +129,7 @@ public class NewNewNewTeleOp extends OpMode {
         reaperSpin.setPower(0);
         stopper.setPosition(1);
         dropper.setPosition(dropperPositions[dropperIsUp ? 1 : 0]);
-        marker.setPosition(0.5);
+        marker.setPosition(0.7);
         reaperFoldLeft.setPosition(foldPositions[foldCount]);
         reaperFoldRight.setPosition(foldPositions[foldCount]);
     }
@@ -292,7 +292,7 @@ public class NewNewNewTeleOp extends OpMode {
 
         // marker bc why not
         if (MathUtils.equals(gamepad1.right_trigger, 1, 0.05) && canToggleMarker.milliseconds() > 500) {
-            marker.setPosition(1.5 - marker.getPosition());
+            marker.setPosition(0.7 - marker.getPosition());
             canToggleMarker.reset();
         }
 

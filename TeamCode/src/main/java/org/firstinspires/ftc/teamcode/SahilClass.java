@@ -62,12 +62,12 @@ public class SahilClass {
         widthCamera = vuforiaInstance.rgb.getBufferWidth();
         heightCameraOriginal = vuforiaInstance.rgb.getHeight();
         heightCamera = (int) Math.round(croppingConstant*heightCameraOriginal);
-//        ctel = new Retrofit.Builder()
-//                .baseUrl(BuildConfig.CTELEM_SERVER_IP)
-//                .addConverterFactory(MatConverterFactory.create())
-//                .build()
-//                .create(CTelemetry.class);
-        ctel = null;
+        ctel = new Retrofit.Builder()
+                .baseUrl(BuildConfig.CTELEM_SERVER_IP)
+                .addConverterFactory(MatConverterFactory.create())
+                .build()
+                .create(CTelemetry.class);
+//        ctel = null;
         this.length = length;
     }
 

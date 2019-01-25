@@ -65,7 +65,7 @@ public class BlueAutonDepotDAVIDISAWAFER extends LinearOpMode {
 
         reaperLeft = (DcMotorEx)hardwareMap.dcMotor.get("horizLeft");
         reaperRight = (DcMotorEx)hardwareMap.dcMotor.get("horizRight");
-        dropper.setPosition(0.9);
+        dropper.setPosition(0.7);
         reaperFoldRight.setDirection(Servo.Direction.REVERSE);
         reaperFoldRight.setPosition(0.45);
         reaperFoldLeft.setPosition(0.45);
@@ -73,7 +73,7 @@ public class BlueAutonDepotDAVIDISAWAFER extends LinearOpMode {
         wdm.setHardwareMap(hardwareMap);
         wdm.setCurrentAuton(this);
         wdm.provision("IMUWatch", IMUWatchdog.class, "imu 1");
-        marker.setPosition(0.5);
+        marker.setPosition(0.7);
         VuforiaLocalizer.Parameters params = new VuforiaLocalizer.Parameters(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
         params.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
 
@@ -111,7 +111,7 @@ public class BlueAutonDepotDAVIDISAWAFER extends LinearOpMode {
         reaperFoldLeft.setPosition(1);
         reaperFoldRight.setPosition(1);
         Thread.sleep(500);
-//        dropper.setPosition(0.2);
+//        dropper.setPosition(0);
 
 //        TFODTest tfod = new TFODTest(hardwareMap);
         liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -190,7 +190,7 @@ public class BlueAutonDepotDAVIDISAWAFER extends LinearOpMode {
                 mv.rotateTo(45);
                 reaperFoldRight.setPosition(1);
                 reaperFoldLeft.setPosition(1);
-                reaperLeft.setTargetPosition(2050);
+                reaperLeft.setTargetPosition(2250);
                 while (reaperLeft.isBusy()) {
                     Thread.sleep(5);
                 }
@@ -213,7 +213,7 @@ public class BlueAutonDepotDAVIDISAWAFER extends LinearOpMode {
                 mv.rotateTo(-45);
                 reaperFoldRight.setPosition(1);
                 reaperFoldLeft.setPosition(1);
-                reaperLeft.setTargetPosition(2050);
+                reaperLeft.setTargetPosition(2250);
                 while (reaperLeft.isBusy()) {
                     Thread.sleep(5);
                 }
@@ -233,7 +233,7 @@ public class BlueAutonDepotDAVIDISAWAFER extends LinearOpMode {
                 reaperFoldLeft.setPosition(0.95);
                 Thread.sleep(500);
                 reaperSpin.setPower(0.6);
-                reaperLeft.setTargetPosition(1250);
+                reaperLeft.setTargetPosition(1450);
                 reaperLeft.setPower(1);
                 while (reaperLeft.isBusy()) {
                     Thread.sleep(5);
@@ -259,22 +259,22 @@ public class BlueAutonDepotDAVIDISAWAFER extends LinearOpMode {
 //        Thread.sleep(100);
         mv.translateDistance(1, -44);//-36*Math.sqrt(2));//TODO:See above immortal TODO
 //        Thread.sleep(100);
-        mv.rotateTo(-45);
+        mv.rotateTo(-40);
 //        Thread.sleep(100);
-        mv.translateDistance(1, -24*1.5);
-        mv.rotateTo(-60);
+        mv.translateDistance(1, -30*1.5);//This is the offending line
+//        mv.rotateTo(-60);
 //        Thread.sleep(100);
 //        mv.rotateDegrees(0.7, -60);
 //        Thread.sleep(100);
-        marker.setPosition(1);
+        marker.setPosition(0);
         Thread.sleep(1000);
-        marker.setPosition(0.5);
+        marker.setPosition(0.7);
         mv.rotateTo(-45);
 //        Thread.sleep(100);
 //        mv.rotateDegrees(0.7, 60);
 //        Thread.sleep(100);
 //       mv.rotate(-0.5,-1);
-        mv.translateDistance(1,85);
+        mv.translateDistance(1,90);
     }
     public void initializeMotor(DcMotor[] motors) {
         for (DcMotor motor : motors) {
