@@ -68,6 +68,11 @@ public class NewNewNewTeleOp extends OpMode {
 
     boolean dropperIsUp = false;
     double[] dropperPositions = {0.7, 0};
+    boolean targetIsTop = false;
+    private ElapsedTime canToggleTarget;
+
+    private double rightModifier = 1;
+    private double leftModifier = 1;
 
     @Override
     public void init() {
@@ -75,6 +80,7 @@ public class NewNewNewTeleOp extends OpMode {
         canToggleDropper = new ElapsedTime();
         canToggleFolder = new ElapsedTime();
         canToggleMarker = new ElapsedTime();
+        canToggleTarget = new ElapsedTime();
         this.msStuckDetectStop = 3000;
         lf = (DcMotorEx)hardwareMap.dcMotor.get("leftFront");
         lb = (DcMotorEx)hardwareMap.dcMotor.get("leftBack");
@@ -137,17 +143,38 @@ public class NewNewNewTeleOp extends OpMode {
     @Override
     public void loop() {
 
+        if (MathUtils.equals(gamepad1.right_trigger, 1, 0.05)) {
+            rightModifier = 0.25;
+        } else {
+            rightModifier = 1;
+        }
+        if (MathUtils.equals(gamepad1.left_trigger, 1, 0.05)) {
+            leftModifier = 0.25;
+        } else {
+            leftModifier = 1;
+        }
+
         // robot movement
-        if (!MathUtils.equals(gamepad1.right_stick_x,0)) {
+        if (!MathUtils.equals(gamepad1.right_stick_x, 0)) {
             lf.setPower(-1 * power * gearing * gamepad1.right_stick_x);
             lb.setPower(-1 * power * gearing * gamepad1.right_stick_x);
             rf.setPower(power * gearing * gamepad1.right_stick_x);
             rb.setPower(power * gearing * gamepad1.right_stick_x);
-        } else if (!MathUtils.equals(gamepad1.left_stick_y,0)) {
-            lf.setPower(power * gearing * gamepad1.left_stick_y);
-            lb.setPower(power * gearing * gamepad1.left_stick_y);
-            rf.setPower(power * gearing * gamepad1.left_stick_y);
-            rb.setPower(power * gearing * gamepad1.left_stick_y);
+        } else if (!MathUtils.equals(gamepad1.left_stick_y, 0)) {
+            lf.setPower(power * leftModifier * gearing * gamepad1.left_stick_y);
+            lb.setPower(power * leftModifier * gearing * gamepad1.left_stick_y);
+            rf.setPower(power * rightModifier * gearing * gamepad1.left_stick_y);
+            rb.setPower(power * rightModifier * gearing * gamepad1.left_stick_y);
+        } else if (!MathUtils.equals(gamepad1.right_trigger, 0, 0.05)) {
+            lf.setPower(power * gearing * gamepad1.right_trigger * 0.3);
+            lb.setPower(power * gearing * gamepad1.right_trigger * 0.3);
+            rf.setPower(-1 * power * gearing * gamepad1.right_trigger * 0.3);
+            rb.setPower(-1 * power * gearing * gamepad1.right_trigger * 0.3);
+        } else if (!MathUtils.equals(gamepad1.left_trigger, 0, 0.05)) {
+            lf.setPower(-1 * power * gearing * gamepad1.left_trigger * 0.3);
+            lb.setPower(-1 * power * gearing * gamepad1.left_trigger * 0.3);
+            rf.setPower(power * gearing * gamepad1.left_trigger * 0.3);
+            rb.setPower(power * gearing * gamepad1.left_trigger * 0.3);
         } else {
             lf.setPower(0);
             lb.setPower(0);
@@ -182,27 +209,38 @@ public class NewNewNewTeleOp extends OpMode {
         }
 
         //auto lift movement
-        if (gamepad2.y) {
-            liftLeft.setMode(RUN_TO_POSITION);
-            liftRight.setMode(RUN_TO_POSITION);
-            liftLeft.setTargetPosition(3400);
-            liftRight.setTargetPosition(3400);
-            liftLeft.setPower(1);
-            liftRight.setPower(1);
-        } else if (gamepad2.b) {
-            liftLeft.setMode(RUN_TO_POSITION);
-            liftRight.setMode(RUN_TO_POSITION);
-            liftLeft.setTargetPosition(2650);
-            liftRight.setTargetPosition(2650);
-            liftLeft.setPower(1);
-            liftRight.setPower(1);
-        } else if (gamepad2.a) {
-            liftLeft.setMode(RUN_TO_POSITION);
-            liftRight.setMode(RUN_TO_POSITION);
-            liftLeft.setTargetPosition(0);
-            liftRight.setTargetPosition(0);
-            liftLeft.setPower(1);
-            liftRight.setPower(1);
+        if (gamepad1.x && canToggleTarget.milliseconds() > 250) {
+            targetIsTop = !targetIsTop;
+            canToggleTarget.reset();
+            if (targetIsTop) {
+                if (foldCount == 2) foldCount = 1;
+                reaperFoldLeft.setPosition(foldPositions[foldCount%3]);
+                reaperFoldRight.setPosition(foldPositions[foldCount%3]);
+//                if (foldCount != foldPositions.length - 1) {
+                    dropperPositions[0] = 0.7;
+                    dropper.setPosition(dropperPositions[dropperIsUp ? 1 : 0]);
+//                }
+                liftLeft.setMode(RUN_TO_POSITION);
+                liftRight.setMode(RUN_TO_POSITION);
+                liftLeft.setTargetPosition(3400);
+                liftRight.setTargetPosition(3400);
+                liftLeft.setPower(1);
+                liftRight.setPower(1);
+            } else {
+                if (foldCount == 2) foldCount = 1;
+                reaperFoldLeft.setPosition(foldPositions[foldCount%3]);
+                reaperFoldRight.setPosition(foldPositions[foldCount%3]);
+//                if (foldCount != foldPositions.length - 1) {
+                dropperPositions[0] = 0.7;
+                dropper.setPosition(dropperPositions[dropperIsUp ? 1 : 0]);
+//                }
+                liftLeft.setMode(RUN_TO_POSITION);
+                liftRight.setMode(RUN_TO_POSITION);
+                liftLeft.setTargetPosition(0);
+                liftRight.setTargetPosition(0);
+                liftLeft.setPower(1);
+                liftRight.setPower(1);
+            }
         }
 
         // reaper extension
@@ -263,7 +301,7 @@ public class NewNewNewTeleOp extends OpMode {
 
 
         // reset pls
-        if (gamepad1.x) {
+        if (gamepad2.x) {
             lf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             lb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             rf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -284,14 +322,14 @@ public class NewNewNewTeleOp extends OpMode {
 
 
         // toggle locking lift
-        if (MathUtils.equals(gamepad1.left_trigger, 1, 0.05) && canToggleStopper.milliseconds() > 500) {
+        if (MathUtils.equals(gamepad2.left_trigger, 1, 0.05) && canToggleStopper.milliseconds() > 500) {
             stopper.setPosition(1.1 - stopper.getPosition());
             canToggleStopper.reset();
         }
 
 
         // marker bc why not
-        if (MathUtils.equals(gamepad1.right_trigger, 1, 0.05) && canToggleMarker.milliseconds() > 500) {
+        if (MathUtils.equals(gamepad2.right_trigger, 1, 0.05) && canToggleMarker.milliseconds() > 500) {
             marker.setPosition(0.7 - marker.getPosition());
             canToggleMarker.reset();
         }
