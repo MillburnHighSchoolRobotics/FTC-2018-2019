@@ -214,10 +214,8 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
                 reaperFoldLeft.setPosition(0.78);
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(0.6);
-                Thread.sleep(250);
                 reaperFoldLeft.setPosition(0.45);
                 reaperFoldRight.setPosition(0.45);
-                Thread.sleep(250);
 //                mv.translateDistance(1,-24);
 //                mv.translateDistance(1,24);
                 mv.rotateTo(0);
@@ -240,10 +238,8 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
                 reaperFoldLeft.setPosition(0.78);
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(0.6);
-                Thread.sleep(250);
                 reaperFoldLeft.setPosition(0.45);
                 reaperFoldRight.setPosition(0.45);
-                Thread.sleep(250);
 //                mv.translateDistance(1,-24);
 //                mv.translateDistance(1,24);
                 mv.rotateTo(0);
@@ -252,7 +248,6 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
             case 1:
                 reaperFoldRight.setPosition(0.95);
                 reaperFoldLeft.setPosition(0.95);
-                Thread.sleep(250);
                 reaperSpin.setPower(0.6);
                 reaperLeft.setTargetPosition(1450);
                 reaperLeft.setPower(1);
@@ -264,10 +259,8 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
                 reaperSpin.setPower(0);
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(0.6);
-                Thread.sleep(250);
                 reaperFoldLeft.setPosition(0.45);
                 reaperFoldRight.setPosition(0.45);
-                Thread.sleep(250);
 //                mv.translateDistance(1,-16);
 //                mv.translateDistance(1,16);
                 break;
@@ -284,7 +277,7 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
 //        Thread.sleep(100);
         mv.rotateTo(120);
 //        Thread.sleep(100);
-        mv.translateDistance(1, -50);
+        mv.translateDistance(1, -62);
         mv.rotateTo(90);
 //        Thread.sleep(100);
 //        Thread.sleep(100);
@@ -293,30 +286,53 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
         marker.setPosition(0.7);
         switch (pos) {
             case 0:
-                mv.rotateTo(-125);
-                mv.translate(1,24);
+                mv.rotateTo(-120);
+                Thread.sleep(250);
+                reaperFoldLeft.setPosition(1);
+                reaperFoldRight.setPosition(1);
+                reaperSpin.setPower(0.6);
+                reaperLeft.setTargetPosition(3200);
+                reaperLeft.setPower(1);
+                while (reaperLeft.isBusy()) {
+                    Thread.sleep(5);
+                }
                 break;
             case 2:
-                mv.rotateTo(-55);
-                mv.translate(1,24);
+                mv.rotateTo(-60);
+                Thread.sleep(250);
+                reaperFoldLeft.setPosition(1);
+                reaperFoldRight.setPosition(1);
+                reaperSpin.setPower(0.6);
+                reaperLeft.setTargetPosition(3200);
+                reaperLeft.setPower(1);
+                while (reaperLeft.isBusy()) {
+                    Thread.sleep(5);
+                }
                 break;
             default:
             case 1:
-                mv.translate(1,36);
+                mv.rotateTo(-90);
+                Thread.sleep(250);
+                reaperFoldLeft.setPosition(1);
+                reaperFoldRight.setPosition(1);
+                reaperSpin.setPower(0.6);
+                reaperLeft.setTargetPosition(2800);
+                reaperLeft.setPower(1);
+                while (reaperLeft.isBusy()) {
+                    Thread.sleep(5);
+                }
                 break;
         }
-//        Thread.sleep(100);
-//        mv.rotateDegrees(0.7, 60);
-//        Thread.sleep(100);
-//       mv.rotate(-0.5,-1);
-        mv.translateDistance(1,72);
+        reaperFoldLeft.setPosition(0.45);
+        reaperFoldRight.setPosition(0.45);
+        mv.rotateTo(-140);
+        reaperLeft.setTargetPosition(3200);
+        mv.translateDistance(1,50);
     }
     public void initializeMotor(DcMotor[] motors) {
         for (DcMotor motor : motors) {
             motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             motor.setPower(0);
-//            motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//            motor.setTargetPosition(0);
         }
     }
 }
