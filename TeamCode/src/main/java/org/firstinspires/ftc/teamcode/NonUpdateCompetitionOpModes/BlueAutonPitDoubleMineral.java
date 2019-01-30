@@ -323,11 +323,16 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
                 }
                 break;
         }
+        reaperLeft.setTargetPosition(0);
+        reaperLeft.setPower(1);
+        while (reaperLeft.isBusy()) {
+            Thread.sleep(5);
+        }
         reaperFoldLeft.setPosition(0.45);
         reaperFoldRight.setPosition(0.45);
-        mv.rotateTo(-140);
-        reaperLeft.setTargetPosition(3200);
-        mv.translateDistance(1,50);
+//        mv.rotateTo(-140);
+//        reaperLeft.setTargetPosition(3200);
+//        mv.translateDistance(1,50);
     }
     public void initializeMotor(DcMotor[] motors) {
         for (DcMotor motor : motors) {
