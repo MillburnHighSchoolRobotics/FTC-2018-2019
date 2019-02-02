@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import virtualRobot.utils.MathUtils;
 
 @TeleOp(name = "Tomas Class 2: Electric Boogaloo")
-@Disabled
+//@Disabled
 public class TomasClass2 extends OpMode {
     private DcMotor motor1;
     private DcMotor motor2;

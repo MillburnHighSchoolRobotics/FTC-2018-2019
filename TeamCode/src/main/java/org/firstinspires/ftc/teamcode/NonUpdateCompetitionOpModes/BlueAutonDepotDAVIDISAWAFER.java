@@ -118,10 +118,10 @@ public class BlueAutonDepotDAVIDISAWAFER extends LinearOpMode {
         liftR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         liftR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        liftL.setPower(-0.5);
-        liftR.setPower(-0.5);
+        liftL.setPower(-0.6);
+        liftR.setPower(-0.6);
         ElapsedTime time = new ElapsedTime();
-        Thread.sleep(250);
+        Thread.sleep(500);
         stopper.setPosition(1);
         Thread.sleep(500);
         mv.moveUntilPressed(new DcMotor[]{liftL, liftR}, magneticLimitSwitch, 1);//Move until limit switch pressed

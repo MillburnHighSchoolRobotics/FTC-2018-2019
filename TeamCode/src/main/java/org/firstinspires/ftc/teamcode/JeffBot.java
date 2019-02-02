@@ -109,7 +109,7 @@ public class JeffBot {
                 throw new InterruptedException();
             }
             double output = pidController.getPIDOutput(WatchdogManager.getInstance().getValue("rotation", Double.class));
-            if (Math.abs(WatchdogManager.getInstance().getValue("rotation", Double.class) - target) < 3) {
+            if (Math.abs(WatchdogManager.getInstance().getValue("rotation", Double.class) - target) < 2) {
                 if (lastTime < 0) lastTime = time.milliseconds();
                 else if (time.milliseconds() - lastTime > 100) {
                     stop();
