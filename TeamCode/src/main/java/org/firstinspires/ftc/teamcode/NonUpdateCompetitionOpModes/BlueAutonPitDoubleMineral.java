@@ -71,7 +71,7 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
 
         reaperLeft = (DcMotorEx)hardwareMap.dcMotor.get("horizLeft");
         reaperRight = (DcMotorEx)hardwareMap.dcMotor.get("horizRight");
-        dropper.setPosition(0.7);
+        dropper.setPosition(0.8);
         reaperFoldRight.setDirection(Servo.Direction.REVERSE);
         reaperFoldRight.setPosition(0.45);
         reaperFoldLeft.setPosition(0.45);

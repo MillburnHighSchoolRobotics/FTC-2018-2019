@@ -71,7 +71,7 @@ public class BlueAutonPit extends LinearOpMode {
 
         reaperLeft = (DcMotorEx)hardwareMap.dcMotor.get("horizLeft");
         reaperRight = (DcMotorEx)hardwareMap.dcMotor.get("horizRight");
-        dropper.setPosition(0.7);
+        dropper.setPosition(0.8);
         reaperFoldRight.setDirection(Servo.Direction.REVERSE);
         reaperFoldRight.setPosition(0.45);
         reaperFoldLeft.setPosition(0.45);
@@ -210,14 +210,14 @@ public class BlueAutonPit extends LinearOpMode {
                     Thread.sleep(5);
                 }
                 reaperSpin.setPower(0);
-                reaperFoldRight.setPosition(0.78);
-                reaperFoldLeft.setPosition(0.78);
+                reaperFoldRight.setPosition(0.825);
+                reaperFoldLeft.setPosition(0.825);
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(0.6);
-                Thread.sleep(250);
-                reaperFoldLeft.setPosition(0.45);
-                reaperFoldRight.setPosition(0.45);
-                Thread.sleep(250);
+                Thread.sleep(500);
+//                reaperFoldLeft.setPosition(0.825);
+//                reaperFoldRight.setPosition(0.45);
+//                Thread.sleep(250);
 //                mv.translateDistance(1,-24);
 //                mv.translateDistance(1,24);
                 mv.rotateTo(0);
@@ -236,14 +236,14 @@ public class BlueAutonPit extends LinearOpMode {
                     Thread.sleep(5);
                 }
                 reaperSpin.setPower(0);
-                reaperFoldRight.setPosition(0.78);
-                reaperFoldLeft.setPosition(0.78);
+                reaperFoldRight.setPosition(0.825);
+                reaperFoldLeft.setPosition(0.825);
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(0.6);
-                Thread.sleep(250);
-                reaperFoldLeft.setPosition(0.45);
-                reaperFoldRight.setPosition(0.45);
-                Thread.sleep(250);
+                Thread.sleep(500);
+//                reaperFoldLeft.setPosition(0.45);
+//                reaperFoldRight.setPosition(0.45);
+//                Thread.sleep(250);
 //                mv.translateDistance(1,-24);
 //                mv.translateDistance(1,24);
                 mv.rotateTo(0);
@@ -253,7 +253,7 @@ public class BlueAutonPit extends LinearOpMode {
                 reaperFoldRight.setPosition(1);
                 reaperFoldLeft.setPosition(1);
                 Thread.sleep(250);
-                reaperSpin.setPower(-0.6);
+                reaperSpin.setPower(0.6);
                 reaperLeft.setTargetPosition(1450);
                 reaperLeft.setPower(1);
                 while (reaperLeft.isBusy()) {
@@ -276,13 +276,15 @@ public class BlueAutonPit extends LinearOpMode {
 //       mv.rotateDegrees(0.5,90);//TODO:Add global variable for speed
 
         mv.translateDistance(1,9);
-        mv.rotateTo(50);
+        reaperFoldLeft.setPosition(0.45);
+        reaperFoldRight.setPosition(0.45);
+        mv.rotateTo(55);
 
 //        Thread.sleep(100);
 //        Thread.sleep(100);
-       mv.translateDistance(1, -40-3);//-36*Math.sqrt(2));//TODO:See above immortal TODO
+       mv.translateDistance(1, -40-4);//-36*Math.sqrt(2));//TODO:See above immortal TODO
 //        Thread.sleep(100);
-       mv.rotateTo(130);
+       mv.rotateTo(135);
 //        Thread.sleep(100);
        mv.translateDistance(1, -60);
        ElapsedTime rotateTimeout = new ElapsedTime(); //oh well, might as well drop it

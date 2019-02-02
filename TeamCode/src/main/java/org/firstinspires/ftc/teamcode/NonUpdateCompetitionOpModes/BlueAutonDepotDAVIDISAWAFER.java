@@ -65,7 +65,7 @@ public class BlueAutonDepotDAVIDISAWAFER extends LinearOpMode {
 
         reaperLeft = (DcMotorEx)hardwareMap.dcMotor.get("horizLeft");
         reaperRight = (DcMotorEx)hardwareMap.dcMotor.get("horizRight");
-        dropper.setPosition(0.7);
+        dropper.setPosition(0.8);
         reaperFoldRight.setDirection(Servo.Direction.REVERSE);
         reaperFoldRight.setPosition(0.45);
         reaperFoldLeft.setPosition(0.45);
@@ -187,7 +187,7 @@ public class BlueAutonDepotDAVIDISAWAFER extends LinearOpMode {
                 reaperSpin.setPower(0.6);
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(1);
-                mv.rotateTo(45);
+                mv.rotateTo(40);
                 reaperFoldRight.setPosition(1);
                 reaperFoldLeft.setPosition(1);
                 reaperLeft.setTargetPosition(2250);
@@ -252,16 +252,16 @@ public class BlueAutonDepotDAVIDISAWAFER extends LinearOpMode {
 //       mv.rotateDegrees(0.5,90);//TODO:Add global variable for speed
 
         mv.translateDistance(0.7,9);
-        mv.rotateTo(51);
+        mv.rotateTo(55);
         reaperFoldLeft.setPosition(0.45);
         reaperFoldRight.setPosition(0.45);
 //        Thread.sleep(100);
 //        Thread.sleep(100);
-        mv.translateDistance(1, -44);//-36*Math.sqrt(2));//TODO:See above immortal TODO
+        mv.translateDistance(1, -45);//-36*Math.sqrt(2));//TODO:See above immortal TODO
 //        Thread.sleep(100);
         mv.rotateTo(-40);
 //        Thread.sleep(100);
-        mv.translateDistance(1, -30*1.5);//This is the offending line
+        mv.translateDistance(1, -28*1.5);//This is the offending line
 //        mv.rotateTo(-60);
 //        Thread.sleep(100);
 //        mv.rotateDegrees(0.7, -60);
