@@ -116,7 +116,9 @@ public class BlueAutonPit extends LinearOpMode {
 
         reaperFoldLeft.setPosition(1);
         reaperFoldRight.setPosition(1);
-        Thread.sleep(250);
+        Thread.sleep(500);
+
+        dropper.setPosition(0.2);
 //        dropper.setPosition(0);
 
 //        TFODTest tfod = new TFODTest(hardwareMap);
@@ -286,7 +288,7 @@ public class BlueAutonPit extends LinearOpMode {
 //        Thread.sleep(100);
        mv.rotateTo(135);
 //        Thread.sleep(100);
-       mv.translateDistance(1, -60);
+       mv.translateDistance(1, -50);
        ElapsedTime rotateTimeout = new ElapsedTime(); //oh well, might as well drop it
         lf.setPower(1);
         lb.setPower(1);
@@ -296,18 +298,21 @@ public class BlueAutonPit extends LinearOpMode {
            Thread.sleep(10);
        }
        mv.stop();
-//       mv.rotateTo(90);
+       mv.rotateTo(180);
+       mv.translateDistance(1,15);
+       mv.rotateTo(90);
+       mv.translateDistance(1,15);
 //        Thread.sleep(100);
 //        Thread.sleep(100);
         marker.setPosition(0);
         Thread.sleep(500);
         marker.setPosition(0.7);
-        mv.rotateTo(135);
+//        mv.rotateTo(135);
 //        Thread.sleep(100);
 //        mv.rotateDegrees(0.7, 60);
 //        Thread.sleep(100);
 //       mv.rotate(-0.5,-1);
-       mv.translateDistance(1,72);
+//       mv.translateDistance(1,72);
     }
     public void initializeMotor(DcMotor[] motors) {
         for (DcMotor motor : motors) {
