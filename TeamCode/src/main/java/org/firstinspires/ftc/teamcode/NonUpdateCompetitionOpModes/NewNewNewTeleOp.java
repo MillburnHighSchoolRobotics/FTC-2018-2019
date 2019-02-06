@@ -89,6 +89,8 @@ public class NewNewNewTeleOp extends OpMode {
         liftLeft = (DcMotorEx)hardwareMap.dcMotor.get("liftLeft");
         liftRight = (DcMotorEx)hardwareMap.dcMotor.get("liftRight");
         reaperLeft = (DcMotorEx)hardwareMap.dcMotor.get("horizLeft");
+
+        reaperLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         reaperRight = (DcMotorEx)hardwareMap.dcMotor.get("horizRight");
         reaperSpin = hardwareMap.crservo.get("reaper");
         stopper = hardwareMap.servo.get("stopper");
@@ -245,11 +247,11 @@ public class NewNewNewTeleOp extends OpMode {
 
         // reaper extension
         if (gamepad1.dpad_left) {
-            reaperLeft.setPower(-0.8 * gearing);
-            reaperRight.setPower(-0.8 * gearing);
-        } else if (gamepad1.dpad_right) {
             reaperLeft.setPower(0.8 * gearing);
             reaperRight.setPower(0.8 * gearing);
+        } else if (gamepad1.dpad_right) {
+            reaperLeft.setPower(-0.8 * gearing);
+            reaperRight.setPower(-0.8 * gearing);
         } else {
             reaperLeft.setPower(0);
             reaperRight.setPower(0);
@@ -318,6 +320,8 @@ public class NewNewNewTeleOp extends OpMode {
             liftRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             reaperLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             reaperRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            reaperLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         }
 
 

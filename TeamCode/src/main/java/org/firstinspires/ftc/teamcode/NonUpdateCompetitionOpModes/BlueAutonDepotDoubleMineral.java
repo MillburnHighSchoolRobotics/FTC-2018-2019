@@ -77,8 +77,10 @@ public class BlueAutonDepotDoubleMineral extends LinearOpMode {
         dropper = hardwareMap.servo.get("dropper");
         reaperFoldLeft = hardwareMap.servo.get("reaperFoldLeft");
         reaperFoldRight = hardwareMap.servo.get("reaperFoldRight");
-        reaperRight.setDirection(REVERSE);
+//        reaperRight.setDirection(REVERSE);
         reaperLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        reaperLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         reaperRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         reaperLeft.setPower(0);
         reaperRight.setPower(0);

@@ -64,6 +64,7 @@ public class BlueAutonDepotDAVIDISAWAFER extends LinearOpMode {
         reaperFoldRight = hardwareMap.servo.get("reaperFoldRight");
 
         reaperLeft = (DcMotorEx)hardwareMap.dcMotor.get("horizLeft");
+        reaperLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         reaperRight = (DcMotorEx)hardwareMap.dcMotor.get("horizRight");
         dropper.setPosition(0.7);
         reaperFoldRight.setDirection(Servo.Direction.REVERSE);

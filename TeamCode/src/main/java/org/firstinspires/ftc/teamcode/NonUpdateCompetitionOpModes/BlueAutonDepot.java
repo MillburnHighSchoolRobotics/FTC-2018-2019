@@ -20,7 +20,9 @@ import org.firstinspires.ftc.teamcode.watchdog.WatchdogManager;
 import org.opencv.android.OpenCVLoader;
 
 import virtualRobot.VuforiaLocalizerImplSubclass;
-
+@Disabled
+@Deprecated
+//TODO delete
 @Autonomous(name = "Blue Auton Depot", group = "competition")
 public class BlueAutonDepot extends LinearOpMode {
     DcMotor lf;

@@ -70,8 +70,10 @@ public class BlueAutonPit extends LinearOpMode {
         reaperFoldRight = hardwareMap.servo.get("reaperFoldRight");
 
         reaperLeft = (DcMotorEx)hardwareMap.dcMotor.get("horizLeft");
+
+        reaperLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         reaperRight = (DcMotorEx)hardwareMap.dcMotor.get("horizRight");
-        dropper.setPosition(0.8);
+        dropper.setPosition(0.7);
         reaperFoldRight.setDirection(Servo.Direction.REVERSE);
         reaperFoldRight.setPosition(0.45);
         reaperFoldLeft.setPosition(0.45);
@@ -118,7 +120,7 @@ public class BlueAutonPit extends LinearOpMode {
         reaperFoldRight.setPosition(1);
         Thread.sleep(500);
 
-        dropper.setPosition(0.2);
+//        dropper.setPosition(0.2);
 //        dropper.setPosition(0);
 
 //        TFODTest tfod = new TFODTest(hardwareMap);
@@ -131,7 +133,7 @@ public class BlueAutonPit extends LinearOpMode {
         ElapsedTime time = new ElapsedTime();
         Thread.sleep(500);
         stopper.setPosition(1);
-        Thread.sleep(250);
+        Thread.sleep(500);
         mv.moveUntilPressed(new DcMotor[]{liftL, liftR}, magneticLimitSwitch, 1);//Move until limit switch pressed
 //        liftL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 //        liftR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -286,22 +288,25 @@ public class BlueAutonPit extends LinearOpMode {
 //        Thread.sleep(100);
        mv.translateDistance(1, -40-4);//-36*Math.sqrt(2));//TODO:See above immortal TODO
 //        Thread.sleep(100);
-       mv.rotateTo(135);
-//        Thread.sleep(100);
-       mv.translateDistance(1, -50);
-       ElapsedTime rotateTimeout = new ElapsedTime(); //oh well, might as well drop it
-        lf.setPower(1);
-        lb.setPower(1);
+        mv.rotateTo(45);
+        ElapsedTime timer = new ElapsedTime(); //oh well, might as well drop it
+        lf.setPower(-1);
+        lb.setPower(-1);
         rf.setPower(-1);
         rb.setPower(-1);
-       while (wdm.getValue("rotation", Double.class) > 90 && rotateTimeout.seconds() < 1.5) {
-           Thread.sleep(10);
-       }
-       mv.stop();
+        while (timer.seconds() < 0.75) {
+            Thread.sleep(10);
+        }
+        mv.stop();
+        mv.translateDistance(1,3);
+        mv.rotateTo(WatchdogManager.getInstance().getValue("rotation", Double.class) + 90); //mv.rotateTo(135);
+//        Thread.sleep(100);
+       mv.translateDistance(1, -50);
+
        mv.rotateTo(180);
-       mv.translateDistance(1,15);
+       mv.translateDistance(1,-15);
        mv.rotateTo(90);
-       mv.translateDistance(1,15);
+       mv.translateDistance(1,-15);
 //        Thread.sleep(100);
 //        Thread.sleep(100);
         marker.setPosition(0);
