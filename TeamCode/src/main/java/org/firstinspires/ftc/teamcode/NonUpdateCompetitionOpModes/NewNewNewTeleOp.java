@@ -217,8 +217,8 @@ public class NewNewNewTeleOp extends OpMode {
                 reaperFoldLeft.setPosition(foldPositions[foldCount%3]);
                 reaperFoldRight.setPosition(foldPositions[foldCount%3]);
 //                if (foldCount != foldPositions.length - 1) {
-                    dropperPositions[0] = 0.7;
-                    dropper.setPosition(dropperPositions[dropperIsUp ? 1 : 0]);
+//                    dropperPositions[0] = 0.7;
+//                    dropper.setPosition(dropperPositions[dropperIsUp ? 1 : 0]);
 //                }
                 liftLeft.setMode(RUN_TO_POSITION);
                 liftRight.setMode(RUN_TO_POSITION);
@@ -231,8 +231,8 @@ public class NewNewNewTeleOp extends OpMode {
                 reaperFoldLeft.setPosition(foldPositions[foldCount%3]);
                 reaperFoldRight.setPosition(foldPositions[foldCount%3]);
 //                if (foldCount != foldPositions.length - 1) {
-                dropperPositions[0] = 0.7;
-                dropper.setPosition(dropperPositions[dropperIsUp ? 1 : 0]);
+//                dropperPositions[0] = 0.7;
+//                dropper.setPosition(dropperPositions[dropperIsUp ? 1 : 0]);
 //                }
                 liftLeft.setMode(RUN_TO_POSITION);
                 liftRight.setMode(RUN_TO_POSITION);
@@ -271,10 +271,10 @@ public class NewNewNewTeleOp extends OpMode {
             if (foldCount >= foldPositions.length) foldCount = foldPositions.length - 1;
             reaperFoldLeft.setPosition(foldPositions[foldCount%3]);
             reaperFoldRight.setPosition(foldPositions[foldCount%3]);
-            if (foldCount == foldPositions.length - 1) {
-                dropperPositions[0] = 0.8;
-                dropper.setPosition(dropperPositions[dropperIsUp ? 1 : 0]);
-            }
+//            if (foldCount == foldPositions.length - 1) {
+//                dropperPositions[0] = 0.8;
+//                dropper.setPosition(dropperPositions[dropperIsUp ? 1 : 0]);
+//            }
             canToggleFolder.reset();
         }
         if (gamepad1.a && canToggleFolder.milliseconds() > 250) {
@@ -282,10 +282,10 @@ public class NewNewNewTeleOp extends OpMode {
             if (foldCount < 0) foldCount = 0;
             reaperFoldLeft.setPosition(foldPositions[foldCount%3]);
             reaperFoldRight.setPosition(foldPositions[foldCount%3]);
-            if (foldCount != foldPositions.length - 1) {
-                dropperPositions[0] = 0.7;
-                dropper.setPosition(dropperPositions[dropperIsUp ? 1 : 0]);
-            }
+//            if (foldCount != foldPositions.length - 1) {
+//                dropperPositions[0] = 0.7;
+//                dropper.setPosition(dropperPositions[dropperIsUp ? 1 : 0]);
+//            }
             canToggleFolder.reset();
         }
 
