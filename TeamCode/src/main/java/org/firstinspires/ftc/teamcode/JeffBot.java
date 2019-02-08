@@ -27,8 +27,8 @@ public class JeffBot {
     DcMotor lb;
     DcMotor rf;
     DcMotor rb;
-    final static float botWidth = 16.5f; //inches
-    final static float botRadius = botWidth/2; //in
+    public final static float BOT_WIDTH = 16.5f; //inches
+    final static float botRadius = BOT_WIDTH /2; //in
     final static float wheelWidth = 3; //in
     final static float wheelRadius = wheelWidth/2; //in
     final static int ticksPerRev = 730; //ticks per rev
@@ -129,8 +129,8 @@ public class JeffBot {
 
 
     public void circleAround(double r, double speed, double stoppingAngle) throws InterruptedException {
-        double botWidth = 17.75; //inches
-        double c = botWidth/2; //in
+//        double BOT_WIDTH = 17.75; //inches
+        double c = BOT_WIDTH /2; //in
         double wheelWidth = 3; //in
         double wheelRadius = wheelWidth/2; //in
         double targetRadius = r; //inches

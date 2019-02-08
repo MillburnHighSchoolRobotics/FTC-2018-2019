@@ -35,8 +35,8 @@ public class BlueAutonDepot extends LinearOpMode {
     Servo stopper;
     DigitalChannel magneticLimitSwitch;
 
-//    final float botWidth = 16.5f; //inches
-//    final float botRadiuxs = botWidth/2; //in
+//    final float BOT_WIDTH = 16.5f; //inches
+//    final float botRadiuxs = BOT_WIDTH/2; //in
 //    final float wheelWidth = 3; //in
 //    final float wheelRadius = wheelWidth/2; //in
 //    final int ticksPerRev = 680; //ticks per rev
