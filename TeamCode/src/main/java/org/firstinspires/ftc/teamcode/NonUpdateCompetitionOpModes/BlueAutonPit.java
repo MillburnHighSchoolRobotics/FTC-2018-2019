@@ -276,42 +276,40 @@ public class BlueAutonPit extends LinearOpMode {
 //                mv.translateDistance(1,16);
                 break;
         }
-//        Thread.sleep(100);
-//       mv.rotateDegrees(0.5,90);//TODO:Add global variable for speed
-
         mv.translateDistance(1,9);
         reaperFoldLeft.setPosition(0.45);
         reaperFoldRight.setPosition(0.45);
         mv.rotateTo(55);
-
-//        Thread.sleep(100);
-//        Thread.sleep(100);
-       mv.translateDistance(1, -40-4);//-36*Math.sqrt(2));//TODO:See above immortal TODO
-//        Thread.sleep(100);
+        mv.translateDistance(1, -28);//-36*Math.sqrt(2));//TODO:See above immortal TODO
+        mv.rotateTo(135);
+        mv.translateDistance(1,-15);
         mv.rotateTo(45);
-        ElapsedTime timer = new ElapsedTime(); //oh well, might as well drop it
-        lf.setPower(-1);
-        lb.setPower(-1);
-        rf.setPower(-1);
-        rb.setPower(-1);
-        while (timer.seconds() < 0.75) {
-            Thread.sleep(10);
-        }
-        mv.stop();
-        mv.translateDistance(1,3);
-        mv.rotateTo(WatchdogManager.getInstance().getValue("rotation", Double.class) + 90); //mv.rotateTo(135);
-//        Thread.sleep(100);
-       mv.translateDistance(1, -50);
+        mv.circleAround(16,-12,135);
+        mv.rotateTo(135);
+        mv.translateDistance(1,-17);
+//        mv.circleAround(6,1,180);
+//        ElapsedTime timer = new ElapsedTime(); //oh well, might as well drop it
+//        lf.setPower(-1);
+//        lb.setPower(-1);
+//        rf.setPower(-1);
+//        rb.setPower(-1);
+//        while (timer.seconds() < 0.75) {
+//            Thread.sleep(10);
+//        }
+//        mv.stop();
+//        mv.translateDistance(1,3);
+//        mv.rotateTo(WatchdogManager.getInstance().getValue("rotation", Double.class) + 90); //mv.rotateTo(135);
+//       mv.translateDistance(1, -50);
 
-       mv.rotateTo(180);
-       mv.translateDistance(1,-15);
-       mv.rotateTo(90);
-       mv.translateDistance(1,-15);
-//        Thread.sleep(100);
-//        Thread.sleep(100);
+//       mv.rotateTo(180);
+//       mv.translateDistance(1,-15);
+//       mv.rotateTo(90);
+//       mv.translateDistance(1,-15);
+//        mv.translateDistance(1,-30);
         marker.setPosition(0);
         Thread.sleep(500);
         marker.setPosition(0.7);
+        mv.translateDistance(1,85);
 //        mv.rotateTo(135);
 //        Thread.sleep(100);
 //        mv.rotateDegrees(0.7, 60);
