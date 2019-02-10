@@ -22,7 +22,7 @@ import org.opencv.android.OpenCVLoader;
 
 import virtualRobot.VuforiaLocalizerImplSubclass;
 
-@Autonomous(name = "Blue Auton Pit Double Mineral", group = "competition")
+@Autonomous(name = "Bloo Ohtawn Peet Duble Meenrahl", group = "competition")
 public class BlueAutonPitDoubleMineral extends LinearOpMode {
     static {
         OpenCVLoader.initDebug();
@@ -73,7 +73,7 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
 
         reaperLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         reaperRight = (DcMotorEx)hardwareMap.dcMotor.get("horizRight");
-        dropper.setPosition(0.8);
+        dropper.setPosition(0.7);
         reaperFoldRight.setDirection(Servo.Direction.REVERSE);
         reaperFoldRight.setPosition(0.45);
         reaperFoldLeft.setPosition(0.45);
@@ -118,7 +118,9 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
 
         reaperFoldLeft.setPosition(1);
         reaperFoldRight.setPosition(1);
-        Thread.sleep(250);
+        Thread.sleep(500);
+
+//        dropper.setPosition(0.2);
 //        dropper.setPosition(0);
 
 //        TFODTest tfod = new TFODTest(hardwareMap);
@@ -131,7 +133,7 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
         ElapsedTime time = new ElapsedTime();
         Thread.sleep(500);
         stopper.setPosition(1);
-        Thread.sleep(250);
+        Thread.sleep(500);
         mv.moveUntilPressed(new DcMotor[]{liftL, liftR}, magneticLimitSwitch, 1);//Move until limit switch pressed
 //        liftL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 //        liftR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -200,7 +202,7 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
             case 0:
                 reaperFoldLeft.setPosition(0.825);
                 reaperFoldRight.setPosition(0.825);
-                reaperSpin.setPower(0.6);
+                reaperSpin.setPower(-0.6);
 
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(1);
@@ -212,12 +214,14 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
                     Thread.sleep(5);
                 }
                 reaperSpin.setPower(0);
-                reaperFoldRight.setPosition(0.78);
-                reaperFoldLeft.setPosition(0.78);
+                reaperFoldRight.setPosition(0.825);
+                reaperFoldLeft.setPosition(0.825);
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(0.6);
-                reaperFoldLeft.setPosition(0.45);
-                reaperFoldRight.setPosition(0.45);
+                Thread.sleep(500);
+//                reaperFoldLeft.setPosition(0.825);
+//                reaperFoldRight.setPosition(0.45);
+//                Thread.sleep(250);
 //                mv.translateDistance(1,-24);
 //                mv.translateDistance(1,24);
                 mv.rotateTo(0);
@@ -225,7 +229,7 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
             case 2:
                 reaperFoldLeft.setPosition(0.825);
                 reaperFoldRight.setPosition(0.825);
-                reaperSpin.setPower(0.6);
+                reaperSpin.setPower(-0.6);
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(1);
                 mv.rotateTo(-45);
@@ -236,12 +240,14 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
                     Thread.sleep(5);
                 }
                 reaperSpin.setPower(0);
-                reaperFoldRight.setPosition(0.78);
-                reaperFoldLeft.setPosition(0.78);
+                reaperFoldRight.setPosition(0.825);
+                reaperFoldLeft.setPosition(0.825);
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(0.6);
-                reaperFoldLeft.setPosition(0.45);
-                reaperFoldRight.setPosition(0.45);
+                Thread.sleep(500);
+//                reaperFoldLeft.setPosition(0.45);
+//                reaperFoldRight.setPosition(0.45);
+//                Thread.sleep(250);
 //                mv.translateDistance(1,-24);
 //                mv.translateDistance(1,24);
                 mv.rotateTo(0);
@@ -250,6 +256,7 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
             case 1:
                 reaperFoldRight.setPosition(1);
                 reaperFoldLeft.setPosition(1);
+                Thread.sleep(250);
                 reaperSpin.setPower(0.6);
                 reaperLeft.setTargetPosition(1450);
                 reaperLeft.setPower(1);
@@ -261,85 +268,75 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
                 reaperSpin.setPower(0);
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(0.6);
+                Thread.sleep(250);
                 reaperFoldLeft.setPosition(0.45);
                 reaperFoldRight.setPosition(0.45);
+                Thread.sleep(250);
 //                mv.translateDistance(1,-16);
 //                mv.translateDistance(1,16);
                 break;
         }
-//        Thread.sleep(100);
-//       mv.rotateDegrees(0.5,90);//TODO:Add global variable for speed
-
         mv.translateDistance(1,9);
+        reaperFoldLeft.setPosition(0.45);
+        reaperFoldRight.setPosition(0.45);
+        mv.rotateTo(55);
+        mv.translateDistance(1, -30);//-36*Math.sqrt(2));//TODO:See above immortal TODO
+        mv.rotateTo(135);
+        mv.translateDistance(1,-17);
         mv.rotateTo(45);
-
-//        Thread.sleep(100);
-//        Thread.sleep(100);
-        mv.translateDistance(1, -40);//-36*Math.sqrt(2));//TODO:See above immortal TODO
-//        Thread.sleep(100);
-        mv.rotateTo(120);
-//        Thread.sleep(100);
-        mv.translateDistance(1, -62);
-        mv.rotateTo(90);
-//        Thread.sleep(100);
-//        Thread.sleep(100);
-        marker.setPosition(0);
-        Thread.sleep(500);
-        marker.setPosition(0.7);
+        mv.circleAround(12,-8,170);
         switch (pos) {
             case 0:
-                mv.rotateTo(-120);
-                Thread.sleep(250);
-                reaperFoldLeft.setPosition(1);
-                reaperFoldRight.setPosition(1);
-                reaperSpin.setPower(0.6);
-                reaperLeft.setTargetPosition(3200);
-                reaperLeft.setPower(1);
-                while (reaperLeft.isBusy()) {
-                    Thread.sleep(5);
-                }
+                mv.translateDistance(1,-34);
+                mv.rotateTo(55);
+                mv.translateDistance(1,-24);
                 break;
             case 2:
-                mv.rotateTo(-60);
-                Thread.sleep(250);
-                reaperFoldLeft.setPosition(1);
-                reaperFoldRight.setPosition(1);
-                reaperSpin.setPower(0.6);
-                reaperLeft.setTargetPosition(3200);
-                reaperLeft.setPower(1);
-                while (reaperLeft.isBusy()) {
-                    Thread.sleep(5);
-                }
+                mv.rotateTo(125);
+                mv.translateDistance(1,-24);
                 break;
             default:
             case 1:
-                mv.rotateTo(-90);
-                Thread.sleep(250);
-                reaperFoldLeft.setPosition(1);
-                reaperFoldRight.setPosition(1);
-                reaperSpin.setPower(0.6);
-                reaperLeft.setTargetPosition(2800);
-                reaperLeft.setPower(1);
-                while (reaperLeft.isBusy()) {
-                    Thread.sleep(5);
-                }
+                mv.translateDistance(1,-17);
+                mv.rotateTo(90);
+                mv.translateDistance(1,-17);
                 break;
         }
-        reaperLeft.setTargetPosition(0);
-        reaperLeft.setPower(1);
-        while (reaperLeft.isBusy()) {
-            Thread.sleep(5);
-        }
-        reaperFoldLeft.setPosition(0.45);
-        reaperFoldRight.setPosition(0.45);
-//        mv.rotateTo(-140);
-//        reaperLeft.setTargetPosition(3200);
-//        mv.translateDistance(1,50);
+//        mv.circleAround(6,1,180);
+//        ElapsedTime timer = new ElapsedTime(); //oh well, might as well drop it
+//        lf.setPower(-1);
+//        lb.setPower(-1);
+//        rf.setPower(-1);
+//        rb.setPower(-1);
+//        while (timer.seconds() < 0.75) {
+//            Thread.sleep(10);
+//        }
+//        mv.stop();
+//        mv.translateDistance(1,3);
+//        mv.rotateTo(WatchdogManager.getInstance().getValue("rotation", Double.class) + 90); //mv.rotateTo(135);
+//       mv.translateDistance(1, -50);
+
+//       mv.rotateTo(180);
+//       mv.translateDistance(1,-15);
+//       mv.rotateTo(90);
+//       mv.translateDistance(1,-15);
+//        mv.translateDistance(1,-30);
+        marker.setPosition(0);
+        Thread.sleep(500);
+        marker.setPosition(0.7);
+//        mv.rotateTo(135);
+//        Thread.sleep(100);
+//        mv.rotateDegrees(0.7, 60);
+//        Thread.sleep(100);
+//       mv.rotate(-0.5,-1);
+//       mv.translateDistance(1,72);
     }
     public void initializeMotor(DcMotor[] motors) {
         for (DcMotor motor : motors) {
             motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             motor.setPower(0);
+//            motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//            motor.setTargetPosition(0);
         }
     }
 }

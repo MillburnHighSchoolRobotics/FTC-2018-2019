@@ -146,8 +146,10 @@ public class JeffBot {
         ((DcMotorEx)rf).setVelocity(v2);
         ((DcMotorEx)rb).setVelocity(v2);
         while (!shouldStop() && !Thread.currentThread().isInterrupted() && sgn * (stoppingAngle - WatchdogManager.getInstance().getValue("rotation", Double.class)) > 0) {
+            Log.d("angle difference", String.valueOf(sgn*(stoppingAngle - WatchdogManager.getInstance().getValue("rotation", Double.class))));
             Thread.sleep(10);
         }
+        stop();
     }
 
     public void rotateDegrees(double power, double degrees) throws InterruptedException {
