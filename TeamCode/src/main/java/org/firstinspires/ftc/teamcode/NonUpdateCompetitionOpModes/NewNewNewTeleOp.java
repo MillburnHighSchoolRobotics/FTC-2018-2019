@@ -18,6 +18,7 @@ import org.opencv.core.Mat;
 import virtualRobot.utils.MathUtils;
 
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_TO_POSITION;
+import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_USING_ENCODER;
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 
 /*
@@ -73,6 +74,8 @@ public class NewNewNewTeleOp extends OpMode {
 
     private double rightModifier = 1;
     private double leftModifier = 1;
+
+    private boolean descending = false;
 
     @Override
     public void init() {
@@ -186,6 +189,7 @@ public class NewNewNewTeleOp extends OpMode {
 
         // lift movement
         if(gamepad1.dpad_up || gamepad2.dpad_up) {
+            descending = false;
             if (liftLeft.getMode().equals(RUN_TO_POSITION)) {
                 liftLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             }
@@ -195,6 +199,7 @@ public class NewNewNewTeleOp extends OpMode {
             liftLeft.setPower(1 * gearing);
             liftRight.setPower(1 * gearing);
         } else if (gamepad1.dpad_down || gamepad2.dpad_down) {
+            descending = false;
             if (liftLeft.getMode().equals(RUN_TO_POSITION)) {
                 liftLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             }
@@ -204,7 +209,7 @@ public class NewNewNewTeleOp extends OpMode {
             liftLeft.setPower(-1 * gearing);
             liftRight.setPower(-1 * gearing);
         } else {
-            if (!liftLeft.getMode().equals(RUN_TO_POSITION) || !liftRight.getMode().equals(RUN_TO_POSITION)) {
+            if (!descending && (!liftLeft.getMode().equals(RUN_TO_POSITION) || !liftRight.getMode().equals(RUN_TO_POSITION))) {
                 liftLeft.setPower(0);
                 liftRight.setPower(0);
             }
@@ -228,6 +233,7 @@ public class NewNewNewTeleOp extends OpMode {
                 liftRight.setTargetPosition(3400);
                 liftLeft.setPower(1);
                 liftRight.setPower(1);
+                descending = false;
             } else {
                 if (foldCount == 2) foldCount = 1;
                 reaperFoldLeft.setPosition(foldPositions[foldCount%3]);
@@ -236,12 +242,13 @@ public class NewNewNewTeleOp extends OpMode {
 //                dropperPositions[0] = 0.7;
 //                dropper.setPosition(dropperPositions[dropperIsUp ? 1 : 0]);
 //                }
-                liftLeft.setMode(RUN_TO_POSITION);
-                liftRight.setMode(RUN_TO_POSITION);
-                liftLeft.setTargetPosition(0);
-                liftRight.setTargetPosition(0);
-                liftLeft.setPower(1);
-                liftRight.setPower(1);
+                liftLeft.setMode(RUN_USING_ENCODER);
+                liftRight.setMode(RUN_USING_ENCODER);
+//                liftLeft.setTargetPosition(0);
+//                liftRight.setTargetPosition(0);
+                descending = true;
+                liftLeft.setPower(-1);
+                liftRight.setPower(-1);
             }
         }
 
@@ -294,7 +301,7 @@ public class NewNewNewTeleOp extends OpMode {
 
 
         // dump truck
-        if (gamepad1.b  && canToggleDropper.milliseconds() > 500) {
+        if (gamepad1.b  && canToggleDropper.milliseconds() > 1000) {
             dropperIsUp = !dropperIsUp;
             dropper.setPosition(dropperPositions[dropperIsUp ? 1 : 0]);
             canToggleDropper.reset();
@@ -343,6 +350,11 @@ public class NewNewNewTeleOp extends OpMode {
             liftRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             liftLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             liftRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            if (liftLeft.getPower() < 0 || liftRight.getPower() < 0) {
+                liftLeft.setPower(0);
+                liftRight.setPower(0);
+                descending = false;
+            }
         }
 
 
