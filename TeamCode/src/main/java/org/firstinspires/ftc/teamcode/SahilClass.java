@@ -153,49 +153,66 @@ public class SahilClass {
             Imgproc.erode(black, erodeBlack, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(10, 10)));
             black.release();
 
-            int minPrev = -1;
-            int maxPrev = -1;
-            ArrayList<int[]> minRanges = new ArrayList<>();
-            ArrayList<int[]> maxRanges = new ArrayList<>();
+//            int minPrev = -1;
+//            int maxPrev = -1;
+//            ArrayList<int[]> minRanges = new ArrayList<>();
+//            ArrayList<int[]> maxRanges = new ArrayList<>();
 
+//            for (int w = 0; w < widthCamera; w++) {
+//                int h = (int) Math.round((int)(heightCameraOriginal*croppingConstant)/2);
+//                double[] data = erodeBlack.get(h,w);
+//                if ((data[0] > 0) && (minPrev == -1)) {
+//                    minPrev = w;
+//                } else if ((data[0] == 0)  && (minPrev != -1)) {
+//                    minRanges.add(new int[] {minPrev, w});
+//                    minPrev = -1;
+//                }
+//            }
+//            int minLength = 0;
+//            int min = 0;
+//            for (int a = 0; a < minRanges.size(); a++) {
+//                int minLengthNew = Math.abs(minRanges.get(a)[1] - minRanges.get(a)[0]);
+//                if (minLengthNew > minLength) {
+//                    minLength = minLengthNew;
+//                    min = minRanges.get(a)[1];
+//                }
+//            }
+            int min = 0;
             for (int w = 0; w < widthCamera; w++) {
                 int h = (int) Math.round((int)(heightCameraOriginal*croppingConstant)/2);
                 double[] data = erodeBlack.get(h,w);
-                if ((data[0] > 0) && (minPrev == -1)) {
-                    minPrev = w;
-                } else if ((data[0] == 0)  && (minPrev != -1)) {
-                    minRanges.add(new int[] {minPrev, w});
-                    minPrev = -1;
-                }
-            }
-            int minLength = 0;
-            int min = 0;
-            for (int a = 0; a < minRanges.size(); a++) {
-                int minLengthNew = Math.abs(minRanges.get(a)[1] - minRanges.get(a)[0]);
-                if (minLengthNew > minLength) {
-                    minLength = minLengthNew;
-                    min = minRanges.get(a)[1];
+                if (data[0] > 0) {
+                    min = w;
+                    break;
                 }
             }
 
-
-            for (int w = (int)(Math.round(widthCamera-1))-1; w >= 0; w--) {
+//            for (int w = (int)(Math.round(widthCamera-1))-1; w >= 0; w--) {
+//                int h = (int) Math.round((int)(heightCameraOriginal*croppingConstant)/2);
+//                double[] data = erodeBlack.get(h,w);
+//                if ((data[0] == 0) && (maxPrev == -1)) {
+//                    maxPrev = w;
+//                } else if ((data[0] > 0)  && (maxPrev != -1)) {
+//                    maxRanges.add(new int[] {maxPrev, w});
+//                    maxPrev = -1;
+//                }
+//            }
+//            int maxLength = 0;
+//            int max = 0;
+//            for (int a = 0; a < maxRanges.size(); a++) {
+//                int maxLengthNew = Math.abs(maxRanges.get(a)[0] - maxRanges.get(a)[1]);
+//                if (maxLengthNew > maxLength) {
+//                    maxLength = maxLengthNew;
+//                    max = maxRanges.get(a)[0];
+//                }
+//            }
+            int max = 0;
+            for (int w = widthCamera-1; w >= 0; w--) {
                 int h = (int) Math.round((int)(heightCameraOriginal*croppingConstant)/2);
                 double[] data = erodeBlack.get(h,w);
-                if ((data[0] == 0) && (maxPrev == -1)) {
-                    maxPrev = w;
-                } else if ((data[0] > 0)  && (maxPrev != -1)) {
-                    maxRanges.add(new int[] {maxPrev, w});
-                    maxPrev = -1;
-                }
-            }
-            int maxLength = 0;
-            int max = 0;
-            for (int a = 0; a < maxRanges.size(); a++) {
-                int maxLengthNew = Math.abs(maxRanges.get(a)[0] - maxRanges.get(a)[1]);
-                if (maxLengthNew > maxLength) {
-                    maxLength = maxLengthNew;
-                    max = maxRanges.get(a)[0];
+                if (data[0] > 0) {
+                    max = w;
+                    break;
                 }
             }
 

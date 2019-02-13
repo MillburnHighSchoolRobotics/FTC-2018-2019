@@ -74,7 +74,7 @@ public class BlueAutonDepotDAVIDISAWAFER extends LinearOpMode {
         wdm.setHardwareMap(hardwareMap);
         wdm.setCurrentAuton(this);
         wdm.provision("IMUWatch", IMUWatchdog.class, "imu 1");
-        marker.setPosition(0.7);
+        marker.setPosition(0.5);
         VuforiaLocalizer.Parameters params = new VuforiaLocalizer.Parameters(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
         params.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
 
@@ -252,7 +252,7 @@ public class BlueAutonDepotDAVIDISAWAFER extends LinearOpMode {
 //        Thread.sleep(100);
 //       mv.rotateDegrees(0.5,90);//TODO:Add global variable for speed
 
-        mv.translateDistance(0.7,9);
+        mv.translateDistance(1,9);
         mv.rotateTo(55);
         reaperFoldLeft.setPosition(0.45);
         reaperFoldRight.setPosition(0.45);
@@ -262,20 +262,21 @@ public class BlueAutonDepotDAVIDISAWAFER extends LinearOpMode {
 //        Thread.sleep(100);
         mv.rotateTo(-40);
 //        Thread.sleep(100);
-        mv.translateDistance(1, -28*1.5);//This is the offending line
+        mv.translateDistance(1, -27);//This is the offending line
 //        mv.rotateTo(-60);
 //        Thread.sleep(100);
 //        mv.rotateDegrees(0.7, -60);
 //        Thread.sleep(100);
         marker.setPosition(0);
         Thread.sleep(1000);
-        marker.setPosition(0.7);
+        marker.setPosition(0.5);
         mv.rotateTo(-45);
 //        Thread.sleep(100);
 //        mv.rotateDegrees(0.7, 60);
 //        Thread.sleep(100);
 //       mv.rotate(-0.5,-1);
-        mv.translateDistance(1,90);
+        mv.rotateTo(-47.5);
+        mv.translateDistance(1,70);
     }
     public void initializeMotor(DcMotor[] motors) {
         for (DcMotor motor : motors) {

@@ -22,8 +22,9 @@ import org.opencv.android.OpenCVLoader;
 
 import virtualRobot.VuforiaLocalizerImplSubclass;
 
-@Autonomous(name = "Blue Auton Pit", group = "competition")
-public class BlueAutonPit extends LinearOpMode {
+@Disabled
+@Autonomous(name = "Blue Auton Pit Backup", group = "competition")
+public class BlueAutonPitBackup extends LinearOpMode {
     static {
         OpenCVLoader.initDebug();
     }
@@ -81,7 +82,7 @@ public class BlueAutonPit extends LinearOpMode {
         wdm.setHardwareMap(hardwareMap);
         wdm.setCurrentAuton(this);
         wdm.provision("IMUWatch", IMUWatchdog.class, "imu 1");
-        marker.setPosition(0.5);
+        marker.setPosition(0.7);
         VuforiaLocalizer.Parameters params = new VuforiaLocalizer.Parameters(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
         params.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
 
@@ -279,44 +280,19 @@ public class BlueAutonPit extends LinearOpMode {
         mv.translateDistance(1,9);
         reaperFoldLeft.setPosition(0.45);
         reaperFoldRight.setPosition(0.45);
-        mv.rotateTo(55);
-        mv.translateDistance(1, -30);//-36*Math.sqrt(2));//TODO:See above immortal TODO
-        mv.rotateTo(135);
-        mv.translateDistance(1,-17);
+        mv.rotateTo(51);
+        mv.translateDistance(1, -44);
+        mv.rotateTo(130);
+        mv.translateDistance(1, -24*2.5);
         mv.rotateTo(45);
-        mv.circleAround(12,-8,135);
-        mv.rotateTo(135);
-//        mv.translateDistance(1,-17);
-//        mv.circleAround(6,1,180);
-//        ElapsedTime timer = new ElapsedTime(); //oh well, might as well drop it
-//        lf.setPower(-1);
-//        lb.setPower(-1);
-//        rf.setPower(-1);
-//        rb.setPower(-1);
-//        while (timer.seconds() < 0.75) {
-//            Thread.sleep(10);
-//        }
-//        mv.stop();
-//        mv.translateDistance(1,3);
-//        mv.rotateTo(WatchdogManager.getInstance().getValue("rotation", Double.class) + 90); //mv.rotateTo(135);
-//       mv.translateDistance(1, -50);
-
-//       mv.rotateTo(180);
-//       mv.translateDistance(1,-15);
-//       mv.rotateTo(90);
-//       mv.translateDistance(1,-15);
-//        mv.translateDistance(1,-30);
+        marker.setPosition(1);
+        Thread.sleep(1000);
+        marker.setPosition(0.5);
         marker.setPosition(0);
         Thread.sleep(500);
-        marker.setPosition(0.5);
-        mv.rotateTo(140);
-        mv.translateDistance(1,75);
-//        mv.rotateTo(135);
-//        Thread.sleep(100);
-//        mv.rotateDegrees(0.7, 60);
-//        Thread.sleep(100);
-//       mv.rotate(-0.5,-1);
-//       mv.translateDistance(1,72);
+        marker.setPosition(0.7);
+        mv.rotateTo(-45);
+        mv.translateDistance(1,85);
     }
     public void initializeMotor(DcMotor[] motors) {
         for (DcMotor motor : motors) {
