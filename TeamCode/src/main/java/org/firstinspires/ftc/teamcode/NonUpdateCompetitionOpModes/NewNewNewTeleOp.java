@@ -215,6 +215,16 @@ public class NewNewNewTeleOp extends OpMode {
             }
         }
 
+        if (gamepad2.x) {
+            gearing = 1;
+        } else if (gamepad2.y) {
+            gearing = 0.8;
+        } else if (gamepad2.b) {
+            gearing = 0.6;
+        } else if (gamepad2.a) {
+            gearing = 0.4;
+        }
+
         //auto lift movement
         if (gamepad1.x && canToggleTarget.milliseconds() > 250) {
             targetIsTop = !targetIsTop;
