@@ -20,8 +20,8 @@ import org.opencv.android.OpenCVLoader;
 
 import virtualRobot.VuforiaLocalizerImplSubclass;
 
-@Autonomous(name = "Blue Auton Depot that actually works", group = "competition")
-public class BlueAutonDepotDAVIDISAWAFER extends LinearOpMode {
+@Autonomous(name = "Blue Auton Depot No Lander Score", group = "competition")
+public class BlueAutonDepotNoLanderScore extends LinearOpMode {
     static {
         OpenCVLoader.initDebug();
     }
@@ -195,13 +195,12 @@ public class BlueAutonDepotDAVIDISAWAFER extends LinearOpMode {
                 while (reaperLeft.isBusy()) {
                     Thread.sleep(5);
                 }
+                reaperSpin.setPower(0);
                 reaperFoldRight.setPosition(0.78);
                 reaperFoldLeft.setPosition(0.78);
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(0.6);
                 Thread.sleep(500);
-                reaperSpin.setPower(0);
-
 //                mv.translateDistance(1,-24);
 //                mv.translateDistance(1,24);
                 mv.rotateTo(0);
@@ -221,13 +220,12 @@ public class BlueAutonDepotDAVIDISAWAFER extends LinearOpMode {
                 while (reaperLeft.isBusy()) {
                     Thread.sleep(5);
                 }
+                reaperSpin.setPower(0);
                 reaperFoldRight.setPosition(0.78);
                 reaperFoldLeft.setPosition(0.78);
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(0.6);
                 Thread.sleep(500);
-                reaperSpin.setPower(0);
-
 //                mv.translateDistance(1,-24);
 //                mv.translateDistance(1,24);
                 mv.rotateTo(0);
@@ -235,77 +233,26 @@ public class BlueAutonDepotDAVIDISAWAFER extends LinearOpMode {
 
                 break;
             default:
-//            case 1:
-//                reaperFoldRight.setPosition(0.95);
-//                reaperFoldLeft.setPosition(0.95);
-//                Thread.sleep(500);
-//                reaperSpin.setPower(0.6);
-//                reaperLeft.setTargetPosition(1450);
-//                reaperLeft.setPower(1);
-//                while (reaperLeft.isBusy()) {
-//                    Thread.sleep(5);
-//                }
-//                reaperFoldLeft.setPosition(0.78);
-//                reaperFoldRight.setPosition(0.78);
-//                reaperSpin.setPower(0);
-//                reaperLeft.setTargetPosition(0);
-//                reaperLeft.setPower(0.6);
-//                Thread.sleep(500);
-////                mv.translateDistance(1,-16);
-////                mv.translateDistance(1,16);
-//                mv.translateDistance(1,9);
-
-//                break;
             case 1:
-                reaperFoldLeft.setPosition(0.825);
-                reaperFoldRight.setPosition(0.825);
-                reaperSpin.setPower(-0.6);
-                reaperLeft.setTargetPosition(0);
-                reaperLeft.setPower(1);
-                reaperFoldRight.setPosition(1);
-                reaperFoldLeft.setPosition(1);
+                reaperFoldRight.setPosition(0.95);
+                reaperFoldLeft.setPosition(0.95);
+                Thread.sleep(500);
+                reaperSpin.setPower(0.6);
                 reaperLeft.setTargetPosition(1450);
+                reaperLeft.setPower(1);
                 while (reaperLeft.isBusy()) {
                     Thread.sleep(5);
                 }
-                Thread.sleep(750);
-                reaperFoldRight.setPosition(0.825);
-                reaperFoldLeft.setPosition(0.825);
+                reaperFoldLeft.setPosition(0.78);
+                reaperFoldRight.setPosition(0.78);
+                reaperSpin.setPower(0);
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(0.6);
-                while (reaperLeft.isBusy()) {
-                    Thread.sleep(5);
-                }
-                mv.translateDistance(1,12);
-                reaperFoldRight.setPosition(0.45);
-                reaperFoldLeft.setPosition(0.45);
-                reaperSpin.setPower(0);
-                Thread.sleep(1000);
-                reaperFoldRight.setPosition(0.825);
-                reaperFoldLeft.setPosition(0.825);
-                Thread.sleep(100);
-                mv.rotateTo(0);
-                liftL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                liftR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                liftL.setPower(-1);
-                liftR.setPower(1);
-                liftL.setTargetPosition(2300);
-                liftR.setTargetPosition(2300);
-                while (liftL.isBusy()) {
-                    Thread.sleep(5);
-                }
-                dropper.setPosition(0);
-                Thread.sleep(2000);
-//                mv.translateDistance(1,-24);
-//                mv.translateDistance(1,24);
-                mv.translateDistance(1,-3);
-                liftL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                liftR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                liftL.setPower(1);
-                liftR.setPower(-1);
-                liftL.setTargetPosition(0);
-                liftR.setTargetPosition(0);
-                dropper.setPosition(1);
+                Thread.sleep(500);
+//                mv.translateDistance(1,-16);
+//                mv.translateDistance(1,16);
+                mv.translateDistance(1,9);
+
                 break;
         }
 //        Thread.sleep(100);
@@ -320,7 +267,7 @@ public class BlueAutonDepotDAVIDISAWAFER extends LinearOpMode {
 //        Thread.sleep(100);
         mv.rotateTo(-40);
 //        Thread.sleep(100);
-        mv.translateDistance(1, -33);//This is the offending line
+        mv.translateDistance(1, -27);//This is the offending line
 //        mv.rotateTo(-60);
 //        Thread.sleep(100);
 //        mv.rotateDegrees(0.7, -60);
@@ -334,7 +281,7 @@ public class BlueAutonDepotDAVIDISAWAFER extends LinearOpMode {
 //        Thread.sleep(100);
 //       mv.rotate(-0.5,-1);
         mv.rotateTo(-47.5);
-        mv.translateDistance(1,65);
+        mv.translateDistance(1,70);
     }
     public void initializeMotor(DcMotor[] motors) {
         for (DcMotor motor : motors) {

@@ -81,7 +81,7 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
         wdm.setHardwareMap(hardwareMap);
         wdm.setCurrentAuton(this);
         wdm.provision("IMUWatch", IMUWatchdog.class, "imu 1");
-        marker.setPosition(0.7);
+        marker.setPosition(0.5);
         VuforiaLocalizer.Parameters params = new VuforiaLocalizer.Parameters(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
         params.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
 
@@ -170,10 +170,10 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
 
         liftL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         liftR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        liftL.setPower(0.8);
-        liftR.setPower(-0.8);
-        liftL.setTargetPosition(600);
-        liftR.setTargetPosition(600);
+        liftL.setPower(1);
+        liftR.setPower(-1);
+        liftL.setTargetPosition(0);
+        liftR.setTargetPosition(0);
 //        mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {-0.8, 0.8}, new int[] {600, 600});
 //        liftL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 //        liftR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -213,12 +213,12 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
                 while (reaperLeft.isBusy()) {
                     Thread.sleep(5);
                 }
-                reaperSpin.setPower(0);
                 reaperFoldRight.setPosition(0.825);
                 reaperFoldLeft.setPosition(0.825);
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(0.6);
                 Thread.sleep(500);
+                reaperSpin.setPower(0);
 //                reaperFoldLeft.setPosition(0.825);
 //                reaperFoldRight.setPosition(0.45);
 //                Thread.sleep(250);
@@ -239,12 +239,13 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
                 while (reaperLeft.isBusy()) {
                     Thread.sleep(5);
                 }
-                reaperSpin.setPower(0);
                 reaperFoldRight.setPosition(0.825);
                 reaperFoldLeft.setPosition(0.825);
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(0.6);
                 Thread.sleep(500);
+                reaperSpin.setPower(0);
+
 //                reaperFoldLeft.setPosition(0.45);
 //                reaperFoldRight.setPosition(0.45);
 //                Thread.sleep(250);
@@ -265,13 +266,11 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
                 }
                 reaperFoldLeft.setPosition(0.78);
                 reaperFoldRight.setPosition(0.78);
-                reaperSpin.setPower(0);
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(0.6);
-                Thread.sleep(250);
-                reaperFoldLeft.setPosition(0.45);
-                reaperFoldRight.setPosition(0.45);
-                Thread.sleep(250);
+                Thread.sleep(500);
+                reaperSpin.setPower(0);
+
 //                mv.translateDistance(1,-16);
 //                mv.translateDistance(1,16);
                 break;
@@ -283,53 +282,41 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
         mv.translateDistance(1, -30);//-36*Math.sqrt(2));//TODO:See above immortal TODO
         mv.rotateTo(135);
         mv.translateDistance(1,-17);
-        mv.rotateTo(45);
-        mv.circleAround(12,-8,170);
+
+
         switch (pos) {
             case 0:
-                mv.translateDistance(1,-34);
-                mv.rotateTo(55);
-                mv.translateDistance(1,-24);
+                mv.rotateTo(45);
+                mv.circleAround(12,-12,135);
+                mv.rotateTo(135);
+                mv.circleAround(12, -12, 225);
+                mv.rotateTo(225);
                 break;
             case 2:
-                mv.rotateTo(125);
-                mv.translateDistance(1,-24);
+                mv.rotateTo(100);
+                mv.translateDistance(1,-23);
+                marker.setPosition(0);
+                Thread.sleep(500);
+                marker.setPosition(0.5);
+                mv.rotateTo(140);
+                mv.translateDistance(1,80);
                 break;
             default:
             case 1:
-                mv.translateDistance(1,-17);
-                mv.rotateTo(90);
-                mv.translateDistance(1,-17);
-                break;
+                mv.rotateTo(45);
+                mv.circleAround(12,-12,135);
+                mv.rotateTo(135);
+                mv.circleAround(12, -12, 225);
+                mv.rotateTo(225);
+                mv.translateDistance(1,-8);
+                mv.translateDistance(1,21);
+                mv.rotateTo(110);
+                marker.setPosition(0);
+                Thread.sleep(500);
+                marker.setPosition(0.5);
+                mv.rotateTo(142.5);
+                mv.translateDistance(1,90);
         }
-//        mv.circleAround(6,1,180);
-//        ElapsedTime timer = new ElapsedTime(); //oh well, might as well drop it
-//        lf.setPower(-1);
-//        lb.setPower(-1);
-//        rf.setPower(-1);
-//        rb.setPower(-1);
-//        while (timer.seconds() < 0.75) {
-//            Thread.sleep(10);
-//        }
-//        mv.stop();
-//        mv.translateDistance(1,3);
-//        mv.rotateTo(WatchdogManager.getInstance().getValue("rotation", Double.class) + 90); //mv.rotateTo(135);
-//       mv.translateDistance(1, -50);
-
-//       mv.rotateTo(180);
-//       mv.translateDistance(1,-15);
-//       mv.rotateTo(90);
-//       mv.translateDistance(1,-15);
-//        mv.translateDistance(1,-30);
-        marker.setPosition(0);
-        Thread.sleep(500);
-        marker.setPosition(0.7);
-//        mv.rotateTo(135);
-//        Thread.sleep(100);
-//        mv.rotateDegrees(0.7, 60);
-//        Thread.sleep(100);
-//       mv.rotate(-0.5,-1);
-//       mv.translateDistance(1,72);
     }
     public void initializeMotor(DcMotor[] motors) {
         for (DcMotor motor : motors) {

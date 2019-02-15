@@ -181,7 +181,7 @@ public class SahilClass {
             for (int w = 0; w < widthCamera; w++) {
                 int h = (int) Math.round((int)(heightCameraOriginal*croppingConstant)/2);
                 double[] data = erodeBlack.get(h,w);
-                if (data[0] > 0) {
+                if (data[0] == 0) {
                     min = w;
                     break;
                 }
@@ -210,7 +210,7 @@ public class SahilClass {
             for (int w = widthCamera-1; w >= 0; w--) {
                 int h = (int) Math.round((int)(heightCameraOriginal*croppingConstant)/2);
                 double[] data = erodeBlack.get(h,w);
-                if (data[0] > 0) {
+                if (data[0] == 0) {
                     max = w;
                     break;
                 }
