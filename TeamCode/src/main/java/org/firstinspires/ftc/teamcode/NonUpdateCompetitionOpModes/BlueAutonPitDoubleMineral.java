@@ -257,15 +257,14 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
             case 1:
                 reaperFoldRight.setPosition(1);
                 reaperFoldLeft.setPosition(1);
-                Thread.sleep(250);
-                reaperSpin.setPower(0.6);
+                reaperSpin.setPower(-0.6);
                 reaperLeft.setTargetPosition(1450);
                 reaperLeft.setPower(1);
                 while (reaperLeft.isBusy()) {
                     Thread.sleep(5);
                 }
-                reaperFoldLeft.setPosition(0.78);
-                reaperFoldRight.setPosition(0.78);
+                reaperFoldLeft.setPosition(0.825);
+                reaperFoldRight.setPosition(0.825);
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(0.6);
                 Thread.sleep(500);
@@ -306,10 +305,15 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
                 mv.rotateTo(45);
                 mv.circleAround(12,-12,135);
                 mv.rotateTo(135);
+                reaperFoldLeft.setPosition(1);
+                reaperFoldRight.setPosition(1);
+                reaperSpin.setPower(-0.6);
                 mv.circleAround(12, -12, 225);
                 mv.rotateTo(225);
-                mv.translateDistance(1,-8);
-                mv.translateDistance(1,21);
+                mv.translateDistance(1,13);
+                reaperFoldRight.setPosition(0.45);
+                reaperFoldLeft.setPosition(0.45);
+                reaperSpin.setPower(0);
                 mv.rotateTo(110);
                 marker.setPosition(0);
                 Thread.sleep(500);
