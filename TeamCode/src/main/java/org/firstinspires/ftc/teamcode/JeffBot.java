@@ -23,10 +23,10 @@ public class JeffBot {
     final double kP = 0.0125; //0.0225
     final double kI = 0; //0.0035
     final double kD = 0.005; //0.0175
-    DcMotor lf;
-    DcMotor lb;
-    DcMotor rf;
-    DcMotor rb;
+    DcMotorEx lf;
+    DcMotorEx lb;
+    DcMotorEx rf;
+    DcMotorEx rb;
     public final static float BOT_WIDTH = 16.5f; //inches
     final static float botRadius = BOT_WIDTH /2; //in
     final static float wheelWidth = 3; //in
@@ -34,10 +34,14 @@ public class JeffBot {
     final static int ticksPerRev = 730; //ticks per rev
     public final static String vuforiaKey = "AcSW/tj/////AAABmUB3byzZQksfqhymb0Tr3M92yvtrzF4HgDl0t7Z07OZ2xscXR1yyeX4GxftrShvm9T926ZCW0VglQKXuQE5+JkrABVijohk5DCkcE9CcxHy3mTs2Ui76Nz+9CQTgOsr6/AMLV+Te6uyXTs3rZwGdnHGRo0Q1yboJCQ51Ap2rgJc//ehVdkp/QetIMnfhRffac0edAHFt0i2F5++S/OH/4kdxFd5ha0lswd4nTnqU2MiJrz+OH4WQPQ8JC94dQZ6F3m/iX5mk4TCq/9xg3cTJvFccEUawf7PIsapABxKMJB6hcPikwa0XtyGB+vEb7fQAXZ80tRal2mcwKSHrDM4ZvYisD73X+sTIAqQnXgxYiL14";
     public JeffBot(DcMotor lf, DcMotor lb, DcMotor rf, DcMotor rb) {
-        this.lf = lf;
-        this.lb = lb;
-        this.rf = rf;
-        this.rb = rb;
+        this.lf = (DcMotorEx)lf;
+        this.lb = (DcMotorEx)lb;
+        this.rf = (DcMotorEx)rf;
+        this.rb = (DcMotorEx)rb;
+        ((DcMotorEx) lf).setTargetPositionTolerance(100);
+        ((DcMotorEx) lb).setTargetPositionTolerance(100);
+        ((DcMotorEx) rf).setTargetPositionTolerance(100);
+        ((DcMotorEx) rb).setTargetPositionTolerance(100);
     }
     public JeffBot() {}
     public void translate(double power, int positionChange) throws InterruptedException {

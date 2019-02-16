@@ -19,9 +19,9 @@ import org.firstinspires.ftc.teamcode.watchdog.WatchdogManager;
 import org.opencv.android.OpenCVLoader;
 
 import virtualRobot.VuforiaLocalizerImplSubclass;
-
-@Autonomous(name = "Blue Auton Depot that actually works", group = "competition")
-public class BlueAutonDepotDAVIDISAWAFER extends LinearOpMode {
+@Disabled
+@Autonomous(name = "Blue Auton Depot Feb 14 backup", group = "competition")
+public class BlueAutonDepotPreWireManagement extends LinearOpMode {
     static {
         OpenCVLoader.initDebug();
     }
@@ -285,8 +285,6 @@ public class BlueAutonDepotDAVIDISAWAFER extends LinearOpMode {
                 reaperFoldLeft.setPosition(0.825);
                 Thread.sleep(100);
                 mv.rotateTo(0);
-                dropper.setPosition(0);
-                Thread.sleep(500);
                 liftL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 liftR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 liftL.setPower(-1);
@@ -296,6 +294,7 @@ public class BlueAutonDepotDAVIDISAWAFER extends LinearOpMode {
                 while (liftL.isBusy()) {
                     Thread.sleep(5);
                 }
+                dropper.setPosition(0);
                 Thread.sleep(2000);
 //                mv.translateDistance(1,-24);
 //                mv.translateDistance(1,24);
@@ -317,24 +316,19 @@ public class BlueAutonDepotDAVIDISAWAFER extends LinearOpMode {
         reaperFoldRight.setPosition(0.45);
 //        Thread.sleep(100);
 //        Thread.sleep(100);
-        mv.translateDistance(1, -44);//-36*Math.sqrt(2));//TODO:See above immortal TODO
+        mv.translateDistance(1, -45);//-36*Math.sqrt(2));//TODO:See above immortal TODO
 //        Thread.sleep(100);
-        mv.rotateTo(-42);
+        mv.rotateTo(-40);
 //        Thread.sleep(100);
-        telemetry.addData("checkpoint 1", "true");
-        telemetry.update();
-        mv.translateDistance(1, -37);//This is the offending lin
-        telemetry.addData("checkpoint 2", "true");
-        telemetry.update();
+        mv.translateDistance(1, -33);//This is the offending line
 //        mv.rotateTo(-60);
 //        Thread.sleep(100);
 //        mv.rotateDegrees(0.7, -60);
 //        Thread.sleep(100);
         marker.setPosition(0);
-        telemetry.addData("checkpoint 3", "true");
-        telemetry.update();
         Thread.sleep(1000);
         marker.setPosition(0.5);
+        mv.rotateTo(-45);
 //        Thread.sleep(100);
 //        mv.rotateDegrees(0.7, 60);
 //        Thread.sleep(100);
