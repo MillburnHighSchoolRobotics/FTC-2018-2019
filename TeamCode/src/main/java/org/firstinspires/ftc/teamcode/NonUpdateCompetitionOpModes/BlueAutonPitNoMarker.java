@@ -22,7 +22,7 @@ import org.opencv.android.OpenCVLoader;
 
 import virtualRobot.VuforiaLocalizerImplSubclass;
 
-@Autonomous(name = "Blue Auton Pit", group = "competition")
+@Autonomous(name = "Blue Auton Pit No Marker", group = "competition")
 public class BlueAutonPitNoMarker extends LinearOpMode {
     static {
         OpenCVLoader.initDebug();
