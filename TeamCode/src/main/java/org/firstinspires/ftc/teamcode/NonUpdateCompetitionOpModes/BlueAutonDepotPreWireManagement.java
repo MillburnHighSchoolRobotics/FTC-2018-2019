@@ -20,6 +20,7 @@ import org.opencv.android.OpenCVLoader;
 
 import virtualRobot.VuforiaLocalizerImplSubclass;
 @Disabled
+@Deprecated
 @Autonomous(name = "Blue Auton Depot Feb 14 backup", group = "competition")
 public class BlueAutonDepotPreWireManagement extends LinearOpMode {
     static {

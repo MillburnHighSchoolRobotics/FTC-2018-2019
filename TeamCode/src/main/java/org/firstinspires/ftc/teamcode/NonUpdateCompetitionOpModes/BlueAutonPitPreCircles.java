@@ -23,8 +23,9 @@ import org.opencv.android.OpenCVLoader;
 import virtualRobot.VuforiaLocalizerImplSubclass;
 
 @Disabled
-@Autonomous(name = "Blue Auton Pit Backup", group = "competition")
-public class BlueAutonPitBackup extends LinearOpMode {
+@Deprecated
+@Autonomous(name = "Blue Auton Pit Pre Circles Backup", group = "competition")
+public class BlueAutonPitPreCircles extends LinearOpMode {
     static {
         OpenCVLoader.initDebug();
     }

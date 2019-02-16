@@ -25,6 +25,7 @@ public class BlueAutonDepotNoLanderScore extends LinearOpMode {
     static {
         OpenCVLoader.initDebug();
     }
+    final static int delay = 0;
     //TODO: Synchronize hardwaremap
     DcMotor lf;
     DcMotor lb;
@@ -85,6 +86,7 @@ public class BlueAutonDepotNoLanderScore extends LinearOpMode {
         telemetry.addData("Vuforia Status: ", "Loaded!");
         telemetry.update();
         waitForStart();
+        Thread.sleep(delay);
         rf.setDirection(DcMotorSimple.Direction.REVERSE);
         rb.setDirection(DcMotorSimple.Direction.REVERSE);
         lf.setDirection(DcMotorSimple.Direction.FORWARD);
