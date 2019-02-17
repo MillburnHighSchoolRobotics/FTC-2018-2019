@@ -147,7 +147,7 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
         liftR.setPower(0);
         reaperFoldRight.setPosition(1);
         reaperFoldLeft.setPosition(1);
-        Thread.sleep(250);
+        Thread.sleep(750);
 
         SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000);
         int pos = sahilClass.getThreeMineralPosition();
@@ -209,7 +209,7 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
 
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(1);
-                mv.rotateTo(45);
+                mv.rotateTo(42.5);
                 reaperFoldRight.setPosition(1);
                 reaperFoldLeft.setPosition(1);
                 reaperLeft.setTargetPosition(2250);
@@ -296,18 +296,21 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
                 mv.translateDistance(1, -1.5);
                 mv.circleAround(12,-10,135);
                 mv.rotateTo(135);
-                mv.translateDistance(1,-17);
+                mv.translateDistance(1,-30);
                 marker.setPosition(0);
                 Thread.sleep(500);
                 marker.setPosition(0.6);
                 mv.rotateTo(225);
-                mv.translateDistance(1, -24);
-                lf.setPower(-0.8);
-                lb.setPower(-0.8);
+                mv.translateDistance(1, -36);
+                mv.rotateTo(180);
+                mv.translateDistance(1, -13);
+                mv.rotateTo(225);
+                lf.setPower(-0.9);
+                lb.setPower(-0.9);
                 rf.setPower(-1);
                 rb.setPower(-1);
                 ElapsedTime killmenow3 = new ElapsedTime();
-                while (killmenow3.milliseconds() < 3000) {
+                while (killmenow3.milliseconds() < 1500) {
                     Thread.sleep(10);
 //            end2 = System.currentTimeMillis() % 1000;
                 }
@@ -317,13 +320,13 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
                 break;
             case 2:
                 mv.rotateTo(100);
-                mv.translateDistance(1,-21);
+                mv.translateDistance(1,-26);
                 marker.setPosition(0);
                 Thread.sleep(500);
                 marker.setPosition(0.6);
                 mv.rotateTo(140);
-                lf.setPower(0.8);
-                lb.setPower(0.8);
+                lf.setPower(0.9);
+                lb.setPower(0.9);
                 rf.setPower(1);
                 rb.setPower(1);
                 ElapsedTime killmenow = new ElapsedTime();
@@ -338,22 +341,16 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
                 mv.translateDistance(1, -1.5);
                 mv.circleAround(12,-10,135);
                 mv.rotateTo(135);
-                reaperFoldLeft.setPosition(1);
-                reaperFoldRight.setPosition(1);
-                reaperSpin.setPower(-0.6);
-                mv.circleAround(12, -10, 225);
-                mv.rotateTo(225);
-                mv.translateDistance(1,11);
-                reaperFoldRight.setPosition(0.45);
-                reaperFoldLeft.setPosition(0.45);
-                reaperSpin.setPower(0);
-                mv.rotateTo(110);
+                mv.translateDistance(1,-17);
                 marker.setPosition(0);
                 Thread.sleep(500);
                 marker.setPosition(0.6);
-                mv.rotateTo(142.5);
-                lf.setPower(0.8);
-                lb.setPower(0.8);
+                mv.rotateTo(225);
+                mv.translateDistance(1, -18);
+                mv.translateDistance(1, 18);
+                mv.rotateTo(135);
+                lf.setPower(0.9);
+                lb.setPower(0.9);
                 rf.setPower(1);
                 rb.setPower(1);
                 ElapsedTime killmenow2 = new ElapsedTime();
@@ -361,6 +358,37 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
                     Thread.sleep(10);
 //            end2 = System.currentTimeMillis() % 1000;
                 }
+//                mv.rotateTo(135);
+//                mv.circleAround(12, -10, 225);
+//                mv.rotateTo(225);
+                break;
+//                mv.rotateTo(45);
+//                mv.translateDistance(1, -1.5);
+//                mv.circleAround(12,-10,135);
+//                mv.rotateTo(135);
+//                reaperFoldLeft.setPosition(1);
+//                reaperFoldRight.setPosition(1);
+//                reaperSpin.setPower(-0.6);
+//                mv.circleAround(13.5, -10, 225);
+//                mv.rotateTo(225);
+//                mv.translateDistance(1,11);
+//                reaperFoldRight.setPosition(0.45);
+//                reaperFoldLeft.setPosition(0.45);
+//                reaperSpin.setPower(0);
+//                mv.rotateTo(110);
+//                marker.setPosition(0);
+//                Thread.sleep(500);
+//                marker.setPosition(0.6);
+//                mv.rotateTo(142.5);
+//                lf.setPower(0.9);
+//                lb.setPower(0.9);
+//                rf.setPower(1);
+//                rb.setPower(1);
+//                ElapsedTime killmenow2 = new ElapsedTime();
+//                while (killmenow2.milliseconds() < 3000) {
+//                    Thread.sleep(10);
+////            end2 = System.currentTimeMillis() % 1000;
+//                }
         }
     }
     public void initializeMotor(DcMotor[] motors) {

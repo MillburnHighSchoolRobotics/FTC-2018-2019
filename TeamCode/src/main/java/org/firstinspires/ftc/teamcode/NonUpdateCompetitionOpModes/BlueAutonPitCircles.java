@@ -22,8 +22,8 @@ import org.opencv.android.OpenCVLoader;
 
 import virtualRobot.VuforiaLocalizerImplSubclass;
 
-@Autonomous(name = "Blue Auton Pit No Circles", group = "competition")
-public class BlueAutonPitNoCircles extends LinearOpMode {
+@Autonomous(name = "Blue Auton Pit Circles", group = "competition")
+public class BlueAutonPitCircles extends LinearOpMode {
     static {
         OpenCVLoader.initDebug();
     }
@@ -288,21 +288,58 @@ public class BlueAutonPitNoCircles extends LinearOpMode {
         reaperFoldLeft.setPosition(0.45);
         reaperFoldRight.setPosition(0.45);
         mv.rotateTo(55);
-        mv.translateDistance(1, -44);//-36*Math.sqrt(2));//TODO:See above immortal TODO
-        mv.rotateTo(127.5);
+        mv.translateDistance(1, -28);//-36*Math.sqrt(2));//TODO:See above immortal TODO
+        mv.rotateTo(135);
+//        mv.translateDistance(1, -15);
 
-        mv.translateDistance(1,-50);
+        //kill me comment
+//        mv.rotateTo(45);
+//        mv.translateDistance(1, -11);
+//        mv.rotateTo(135);
+//        mv.translateDistance(1, -6);
+        //kill me comment
 
+
+
+        //TODO: SEE IF SHIT BREAKS
+        //AAA COMMENT THIS OUT IF SHIT BREAKS
+        mv.translateDistance(1,-15);
+        mv.rotateTo(45);
+        mv.circleAround(12,-10,135);
+        //AAA COMMENT THIS OUT IF SHIT BREAKS
+
+
+        mv.rotateTo(135);
+        mv.translateDistance(1,-17.5);
+//        mv.circleAround(6,1,180);
+//        ElapsedTime timer = new ElapsedTime(); //oh well, might as well drop it
+//        lf.setPower(-1);
+//        lb.setPower(-1);
+//        rf.setPower(-1);
+//        rb.setPower(-1);
+//        while (timer.seconds() < 0.75) {
+//            Thread.sleep(10);
+//        }
+//        mv.stop();
+//        mv.translateDistance(1,3);
+//        mv.rotateTo(WatchdogManager.getInstance().getValue("rotation", Double.class) + 90); //mv.rotateTo(135);
+//       mv.translateDistance(1, -50);
+
+//       mv.rotateTo(180);
+//       mv.translateDistance(1,-15);
+//       mv.rotateTo(90);
+//       mv.translateDistance(1,-15);
+//        mv.translateDistance(1,-30);
         marker.setPosition(0);
         Thread.sleep(500);
         marker.setPosition(0.6);
-        mv.rotateTo(145);
+        mv.rotateTo(140);
         lf.setPower(0.8);
         lb.setPower(0.8);
         rf.setPower(1);
         rb.setPower(1);
         ElapsedTime killmenow = new ElapsedTime();
-        while (killmenow.milliseconds() < 3000) {
+        while (killmenow.milliseconds() < 3500) {
             Thread.sleep(10);
 //            end2 = System.currentTimeMillis() % 1000;
         }

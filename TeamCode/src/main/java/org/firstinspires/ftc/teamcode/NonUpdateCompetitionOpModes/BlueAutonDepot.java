@@ -141,7 +141,7 @@ public class BlueAutonDepot extends LinearOpMode {
         liftR.setPower(0);
         reaperFoldRight.setPosition(1);
         reaperFoldLeft.setPosition(1);
-        Thread.sleep(250);
+        Thread.sleep(750);
         SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000);
         int pos = sahilClass.getThreeMineralPosition();
         telemetry.addData("Position", pos);

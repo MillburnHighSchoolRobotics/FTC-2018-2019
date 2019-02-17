@@ -134,7 +134,7 @@ public class BlueAutonPitNoMarker extends LinearOpMode {
         }
         liftL.setPower(0);
         liftR.setPower(0);
-        Thread.sleep(250);
+        Thread.sleep(750);
         SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000);
         int pos = sahilClass.getThreeMineralPosition();
 

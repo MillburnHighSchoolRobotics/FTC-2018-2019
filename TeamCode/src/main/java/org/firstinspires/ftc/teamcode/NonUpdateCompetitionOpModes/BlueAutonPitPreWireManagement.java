@@ -22,6 +22,8 @@ import org.opencv.android.OpenCVLoader;
 
 import virtualRobot.VuforiaLocalizerImplSubclass;
 
+@Disabled
+@Deprecated
 @Autonomous(name = "Blue Auton Pit Feb 14 backup", group = "competition")
 public class BlueAutonPitPreWireManagement extends LinearOpMode {
     static {
@@ -145,7 +147,7 @@ public class BlueAutonPitPreWireManagement extends LinearOpMode {
         }
         liftL.setPower(0);
         liftR.setPower(0);
-        Thread.sleep(250);
+        Thread.sleep(750);
         SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000);
         int pos = sahilClass.getThreeMineralPosition();
 

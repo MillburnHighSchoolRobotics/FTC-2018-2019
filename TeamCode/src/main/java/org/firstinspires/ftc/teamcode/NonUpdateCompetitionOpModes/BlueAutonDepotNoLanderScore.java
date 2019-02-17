@@ -25,6 +25,7 @@ public class BlueAutonDepotNoLanderScore extends LinearOpMode {
     static {
         OpenCVLoader.initDebug();
     }
+    final static int PINGRY_DELAY = 1500;
     final static int delay = 0;
     //TODO: Synchronize hardwaremap
     DcMotor lf;
@@ -111,8 +112,8 @@ public class BlueAutonDepotNoLanderScore extends LinearOpMode {
         //   int meme = 0;
         JeffBot mv = new JeffBot(lf, lb, rf, rb);
 
-        reaperFoldLeft.setPosition(1);
-        reaperFoldRight.setPosition(1);
+        reaperFoldLeft.setPosition(0.85);
+        reaperFoldRight.setPosition(0.85);
         Thread.sleep(500);
 //        dropper.setPosition(0);
 
@@ -138,7 +139,9 @@ public class BlueAutonDepotNoLanderScore extends LinearOpMode {
         }
         liftL.setPower(0);
         liftR.setPower(0);
-        Thread.sleep(250);
+        reaperFoldRight.setPosition(1);
+        reaperFoldLeft.setPosition(1);
+        Thread.sleep(750);
         SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000);
         int pos = sahilClass.getThreeMineralPosition();
         telemetry.addData("Position", pos);
@@ -197,12 +200,13 @@ public class BlueAutonDepotNoLanderScore extends LinearOpMode {
                 while (reaperLeft.isBusy()) {
                     Thread.sleep(5);
                 }
-                reaperSpin.setPower(0);
                 reaperFoldRight.setPosition(0.78);
                 reaperFoldLeft.setPosition(0.78);
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(0.6);
                 Thread.sleep(500);
+                reaperSpin.setPower(0);
+
 //                mv.translateDistance(1,-24);
 //                mv.translateDistance(1,24);
                 mv.rotateTo(0);
@@ -222,12 +226,13 @@ public class BlueAutonDepotNoLanderScore extends LinearOpMode {
                 while (reaperLeft.isBusy()) {
                     Thread.sleep(5);
                 }
-                reaperSpin.setPower(0);
                 reaperFoldRight.setPosition(0.78);
                 reaperFoldLeft.setPosition(0.78);
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(0.6);
                 Thread.sleep(500);
+                reaperSpin.setPower(0);
+
 //                mv.translateDistance(1,-24);
 //                mv.translateDistance(1,24);
                 mv.rotateTo(0);
@@ -236,8 +241,8 @@ public class BlueAutonDepotNoLanderScore extends LinearOpMode {
                 break;
             default:
             case 1:
-                reaperFoldRight.setPosition(0.95);
-                reaperFoldLeft.setPosition(0.95);
+                reaperFoldRight.setPosition(1);
+                reaperFoldLeft.setPosition(1);
                 Thread.sleep(500);
                 reaperSpin.setPower(0.6);
                 reaperLeft.setTargetPosition(1450);
@@ -247,15 +252,17 @@ public class BlueAutonDepotNoLanderScore extends LinearOpMode {
                 }
                 reaperFoldLeft.setPosition(0.78);
                 reaperFoldRight.setPosition(0.78);
-                reaperSpin.setPower(0);
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(0.6);
                 Thread.sleep(500);
+                reaperSpin.setPower(0);
+
 //                mv.translateDistance(1,-16);
 //                mv.translateDistance(1,16);
                 mv.translateDistance(1,9);
 
                 break;
+
         }
 //        Thread.sleep(100);
 //       mv.rotateDegrees(0.5,90);//TODO:Add global variable for speed
@@ -265,25 +272,30 @@ public class BlueAutonDepotNoLanderScore extends LinearOpMode {
         reaperFoldRight.setPosition(0.45);
 //        Thread.sleep(100);
 //        Thread.sleep(100);
-        mv.translateDistance(1, -45);//-36*Math.sqrt(2));//TODO:See above immortal TODO
+        mv.translateDistance(1, -44);//-36*Math.sqrt(2));//TODO:See above immortal TODO
 //        Thread.sleep(100);
-        mv.rotateTo(-40);
+        mv.rotateTo(-42);
 //        Thread.sleep(100);
-        mv.translateDistance(1, -27);//This is the offending line
+        telemetry.addData("checkpoint 1", "true");
+        telemetry.update();
+        mv.translateDistance(1, -37);//This is the offending lin
+        telemetry.addData("checkpoint 2", "true");
+        telemetry.update();
 //        mv.rotateTo(-60);
 //        Thread.sleep(100);
 //        mv.rotateDegrees(0.7, -60);
 //        Thread.sleep(100);
         marker.setPosition(0);
+        telemetry.addData("checkpoint 3", "true");
+        telemetry.update();
         Thread.sleep(1000);
         marker.setPosition(0.6);
-        mv.rotateTo(-45);
 //        Thread.sleep(100);
 //        mv.rotateDegrees(0.7, 60);
 //        Thread.sleep(100);
 //       mv.rotate(-0.5,-1);
         mv.rotateTo(-47.5);
-        mv.translateDistance(1,70);
+        mv.translateDistance(1,65);
     }
     public void initializeMotor(DcMotor[] motors) {
         for (DcMotor motor : motors) {

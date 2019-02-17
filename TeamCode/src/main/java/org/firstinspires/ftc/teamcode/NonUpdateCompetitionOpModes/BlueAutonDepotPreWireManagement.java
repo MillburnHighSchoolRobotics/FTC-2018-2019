@@ -22,6 +22,7 @@ import virtualRobot.VuforiaLocalizerImplSubclass;
 
 @Autonomous(name = "Blue Auton Depot Feb 14 backup", group = "competition")
 @Disabled
+@Deprecated
 public class BlueAutonDepotPreWireManagement extends LinearOpMode {
     static {
         OpenCVLoader.initDebug();
