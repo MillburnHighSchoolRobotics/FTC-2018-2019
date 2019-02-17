@@ -293,10 +293,27 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
         switch (pos) {
             case 0:
                 mv.rotateTo(45);
+                mv.translateDistance(1, -1.5);
                 mv.circleAround(12,-10,135);
                 mv.rotateTo(135);
-                mv.circleAround(12, -10, 225);
+                mv.translateDistance(1,-17);
+                marker.setPosition(0);
+                Thread.sleep(500);
+                marker.setPosition(0.6);
                 mv.rotateTo(225);
+                mv.translateDistance(1, -24);
+                lf.setPower(-0.8);
+                lb.setPower(-0.8);
+                rf.setPower(-1);
+                rb.setPower(-1);
+                ElapsedTime killmenow3 = new ElapsedTime();
+                while (killmenow3.milliseconds() < 3000) {
+                    Thread.sleep(10);
+//            end2 = System.currentTimeMillis() % 1000;
+                }
+//                mv.rotateTo(135);
+//                mv.circleAround(12, -10, 225);
+//                mv.rotateTo(225);
                 break;
             case 2:
                 mv.rotateTo(100);
@@ -318,6 +335,7 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
             default:
             case 1:
                 mv.rotateTo(45);
+                mv.translateDistance(1, -1.5);
                 mv.circleAround(12,-10,135);
                 mv.rotateTo(135);
                 reaperFoldLeft.setPosition(1);
