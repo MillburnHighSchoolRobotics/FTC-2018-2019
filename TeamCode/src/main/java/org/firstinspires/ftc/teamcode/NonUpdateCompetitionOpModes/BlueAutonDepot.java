@@ -25,6 +25,7 @@ public class BlueAutonDepot extends LinearOpMode {
     static {
         OpenCVLoader.initDebug();
     }
+    final static int PINGRY_DELAY = 1500;
     final static int delay = 0;
     //TODO: Synchronize hardwaremap
     DcMotor lf;
