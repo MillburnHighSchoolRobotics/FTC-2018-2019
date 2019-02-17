@@ -165,7 +165,7 @@ public class BlueAutonPitNoMarker extends LinearOpMode {
                 reaperSpin.setPower(0.6);
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(1);
-                mv.rotateTo(35);
+                mv.rotateTo(45);
                 reaperFoldRight.setPosition(1);
                 reaperFoldLeft.setPosition(1);
                 reaperLeft.setTargetPosition(2250);
@@ -175,7 +175,15 @@ public class BlueAutonPitNoMarker extends LinearOpMode {
                 reaperFoldRight.setPosition(0.825);
                 reaperFoldLeft.setPosition(0.825);
                 Thread.sleep(500);
-                mv.rotateTo(20);
+                mv.rotateTo(30);
+                reaperLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                reaperLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                reaperLeft.setPower(1);
+                ElapsedTime delay1 = new ElapsedTime();
+                while (delay1.milliseconds() < 1500) {
+                    Thread.sleep(10);
+                }
+                reaperLeft.setPower(0);
                 break;
             case 2:
                 reaperFoldLeft.setPosition(0.825);
@@ -194,6 +202,14 @@ public class BlueAutonPitNoMarker extends LinearOpMode {
                 reaperFoldLeft.setPosition(0.825);
                 Thread.sleep(500);
                 mv.rotateTo(-30);
+                reaperLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                reaperLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                reaperLeft.setPower(1);
+                ElapsedTime delay2 = new ElapsedTime();
+                while (delay2.milliseconds() < 1500) {
+                    Thread.sleep(10);
+                }
+                reaperLeft.setPower(0);
                 break;
             default:
             case 1:
@@ -214,6 +230,15 @@ public class BlueAutonPitNoMarker extends LinearOpMode {
                 while (reaperLeft.isBusy()) {
                     Thread.sleep(5);
                 }
+                reaperLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                reaperLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+                reaperLeft.setPower(1);
+                ElapsedTime delay3 = new ElapsedTime();
+                while (delay3.milliseconds() < 1500) {
+                    Thread.sleep(10);
+                }
+                reaperLeft.setPower(0);
                 break;
         }
     }

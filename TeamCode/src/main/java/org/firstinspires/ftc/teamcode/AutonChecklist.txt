@@ -1,0 +1,5 @@
+1. Use the crimper to twist the channel into tension state
+2. Hang and make sure the bot is aligned
+3. Check camera alignment
+4. Tuck left wire to the outside of the bot
+5. Reset Watchdog Manager

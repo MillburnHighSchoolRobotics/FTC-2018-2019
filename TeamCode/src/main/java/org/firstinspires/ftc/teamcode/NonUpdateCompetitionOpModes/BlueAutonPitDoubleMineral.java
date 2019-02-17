@@ -81,7 +81,7 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
         wdm.setHardwareMap(hardwareMap);
         wdm.setCurrentAuton(this);
         wdm.provision("IMUWatch", IMUWatchdog.class, "imu 1");
-        marker.setPosition(0.5);
+        marker.setPosition(0.6);
         VuforiaLocalizer.Parameters params = new VuforiaLocalizer.Parameters(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
         params.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
 
@@ -116,8 +116,8 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
         //   int meme = 0;
         JeffBot mv = new JeffBot(lf, lb, rf, rb);
 
-        reaperFoldLeft.setPosition(1);
-        reaperFoldRight.setPosition(1);
+        reaperFoldLeft.setPosition(0.85);
+        reaperFoldRight.setPosition(0.85);
         Thread.sleep(500);
 
 //        dropper.setPosition(0.2);
@@ -145,7 +145,10 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
         }
         liftL.setPower(0);
         liftR.setPower(0);
+        reaperFoldRight.setPosition(1);
+        reaperFoldLeft.setPosition(1);
         Thread.sleep(250);
+
         SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000);
         int pos = sahilClass.getThreeMineralPosition();
 
@@ -206,7 +209,7 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
 
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(1);
-                mv.rotateTo(35);
+                mv.rotateTo(45);
                 reaperFoldRight.setPosition(1);
                 reaperFoldLeft.setPosition(1);
                 reaperLeft.setTargetPosition(2250);
@@ -274,52 +277,72 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
 //                mv.translateDistance(1,16);
                 break;
         }
+        telemetry.addData("checkpoint 1", true);
+        telemetry.update();
         mv.translateDistance(1,9);
+        telemetry.addData("checkpoint 2", true);
+        telemetry.update();
         reaperFoldLeft.setPosition(0.45);
         reaperFoldRight.setPosition(0.45);
         mv.rotateTo(55);
-        mv.translateDistance(1, -30);//-36*Math.sqrt(2));//TODO:See above immortal TODO
+        mv.translateDistance(1, -28);//-36*Math.sqrt(2));//TODO:See above immortal TODO
         mv.rotateTo(135);
-        mv.translateDistance(1,-17);
+        mv.translateDistance(1,-15);
 
 
         switch (pos) {
             case 0:
                 mv.rotateTo(45);
-                mv.circleAround(12,-12,135);
+                mv.circleAround(12,-10,135);
                 mv.rotateTo(135);
-                mv.circleAround(12, -12, 225);
+                mv.circleAround(12, -10, 225);
                 mv.rotateTo(225);
                 break;
             case 2:
                 mv.rotateTo(100);
-                mv.translateDistance(1,-23);
+                mv.translateDistance(1,-21);
                 marker.setPosition(0);
                 Thread.sleep(500);
-                marker.setPosition(0.5);
+                marker.setPosition(0.6);
                 mv.rotateTo(140);
-                mv.translateDistance(1,80);
+                lf.setPower(0.8);
+                lb.setPower(0.8);
+                rf.setPower(1);
+                rb.setPower(1);
+                ElapsedTime killmenow = new ElapsedTime();
+                while (killmenow.milliseconds() < 3000) {
+                    Thread.sleep(10);
+//            end2 = System.currentTimeMillis() % 1000;
+                }
                 break;
             default:
             case 1:
                 mv.rotateTo(45);
-                mv.circleAround(12,-12,135);
+                mv.circleAround(12,-10,135);
                 mv.rotateTo(135);
                 reaperFoldLeft.setPosition(1);
                 reaperFoldRight.setPosition(1);
                 reaperSpin.setPower(-0.6);
-                mv.circleAround(12, -12, 225);
+                mv.circleAround(12, -10, 225);
                 mv.rotateTo(225);
-                mv.translateDistance(1,13);
+                mv.translateDistance(1,11);
                 reaperFoldRight.setPosition(0.45);
                 reaperFoldLeft.setPosition(0.45);
                 reaperSpin.setPower(0);
                 mv.rotateTo(110);
                 marker.setPosition(0);
                 Thread.sleep(500);
-                marker.setPosition(0.5);
+                marker.setPosition(0.6);
                 mv.rotateTo(142.5);
-                mv.translateDistance(1,90);
+                lf.setPower(0.8);
+                lb.setPower(0.8);
+                rf.setPower(1);
+                rb.setPower(1);
+                ElapsedTime killmenow2 = new ElapsedTime();
+                while (killmenow2.milliseconds() < 3000) {
+                    Thread.sleep(10);
+//            end2 = System.currentTimeMillis() % 1000;
+                }
         }
     }
     public void initializeMotor(DcMotor[] motors) {

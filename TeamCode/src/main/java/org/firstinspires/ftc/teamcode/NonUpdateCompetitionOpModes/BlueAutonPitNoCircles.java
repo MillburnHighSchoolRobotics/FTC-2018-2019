@@ -22,8 +22,8 @@ import org.opencv.android.OpenCVLoader;
 
 import virtualRobot.VuforiaLocalizerImplSubclass;
 
-@Autonomous(name = "Blue Auton Pit", group = "competition")
-public class BlueAutonPit extends LinearOpMode {
+@Autonomous(name = "Blue Auton Pit No Circles", group = "competition")
+public class BlueAutonPitNoCircles extends LinearOpMode {
     static {
         OpenCVLoader.initDebug();
     }
@@ -288,48 +288,11 @@ public class BlueAutonPit extends LinearOpMode {
         reaperFoldLeft.setPosition(0.45);
         reaperFoldRight.setPosition(0.45);
         mv.rotateTo(55);
-        mv.translateDistance(1, -28);//-36*Math.sqrt(2));//TODO:See above immortal TODO
-        mv.rotateTo(135);
-//        mv.translateDistance(1, -15);
+        mv.translateDistance(1, -44);//-36*Math.sqrt(2));//TODO:See above immortal TODO
+        mv.rotateTo(127.5);
 
-        //kill me comment
-//        mv.rotateTo(45);
-//        mv.translateDistance(1, -11);
-//        mv.rotateTo(135);
-//        mv.translateDistance(1, -6);
-        //kill me comment
+        mv.translateDistance(1,-50);
 
-
-
-        //TODO: SEE IF SHIT BREAKS
-        //AAA COMMENT THIS OUT IF SHIT BREAKS
-        mv.translateDistance(1,-15);
-        mv.rotateTo(45);
-        mv.circleAround(12,-10,135);
-        //AAA COMMENT THIS OUT IF SHIT BREAKS
-
-
-        mv.rotateTo(135);
-        mv.translateDistance(1,-15);
-//        mv.circleAround(6,1,180);
-//        ElapsedTime timer = new ElapsedTime(); //oh well, might as well drop it
-//        lf.setPower(-1);
-//        lb.setPower(-1);
-//        rf.setPower(-1);
-//        rb.setPower(-1);
-//        while (timer.seconds() < 0.75) {
-//            Thread.sleep(10);
-//        }
-//        mv.stop();
-//        mv.translateDistance(1,3);
-//        mv.rotateTo(WatchdogManager.getInstance().getValue("rotation", Double.class) + 90); //mv.rotateTo(135);
-//       mv.translateDistance(1, -50);
-
-//       mv.rotateTo(180);
-//       mv.translateDistance(1,-15);
-//       mv.rotateTo(90);
-//       mv.translateDistance(1,-15);
-//        mv.translateDistance(1,-30);
         marker.setPosition(0);
         Thread.sleep(500);
         marker.setPosition(0.6);

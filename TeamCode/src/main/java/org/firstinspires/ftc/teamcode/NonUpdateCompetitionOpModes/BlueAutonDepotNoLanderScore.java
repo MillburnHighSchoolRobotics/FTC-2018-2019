@@ -75,7 +75,7 @@ public class BlueAutonDepotNoLanderScore extends LinearOpMode {
         wdm.setHardwareMap(hardwareMap);
         wdm.setCurrentAuton(this);
         wdm.provision("IMUWatch", IMUWatchdog.class, "imu 1");
-        marker.setPosition(0.5);
+        marker.setPosition(0.6);
         VuforiaLocalizer.Parameters params = new VuforiaLocalizer.Parameters(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
         params.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
 
@@ -190,7 +190,7 @@ public class BlueAutonDepotNoLanderScore extends LinearOpMode {
                 reaperSpin.setPower(0.6);
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(1);
-                mv.rotateTo(40);
+                mv.rotateTo(45);
                 reaperFoldRight.setPosition(1);
                 reaperFoldLeft.setPosition(1);
                 reaperLeft.setTargetPosition(2250);
@@ -276,7 +276,7 @@ public class BlueAutonDepotNoLanderScore extends LinearOpMode {
 //        Thread.sleep(100);
         marker.setPosition(0);
         Thread.sleep(1000);
-        marker.setPosition(0.5);
+        marker.setPosition(0.6);
         mv.rotateTo(-45);
 //        Thread.sleep(100);
 //        mv.rotateDegrees(0.7, 60);

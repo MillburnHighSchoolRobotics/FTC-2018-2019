@@ -75,7 +75,7 @@ public class BlueAutonDepot extends LinearOpMode {
         wdm.setHardwareMap(hardwareMap);
         wdm.setCurrentAuton(this);
         wdm.provision("IMUWatch", IMUWatchdog.class, "imu 1");
-        marker.setPosition(0.5);
+        marker.setPosition(0.6);
         VuforiaLocalizer.Parameters params = new VuforiaLocalizer.Parameters(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
         params.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
 
@@ -111,8 +111,8 @@ public class BlueAutonDepot extends LinearOpMode {
         //   int meme = 0;
         JeffBot mv = new JeffBot(lf, lb, rf, rb);
 
-        reaperFoldLeft.setPosition(1);
-        reaperFoldRight.setPosition(1);
+        reaperFoldLeft.setPosition(0.85);
+        reaperFoldRight.setPosition(0.85);
         Thread.sleep(500);
 //        dropper.setPosition(0);
 
@@ -138,6 +138,8 @@ public class BlueAutonDepot extends LinearOpMode {
         }
         liftL.setPower(0);
         liftR.setPower(0);
+        reaperFoldRight.setPosition(1);
+        reaperFoldLeft.setPosition(1);
         Thread.sleep(250);
         SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000);
         int pos = sahilClass.getThreeMineralPosition();
@@ -190,7 +192,7 @@ public class BlueAutonDepot extends LinearOpMode {
                 reaperSpin.setPower(0.6);
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(1);
-                mv.rotateTo(40);
+                mv.rotateTo(45);
                 reaperFoldRight.setPosition(1);
                 reaperFoldLeft.setPosition(1);
                 reaperLeft.setTargetPosition(2250);
@@ -336,7 +338,7 @@ public class BlueAutonDepot extends LinearOpMode {
         telemetry.addData("checkpoint 3", "true");
         telemetry.update();
         Thread.sleep(1000);
-        marker.setPosition(0.5);
+        marker.setPosition(0.6);
 //        Thread.sleep(100);
 //        mv.rotateDegrees(0.7, 60);
 //        Thread.sleep(100);

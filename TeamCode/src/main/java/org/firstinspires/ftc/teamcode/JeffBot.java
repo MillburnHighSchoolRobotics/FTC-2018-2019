@@ -38,10 +38,10 @@ public class JeffBot {
         this.lb = (DcMotorEx)lb;
         this.rf = (DcMotorEx)rf;
         this.rb = (DcMotorEx)rb;
-        ((DcMotorEx) lf).setTargetPositionTolerance(100);
-        ((DcMotorEx) lb).setTargetPositionTolerance(100);
-        ((DcMotorEx) rf).setTargetPositionTolerance(100);
-        ((DcMotorEx) rb).setTargetPositionTolerance(100);
+//        ((DcMotorEx) lf).setTargetPositionTolerance(100);
+//        ((DcMotorEx) lb).setTargetPositionTolerance(100);
+//        ((DcMotorEx) rf).setTargetPositionTolerance(100);
+//        ((DcMotorEx) rb).setTargetPositionTolerance(100);
     }
     public JeffBot() {}
     public void translate(double power, int positionChange) throws InterruptedException {
@@ -191,9 +191,9 @@ public class JeffBot {
             if (Thread.currentThread().isInterrupted()) {
                 throw new InterruptedException();
             }
-            boolean flag = false;
+            boolean flag = true;
             for (int i = 0; i < motors.length; i++) {
-                flag = flag || (motors[i].isBusy() && !MathUtils.equals(motors[i].getCurrentPosition(), position[i], 50));
+                flag = flag && (motors[i].isBusy() && !MathUtils.equals(motors[i].getCurrentPosition(), position[i], 50));
             }
             for (int i = 0; i < motors.length; i++) {
                 Log.d("bigmeme", motors[i].isBusy() + " " + i);
