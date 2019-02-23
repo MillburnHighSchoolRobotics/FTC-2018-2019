@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.vuforia.CameraDevice;
+import com.vuforia.CameraField;
 
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
@@ -59,6 +61,22 @@ public class SahilClass {
 
     public SahilClass(VuforiaLocalizerImplSubclass vuforiaInstance, int length) {
         this.vuforiaInstance = vuforiaInstance;
+//        long[] valWrapper = new long[1];
+//        CameraDevice.getInstance().getFieldInt64("iso", valWrapper);
+//        long realVal = valWrapper[0];
+//        CameraDevice.getInstance().getCameraField("iso", cameraField);
+//        Log.d("SahilClass", cameraField.getKey() + " " + cameraField.getType());
+
+
+//        Log.d("SahilClass", "Field String1: " + CameraDevice.getInstance().getFieldString("iso"));
+//
+////        CameraField cameraField = CameraDevice.getInstance().;
+////        int type = cameraField.getType();
+//        String key = cameraField.getKey();
+//        Log.d("SahilClass","Type: " + type);
+//        Log.d("SahilClass","Key: " + key);
+//        Log.d("SahilClass","Field String: " + CameraDevice.getInstance().getFieldString(key));
+//        CameraDevice.getInstance().setField("iso",1600);
         widthCamera = vuforiaInstance.rgb.getBufferWidth();
         heightCameraOriginal = vuforiaInstance.rgb.getHeight();
         heightCamera = (int) Math.round(croppingConstant*heightCameraOriginal);
