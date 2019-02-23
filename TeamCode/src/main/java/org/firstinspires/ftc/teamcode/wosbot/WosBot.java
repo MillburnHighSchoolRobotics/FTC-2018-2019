@@ -18,6 +18,16 @@ import virtualRobot.PIDController;
 import virtualRobot.utils.MathUtils;
 
 public class WosBot {
+    public static final int[][] POWER_MATRIX = { //for each of the directions
+            {1, 1, 1, 1},
+            {1, 0, 0, 1},
+            {1, -1, -1, 1},
+            {0, -1, -1, 0},
+            {-1, -1, -1, -1},
+            {-1, 0, 0, -1},
+            {-1, 1, 1, -1},
+            {0, 1, 1, 0}
+    };
     public final double POS_POWER_CONST = 0.7;
     public final double NEG_POWER_CONST = -0.7;
     final double kP = 0.0125; //0.0225
@@ -191,9 +201,9 @@ public class WosBot {
             if (Thread.currentThread().isInterrupted()) {
                 throw new InterruptedException();
             }
-            boolean flag = true;
+            boolean flag = false;
             for (int i = 0; i < motors.length; i++) {
-                flag = flag && (motors[i].isBusy() && !MathUtils.equals(motors[i].getCurrentPosition(), position[i], 50));
+                flag = flag || (motors[i].isBusy() && !MathUtils.equals(motors[i].getCurrentPosition(), position[i], 50));
             }
             for (int i = 0; i < motors.length; i++) {
                 Log.d("bigmeme", motors[i].isBusy() + " " + i);
