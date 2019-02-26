@@ -98,9 +98,9 @@ public class DogeCVTest extends OpMode
     /*
      * Code to run ONCE after the driver hits STOP
      */
-    @Override
-    public void stop() {
-        if(detector != null) detector.disable(); //Make sure to run this on stop!
-    }
+//    @Override
+//    public void stop() {
+//        if(detector != null) detector.disable(); //Make sure to run this on stop!
+//    }
 
 }

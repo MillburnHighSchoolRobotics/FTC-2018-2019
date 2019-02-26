@@ -56,38 +56,38 @@ public class SahilTest extends LinearOpMode{
         telemetry.addData("Vuforia Status: ", "Loading...");
         telemetry.update();
         VuforiaLocalizerImplSubclass vuforiaInstance = new VuforiaLocalizerImplSubclass(params);
-        int n = CameraDevice.getInstance().getNumFields();
-        for (int x = 0; x < n; x++) {
-            CameraField cameraField = new CameraField();
-            CameraDevice.getInstance().getCameraField(x,cameraField);
-            Log.d("SahilClass", "type: " + cameraField.getType());
-            Log.d("SahilClass", "key: " + cameraField.getKey());
-        }
-//        Log.d("SahilClass", "Field String: " + CameraDevice.getInstance().getFieldString("android.control.aeExposureCompensation"));
+//        int n = CameraDevice.getInstance().getNumFields();
+//        for (int x = 0; x < n; x++) {
+//            CameraField cameraField = new CameraField();
+//            CameraDevice.getInstance().getCameraField(x,cameraField);
+//            Log.d("SahilClass", "type: " + cameraField.getType());
+//            Log.d("SahilClass", "key: " + cameraField.getKey());
+//        }
+////        Log.d("SahilClass", "Field String: " + CameraDevice.getInstance().getFieldString("android.control.aeExposureCompensation"));
+////        Log.d("SahilClass","Value: " + realVal);
+////        Log.d("SahilClass", "Field String: " + CameraDevice.getInstance().getFieldString("iso"));
+////        CameraDevice.getInstance().setField("iso","1600");
+//
+//        float[] stepWrapper = new float[1];
+//        CameraDevice.getInstance().getFieldFloat("android.control.aeCompensationStep", stepWrapper);
+//        float step = stepWrapper[0];
+//        Log.d("SahilClass","Step: " + step);
+//        CameraDevice.getInstance().setField("android.control.aeCompensationStep", 0.5f);
+//        float[] stepWrapper1 = new float[1];
+//        CameraDevice.getInstance().getFieldFloat("android.control.aeCompensationStep", stepWrapper1);
+//        float step1 = stepWrapper1[0];
+//        Log.d("SahilClass","Step1: " + step1);
+//
+//        long[] valWrapper = new long[1];
+//        CameraDevice.getInstance().getFieldInt64("android.control.aeExposureCompensation", valWrapper);
+//        long realVal = valWrapper[0];
 //        Log.d("SahilClass","Value: " + realVal);
-//        Log.d("SahilClass", "Field String: " + CameraDevice.getInstance().getFieldString("iso"));
-//        CameraDevice.getInstance().setField("iso","1600");
-
-        float[] stepWrapper = new float[1];
-        CameraDevice.getInstance().getFieldFloat("android.control.aeCompensationStep", stepWrapper);
-        float step = stepWrapper[0];
-        Log.d("SahilClass","Step: " + step);
-        CameraDevice.getInstance().setField("android.control.aeCompensationStep", 0.5f);
-        float[] stepWrapper1 = new float[1];
-        CameraDevice.getInstance().getFieldFloat("android.control.aeCompensationStep", stepWrapper1);
-        float step1 = stepWrapper1[0];
-        Log.d("SahilClass","Step1: " + step1);
-
-        long[] valWrapper = new long[1];
-        CameraDevice.getInstance().getFieldInt64("android.control.aeExposureCompensation", valWrapper);
-        long realVal = valWrapper[0];
-        Log.d("SahilClass","Value: " + realVal);
-        CameraDevice.getInstance().setField("android.control.aeExposureCompensation",-3);
-        long[] valWrapper1 = new long[1];
-        CameraDevice.getInstance().getFieldInt64("android.control.aeExposureCompensation", valWrapper1);
-        long realVal1 = valWrapper1[0];
-        Log.d("SahilClass","Value1: " + realVal1);
-        Thread.sleep(3000);
+//        CameraDevice.getInstance().setField("android.control.aeExposureCompensation",-3);
+//        long[] valWrapper1 = new long[1];
+//        CameraDevice.getInstance().getFieldInt64("android.control.aeExposureCompensation", valWrapper1);
+//        long realVal1 = valWrapper1[0];
+//        Log.d("SahilClass","Value1: " + realVal1);
+//        Thread.sleep(3000);
         telemetry.addData("Vuforia Status: ", "Loaded!");
         telemetry.update();
         waitForStart();
