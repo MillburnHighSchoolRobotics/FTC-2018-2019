@@ -15,6 +15,7 @@ public class WosTeleOp extends OpMode {
     public DcMotorEx lb;
     public DcMotorEx rf;
     public DcMotorEx rb;
+    public DcMotorEx lift;
     private double gearCoefficient = 1;
     private double rotateCoefficient = 1;
 
@@ -24,14 +25,17 @@ public class WosTeleOp extends OpMode {
         lb = (DcMotorEx)hardwareMap.dcMotor.get("lb");
         rf = (DcMotorEx)hardwareMap.dcMotor.get("rf");
         rb = (DcMotorEx)hardwareMap.dcMotor.get("rb");
+        lift = (DcMotorEx) hardwareMap.dcMotor.get("lift");
         lf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         lb.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rb.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         lf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lb.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rb.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rf.setDirection(REVERSE);
         rb.setDirection(REVERSE);
     }
@@ -50,10 +54,18 @@ public class WosTeleOp extends OpMode {
             rb.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
 
-        if (gamepad1.dpad_up) {
+        if (gamepad1.dpad_left) {
             gearCoefficient = 1;
-        } else if (gamepad1.dpad_down) {
+        } else if (gamepad1.dpad_right) {
             gearCoefficient = 0.5;
+        }
+
+        if (gamepad1.dpad_up) {
+            lift.setPower(1 * gearCoefficient);
+        } else if (gamepad1.dpad_down) {
+            lift.setPower(-1 * gearCoefficient);
+        } else {
+            lift.setPower(0);
         }
 
         double transX = gamepad1.left_stick_x;
@@ -129,6 +141,7 @@ public class WosTeleOp extends OpMode {
         rb.setPower(RB * gearCoefficient);
         telemetry.addData("THETA", translateTheta);
         telemetry.addData("SCALE", scale);
+        telemetry.addData("LIFT", lift.getPower() + " " + lift.getCurrentPosition());
         telemetry.addData("LF", lf.getPower() + " " + lf.getCurrentPosition());
         telemetry.addData("LB", lb.getPower() + " " +  lb.getCurrentPosition());
         telemetry.addData("RF", rf.getPower() + " " + rf.getCurrentPosition());
