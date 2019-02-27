@@ -36,6 +36,8 @@ import com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.opencv.android.OpenCVLoader;
+
 
 @TeleOp(name="DogeCV Gold Test", group="DogeCV")
 
@@ -43,7 +45,9 @@ public class DogeCVTest extends OpMode
 {
     // Detector object
     private GoldAlignDetector detector;
-
+static {
+    OpenCVLoader.initDebug();
+}
 
     @Override
     public void init() {

@@ -54,6 +54,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefau
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 import org.firstinspires.ftc.teamcode.JeffBot;
 //import org.opencv.android.OpenCVLoader;
+//import org.opencv.android.OpenCVLoader;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
@@ -78,12 +79,14 @@ public class DogeCVVuforiaTest extends OpMode {
 
     //Detector object
     GoldDetector detector;
-
+static {
+    OpenCVLoader.initDebug();
+    com.disnodeteam.dogecv.OpenCVLoader.loadOpenCV();
+}
 
     @Override
     public void init() {
 //        OpenCVLoader.loadOpenCV();
-        OpenCVLoader.initDebug();
         telemetry.addData("Status", "DogeCV 2019.1 - Gold & VuMark Example");
         detector = new GoldDetector(); // Create a Gold Detector
 
