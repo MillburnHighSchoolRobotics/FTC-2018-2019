@@ -36,8 +36,10 @@ public class WosTeleOp extends OpMode {
         rf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rb.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rf.setDirection(REVERSE);
         rb.setDirection(REVERSE);
+        lift.setDirection(REVERSE);
     }
 
     @Override
