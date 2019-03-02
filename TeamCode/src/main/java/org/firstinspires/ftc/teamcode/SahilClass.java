@@ -86,9 +86,9 @@ public class SahilClass {
 //                .build()
 //                .create(CTelemetry.class);
         ctel = null;
+
         this.length = length;
     }
-
     public int getThreeMineralPosition() {
         int[] data = getMineralLocationNotCorrected();
         int totalMax = data[0];
