@@ -181,7 +181,9 @@ public class JeffBot {
             motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
     }
-    public void moveToPosition(DcMotor[] motors, double[] power, int[] position) throws InterruptedException {
+    public void moveToPositionCorrected(DcMotor[] motors, double[] power, int[] position) throws InterruptedException {
+        double initialRot = WatchdogManager.getInstance().getValue("rotation", Double.class);
+        int[] signconsts = [-1, -1, 1, 1]//TODO: Stop cheating
         for (int x = 0; x < motors.length; x++) {
             motors[x].setPower(power[x]);
             motors[x].setTargetPosition(position[x]);
@@ -194,6 +196,57 @@ public class JeffBot {
             boolean flag = true;
             for (int i = 0; i < motors.length; i++) {
                 flag = flag && (motors[i].isBusy() && !MathUtils.equals(motors[i].getCurrentPosition(), position[i], 50));
+                PIDController pidController = new PIDController(kP, kI, kD, 1, initialRot); // TODO: Tune constants
+                double output = pidController.getPIDOutput(WatchdogManager.getInstance().getValue("rotation", Double.class));
+                motors[x].setPower(power[x]+output*signconsts[x]); //TODO: Make sure the sign constants are right
+            motors[x].setTargetPosition(position[x]);
+            }
+            for (int i = 0; i < motors.length; i++) {
+                Log.d("bigmeme", motors[i].isBusy() + " " + i);
+            }
+            if (!flag) {
+                break;
+            }
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException ex) {}
+        }
+        boolean flag = false;
+        for (DcMotor motor : motors) {
+            flag = flag || motor.isBusy();
+        }
+        if (flag) {
+            ElapsedTime et = new ElapsedTime();
+            while (!shouldStop() && et.milliseconds() < 100) {
+                boolean flag2 = false;
+                for (DcMotor motor : motors) {
+                    flag2 = flag2 || motor.isBusy();
+                }
+                if (!flag2) {
+                    break;
+                }
+                Thread.sleep(10);
+            }
+        }
+        for (DcMotor motor : motors) {
+            motor.setPower(0);
+            motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
+    }
+    public void moveToPosition(DcMotor[] motors, double[] power, int[] position) throws InterruptedException {
+        for (int x = 0; x < motors.length; x++) {
+            motors[x].setPower(power[x]);
+            motors[x].setTargetPosition(position[x]);
+            motors[x].setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
+        while (!shouldStop()) {
+            if (Thread.currentThread().isInterrupted()) {
+                throw new InterruptedException();
+            }
+            boolean flag = true;
+            for (int i = 0; i < motors.length; i++) {
+                flag = flag && (motors[i].isBusy() && !MathUtils.equals(motors[i].getCurrentPosition(), position[i], 50));            
+            motors[x].setTargetPosition(position[x]);
             }
             for (int i = 0; i < motors.length; i++) {
                 Log.d("bigmeme", motors[i].isBusy() + " " + i);
