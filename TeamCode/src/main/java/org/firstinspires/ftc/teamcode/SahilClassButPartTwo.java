@@ -121,7 +121,7 @@ public class SahilClassButPartTwo {
         crop = original.clone().submat(0,(int)(heightCameraCropped),min,max);
     }
 
-    public void getPosition() {
+    public int getPosition() {
         getImage();
         display = original.clone();
         crop = original.clone();
@@ -129,25 +129,25 @@ public class SahilClassButPartTwo {
 //        getSilverPosition();
         sendImages();
 
-//        int position = 0;
-//        if (gold == null) {
-//            position =  0;
+        int position = 0;
+        if (gold == null) {
+            position =  0;
 //            if (silverCount >= 2) {
 //                Log.d("SahilClass2", "Position " + position + " - no silver detected");
 //            }
-//        } else if (gold.x > 0 && gold.x <= (widthCamera/2)) {
-//            position = 1;
+        } else if (gold.x > 0 && gold.x <= (widthCamera/2)) {
+            position = 1;
 //            if (!(silver.x > (widthCamera/2) && gold.x <= widthCamera)) {
 //                Log.d("SahilClass2", "Position " + position + " - no silver detected");
 //            }
-//        } else if (gold.x > (widthCamera/2) && gold.x <= widthCamera) {
-//            position = 2;
+        } else if (gold.x > (widthCamera/2) && gold.x <= widthCamera) {
+            position = 2;
 //            if (!(gold.x > 0 && gold.x <= (widthCamera/2))) {
 //                Log.d("SahilClass2", "Position " + position + " - no silver detected");
 //            }
-//        }
-//        Log.d("SahilClass2", "Position: " + position);
-//        return position;
+        }
+        Log.d("SahilClass2", "Position: " + position);
+        return position;
     }
     public int getPositionOld() {
         getImageOld();
