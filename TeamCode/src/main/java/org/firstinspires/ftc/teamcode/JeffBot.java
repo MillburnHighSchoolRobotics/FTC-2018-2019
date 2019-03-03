@@ -20,9 +20,12 @@ import virtualRobot.utils.MathUtils;
 public class JeffBot {
     public final double POS_POWER_CONST = 0.7;
     public final double NEG_POWER_CONST = -0.7;
-    final double kP = 0.0125; //0.0225
-    final double kI = 0; //0.0035
-    final double kD = 0.005; //0.0175
+    final double rotkP = 0.0125; //0.0225
+    final double rotkI = 0; //0.0035
+    final double rotkD = 0.005; //0.0175
+    final double transkP = 0;
+    final double transkI = 0;
+    final double transkD = 0;
     DcMotorEx lf;
     DcMotorEx lb;
     DcMotorEx rf;
@@ -106,7 +109,7 @@ public class JeffBot {
         while (!shouldStop() && !Thread.currentThread().isInterrupted() && WatchdogManager.getInstance().getValue("rotation") == null) {
             Thread.sleep(5);
         }
-        PIDController pidController = new PIDController(kP, kI, kD, 1, target);
+        PIDController pidController = new PIDController(rotkP, rotkI, rotkD, 1, target);
         double lastTime = -1;
         while (!shouldStop()) {
             if (Thread.currentThread().isInterrupted()) {
@@ -181,25 +184,24 @@ public class JeffBot {
             motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
     }
-    public void moveToPositionCorrected(DcMotor[] motors, double[] power, int[] position) throws InterruptedException {
+    public void translateDistanceCorrected(double power, double distance) throws InterruptedException {
+        DcMotor[] motors = new DcMotor[] {lf, lb, rf, rb};
+        int targetPosition = distToEncoder(distance);
         double initialRot = WatchdogManager.getInstance().getValue("rotation", Double.class);
-        int[] signconsts = [-1, -1, 1, 1]//TODO: Stop cheating
+        int[] signconsts = {-1, -1, 1, 1}; //TODO: Stop cheating
         for (int x = 0; x < motors.length; x++) {
-            motors[x].setPower(power[x]);
-            motors[x].setTargetPosition(position[x]);
+            motors[x].setPower(power * signconsts[x]);
+            motors[x].setTargetPosition(distToEncoder(distance));
             motors[x].setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
+        PIDController pidController = new PIDController(transkP, transkI, transkD, 1, initialRot); // TODO: Tune constants
         while (!shouldStop()) {
             if (Thread.currentThread().isInterrupted()) {
                 throw new InterruptedException();
             }
             boolean flag = true;
             for (int i = 0; i < motors.length; i++) {
-                flag = flag && (motors[i].isBusy() && !MathUtils.equals(motors[i].getCurrentPosition(), position[i], 50));
-                PIDController pidController = new PIDController(kP, kI, kD, 1, initialRot); // TODO: Tune constants
-                double output = pidController.getPIDOutput(WatchdogManager.getInstance().getValue("rotation", Double.class));
-                motors[x].setPower(power[x]+output*signconsts[x]); //TODO: Make sure the sign constants are right
-            motors[x].setTargetPosition(position[x]);
+                flag = flag && (motors[i].isBusy());// && !MathUtils.equals(motors[i].getCurrentPosition(), targetPosition, 50));
             }
             for (int i = 0; i < motors.length; i++) {
                 Log.d("bigmeme", motors[i].isBusy() + " " + i);
@@ -207,6 +209,9 @@ public class JeffBot {
             if (!flag) {
                 break;
             }
+
+            double output = pidController.getPIDOutput(WatchdogManager.getInstance().getValue("rotation", Double.class));
+            double ratio = 1 - MathUtils.clamp(Math.abs(output), 0, 1);
             try {
                 Thread.sleep(10);
             } catch (InterruptedException ex) {}
@@ -246,7 +251,6 @@ public class JeffBot {
             boolean flag = true;
             for (int i = 0; i < motors.length; i++) {
                 flag = flag && (motors[i].isBusy() && !MathUtils.equals(motors[i].getCurrentPosition(), position[i], 50));            
-            motors[x].setTargetPosition(position[x]);
             }
             for (int i = 0; i < motors.length; i++) {
                 Log.d("bigmeme", motors[i].isBusy() + " " + i);
