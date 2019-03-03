@@ -36,7 +36,8 @@ public class SahilTest2 extends LinearOpMode{
         telemetry.update();
         waitForStart();
         SahilClassButPartTwo sahilClass2 = new SahilClassButPartTwo(vuforiaInstance);
-        int position = sahilClass2.getPosition();
+//        sahilClass2.getPosition();
+        int position = sahilClass2.getPositionOld();
         telemetry.addData("SahilClass2", String.valueOf(position));
         telemetry.update();
     }
