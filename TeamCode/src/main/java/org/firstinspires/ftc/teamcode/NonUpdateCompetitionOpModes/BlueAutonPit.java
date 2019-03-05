@@ -289,17 +289,17 @@ public class BlueAutonPit extends LinearOpMode {
         reaperFoldLeft.setPosition(0.45);
         reaperFoldRight.setPosition(0.45);
         mv.rotateTo(55);
-        mv.translateDistance(1, -50);//-36*Math.sqrt(2));//TODO:See above immortal TODO
-        mv.rotateTo(127.5);
+        mv.translateDistance(1, -46);//-36*Math.sqrt(2));//TODO:See above immortal TODO
+        mv.rotateTo(132.5);
 
         mv.translateDistance(1,-50);
 
         marker.setPosition(0);
         Thread.sleep(500);
         marker.setPosition(0.6);
-        mv.rotateTo(130);
-        lf.setPower(0.9);
-        lb.setPower(0.9);
+//        mv.rotateTo(127.5);
+        lf.setPower(1);
+        lb.setPower(1);
         rf.setPower(1);
         rb.setPower(1);
         ElapsedTime killmenow = new ElapsedTime();
