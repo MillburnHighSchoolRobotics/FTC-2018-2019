@@ -15,6 +15,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.teamcode.JeffBot;
 import org.firstinspires.ftc.teamcode.SahilClass;
+import org.firstinspires.ftc.teamcode.SahilClassButPartTwo;
 import org.firstinspires.ftc.teamcode.TestingOpModes.TFODTest;
 import org.firstinspires.ftc.teamcode.watchdog.IMUWatchdog;
 import org.firstinspires.ftc.teamcode.watchdog.WatchdogManager;
@@ -145,9 +146,12 @@ public class BlueAutonDepotDoubleMineral extends LinearOpMode {
         }
         liftL.setPower(0);
         liftR.setPower(0);
-        Thread.sleep(250);
-        SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000); //this only loops once after 1000 millis but keep this constraint just in case
-        int num = sahilClass.getThreeMineralPosition();
+        Thread.sleep(750);
+        SahilClassButPartTwo sahilClass2 = new SahilClassButPartTwo(vuforiaInstance);
+        int num = sahilClass2.getPositionOld();
+        telemetry.addData("Position", num);
+        telemetry.update();
+        Thread.sleep(750);
         reaperFoldLeft.setPosition(0.3);
         reaperFoldRight.setPosition(0.3);
         //mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {-0.8, 0.8}, new int[] {10700+100, 10700+100});

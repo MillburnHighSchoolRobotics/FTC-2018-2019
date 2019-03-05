@@ -16,6 +16,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.teamcode.JeffBot;
 import org.firstinspires.ftc.teamcode.SahilClass;
+import org.firstinspires.ftc.teamcode.SahilClassButPartTwo;
 import org.firstinspires.ftc.teamcode.watchdog.IMUWatchdog;
 import org.firstinspires.ftc.teamcode.watchdog.WatchdogManager;
 import org.opencv.android.OpenCVLoader;
@@ -151,11 +152,11 @@ public class BlueAutonPit extends LinearOpMode {
         reaperFoldLeft.setPosition(1);
         Thread.sleep(750);
 
-        SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000);
-        int pos = sahilClass.getThreeMineralPosition();
-
+        SahilClassButPartTwo sahilClass2 = new SahilClassButPartTwo(vuforiaInstance);
+        int pos = sahilClass2.getPositionOld();
         telemetry.addData("Position", pos);
         telemetry.update();
+        Thread.sleep(750);
 
         reaperFoldLeft.setPosition(0.78);
         reaperFoldRight.setPosition(0.78);
@@ -288,7 +289,7 @@ public class BlueAutonPit extends LinearOpMode {
         reaperFoldLeft.setPosition(0.45);
         reaperFoldRight.setPosition(0.45);
         mv.rotateTo(55);
-        mv.translateDistance(1, -44);//-36*Math.sqrt(2));//TODO:See above immortal TODO
+        mv.translateDistance(1, -50);//-36*Math.sqrt(2));//TODO:See above immortal TODO
         mv.rotateTo(127.5);
 
         mv.translateDistance(1,-50);
@@ -296,7 +297,7 @@ public class BlueAutonPit extends LinearOpMode {
         marker.setPosition(0);
         Thread.sleep(500);
         marker.setPosition(0.6);
-        mv.rotateTo(140);
+        mv.rotateTo(130);
         lf.setPower(0.9);
         lb.setPower(0.9);
         rf.setPower(1);

@@ -16,6 +16,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.teamcode.JeffBot;
 import org.firstinspires.ftc.teamcode.SahilClass;
+import org.firstinspires.ftc.teamcode.SahilClassButPartTwo;
 import org.firstinspires.ftc.teamcode.watchdog.IMUWatchdog;
 import org.firstinspires.ftc.teamcode.watchdog.WatchdogManager;
 import org.opencv.android.OpenCVLoader;
@@ -149,10 +150,10 @@ public class BlueAutonPitDoubleMineral extends LinearOpMode {
         reaperFoldLeft.setPosition(1);
         Thread.sleep(750);
 
-        SahilClass sahilClass = new SahilClass(vuforiaInstance, 1000);
-        int pos = sahilClass.getThreeMineralPosition();
-
+        SahilClassButPartTwo sahilClass2 = new SahilClassButPartTwo(vuforiaInstance);
+        int pos = sahilClass2.getPositionOld();
         telemetry.addData("Position", pos);
+        Thread.sleep(750);
         telemetry.update();
 
         reaperFoldLeft.setPosition(0.78);
