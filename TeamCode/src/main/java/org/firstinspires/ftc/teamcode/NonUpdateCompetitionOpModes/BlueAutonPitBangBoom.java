@@ -23,12 +23,13 @@ import org.opencv.android.OpenCVLoader;
 
 import virtualRobot.VuforiaLocalizerImplSubclass;
 
-@Autonomous(name = "Blue Auton Pit", group = "competition")
-public class BlueAutonPit extends LinearOpMode {
+@Autonomous(name = "Blue Auton Pit Bang Wall", group = "competition")
+public class BlueAutonPitBangBoom extends LinearOpMode {
     static {
         OpenCVLoader.initDebug();
     }
     final static int delay = 0;
+    //TODO: Synchronize hardwaremap
     DcMotor lf;
     DcMotor lb;
     DcMotor rf;
@@ -99,13 +100,33 @@ public class BlueAutonPit extends LinearOpMode {
         lf.setDirection(DcMotorSimple.Direction.FORWARD);
         lb.setDirection(DcMotorSimple.Direction.FORWARD);
         initializeMotor(new DcMotor[]{lf, lb, rf, rb});
+//        for (int x = 0; x < 4; x++) {
+//        }
+
         liftR.setDirection(DcMotorSimple.Direction.REVERSE);
+        int initL = liftL.getCurrentPosition();
+        int initR = liftR.getCurrentPosition();
+
+//        moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {1, 1}, new int[] {4796+1067-initL, 4796+1067-initR});
+//        Thread.sleep(100);
+//       mv.translate(0.5, 104);
+//        Thread.sleep(100);
+//
+//        moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {1, 1}, new int[] {8418+1067-initL, 8418+1067-initR});
+//        Thread.sleep(100);
+
+        //sampling
+        //   int meme = 0;
         JeffBot mv = new JeffBot(lf, lb, rf, rb);
 
         reaperFoldLeft.setPosition(0.85);
         reaperFoldRight.setPosition(0.85);
         Thread.sleep(500);
 
+//        dropper.setPosition(0.2);
+//        dropper.setPosition(0);
+
+//        TFODTest tfod = new TFODTest(hardwareMap);
         liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -117,6 +138,8 @@ public class BlueAutonPit extends LinearOpMode {
         stopper.setPosition(1);
         Thread.sleep(500);
         mv.moveUntilPressed(new DcMotor[]{liftL, liftR}, magneticLimitSwitch, 1);//Move until limit switch pressed
+//        liftL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        liftR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         liftL.setPower(0.8);
         liftR.setPower(0.8);
         ElapsedTime extraLiftTimer = new ElapsedTime();
@@ -137,7 +160,17 @@ public class BlueAutonPit extends LinearOpMode {
 
         reaperFoldLeft.setPosition(0.78);
         reaperFoldRight.setPosition(0.78);
+        //mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {-0.8, 0.8}, new int[] {10700+100, 10700+100});
+//        Thread.sleep(100);
 
+//
+//       mv.translate(0.5, 104);
+//        Thread.sleep(100);
+//
+//        moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {1, 1}, new int[] {8418+1067-initL, 8418+1067-initR});
+//        Thread.sleep(100);
+
+        //sampling
         mv.translateDistance(1,-12);
 
 
@@ -147,10 +180,29 @@ public class BlueAutonPit extends LinearOpMode {
         liftR.setPower(-1);
         liftL.setTargetPosition(0);
         liftR.setTargetPosition(0);
+//        mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {-0.8, 0.8}, new int[] {600, 600});
+//        liftL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//        liftR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//        liftL.setPower(0.8);
+//        liftR.setPower(-0.8);
+//        liftL.setTargetPosition(600);
+//        liftR.setTargetPosition(600);
 
+
+//        Thread.sleep(100);
+
+
+
+//        VuforiaLocalizer.Parameters params = new VuforiaLocalizer.Parameters(R.id.cameraMonitorViewId);
+//        params.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
+//        params.vuforiaLicenseKey = "AdVGalv/////AAAAGYhiDIdk+UI+ivt0Y7WGvUJnm5cKX/lWesW2pH7gnK3eOLTKThLekYSO1q65ttw7X1FvNhxxhdQl3McS+mzYjO+HkaFNJlHxltsI5+b4giqNQKWhyKjzbYbNw8aWarI5YCYUFnyiPPjH39/CbBzzFk3G2RWIzNB7cy4AYhjwYRKRiL3k33YvXv0ZHRzJRkMpnytgvdv5jEQyWa20DIkriC+ZBaj8dph8/akyYfyD1/U19vowknmzxef3ncefgOZoI9yrK82T4GBWazgWvZkIz7bPy/ApGiwnkVzp44gVGsCJCUFERiPVwfFa0SBLeCrQMrQaMDy3kOIVcWTotFn4m1ridgE5ZP/lvRzEC4/vcuV0";
+//        VuforiaLocalizerImplSubclass vuforiaInstance = new VuforiaLocalizerImplSubclass(params);
+//
+//
         reaperLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         reaperLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
+//        pos = 0;
 
         switch (pos) {
             case 0:
@@ -173,6 +225,11 @@ public class BlueAutonPit extends LinearOpMode {
                 reaperLeft.setPower(0.6);
                 Thread.sleep(500);
                 reaperSpin.setPower(0);
+//                reaperFoldLeft.setPosition(0.825);
+//                reaperFoldRight.setPosition(0.45);
+//                Thread.sleep(250);
+//                mv.translateDistance(1,-24);
+//                mv.translateDistance(1,24);
                 mv.rotateTo(0);
                 break;
             case 2:
@@ -194,6 +251,12 @@ public class BlueAutonPit extends LinearOpMode {
                 reaperLeft.setPower(0.6);
                 Thread.sleep(500);
                 reaperSpin.setPower(0);
+
+//                reaperFoldLeft.setPosition(0.45);
+//                reaperFoldRight.setPosition(0.45);
+//                Thread.sleep(250);
+//                mv.translateDistance(1,-24);
+//                mv.translateDistance(1,24);
                 mv.rotateTo(0);
                 break;
             default:
@@ -213,21 +276,28 @@ public class BlueAutonPit extends LinearOpMode {
                 reaperLeft.setPower(0.6);
                 Thread.sleep(500);
                 reaperSpin.setPower(0);
+
+//                mv.translateDistance(1,-16);
+//                mv.translateDistance(1,16);
                 break;
         }
+        telemetry.addData("checkpoint 1", true);
+        telemetry.update();
         mv.translateDistance(1,9);
+        telemetry.addData("checkpoint 2", true);
+        telemetry.update();
         reaperFoldLeft.setPosition(0.45);
         reaperFoldRight.setPosition(0.45);
         mv.rotateTo(55);
-        mv.translateDistance(1, -44);
-        mv.rotateTo(132);
+        mv.translateDistance(1, -50);//-36*Math.sqrt(2));//TODO:See above immortal TODO
+        mv.rotateTo(127.5);
 
         mv.translateDistance(1,-50);
 
         marker.setPosition(0);
         Thread.sleep(500);
         marker.setPosition(0.6);
-        mv.rotateTo(136);
+        mv.rotateTo(130);
         lf.setPower(0.9);
         lb.setPower(0.9);
         rf.setPower(1);
@@ -235,12 +305,21 @@ public class BlueAutonPit extends LinearOpMode {
         ElapsedTime killmenow = new ElapsedTime();
         while (killmenow.milliseconds() < 3000) {
             Thread.sleep(10);
+//            end2 = System.currentTimeMillis() % 1000;
         }
+//        mv.rotateTo(135);
+//        Thread.sleep(100);
+//        mv.rotateDegrees(0.7, 60);
+//        Thread.sleep(100);
+//       mv.rotate(-0.5,-1);
+//       mv.translateDistance(1,72);
     }
     public void initializeMotor(DcMotor[] motors) {
         for (DcMotor motor : motors) {
             motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             motor.setPower(0);
+//            motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//            motor.setTargetPosition(0);
         }
     }
 }
