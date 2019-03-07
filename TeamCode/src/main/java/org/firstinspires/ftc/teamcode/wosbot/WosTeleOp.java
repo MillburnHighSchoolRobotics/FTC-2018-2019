@@ -18,10 +18,13 @@ public class WosTeleOp extends OpMode {
     public DcMotorEx rb;
     public DcMotorEx lift;
     public DcMotorEx reaperExtension;
+    public DcMotorEx hang;
     private CRServo reaperSpin;
-
+    private Servo dropper;
+    private Servo reaperFold;
     private double gearCoefficient = 1;
     private double rotateCoefficient = 1;
+    double[] foldPositions = {1,0.8,0.45}; 
 
     @Override
     public void init() {
@@ -32,6 +35,9 @@ public class WosTeleOp extends OpMode {
         lift = (DcMotorEx) hardwareMap.dcMotor.get("lift");
         reaperSpin = hardwareMap.crservo.get("reaper");
         reaperExtension = (DcMotorEx) hardwareMap.dcMotor.get("reaperExtension");
+        dropper = hardwareMap.servo.get("dropper");
+        reaperFold = hardwareMap.servo.get("reaperFold");
+        hang = (DcMotorEx) hardwareMap.dcMotor.get("hanging");
         lf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         lb.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -48,6 +54,7 @@ public class WosTeleOp extends OpMode {
         rb.setDirection(REVERSE);
         lift.setDirection(REVERSE);
         reaperSpin.setPower(0);
+        reaperFoldLeft.setPosition(foldPositions[foldCount]);
     }
 
     @Override
@@ -62,6 +69,16 @@ public class WosTeleOp extends OpMode {
             lb.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rb.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
+
+        if(gamepad2.dpad_up){
+            hanger.setPower(1);
+        }
+        else if (gamepad2.dpad_down){
+            hanger.setPower(-1);
+        }
+        else{
+            hager.setPower(0);
         }
 
         if (gamepad1.left_bumper) {
@@ -86,6 +103,13 @@ public class WosTeleOp extends OpMode {
             lift.setPower(-1 * gearCoefficient);
         } else {
             lift.setPower(0);
+        }
+
+        if(gamepad1.a){
+            dropper.setPosition(0); //TODO:Tune
+        }
+        else{
+            dropper.setPosition(1); //TODO:Tune
         }
 
         double transX = gamepad1.left_stick_x;
