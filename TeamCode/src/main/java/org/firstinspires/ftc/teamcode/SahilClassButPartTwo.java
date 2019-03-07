@@ -155,20 +155,27 @@ public class SahilClassButPartTwo {
         getGoldPosition();
 //        getSilverPosition();
         Log.d("SahilClass2", "Cropped Width: " + widthCameraCropped);
-        Log.d("SahilClass2", "Rectangle Position: (" + gold.x + "," + gold.y + ")");
-        Imgproc.line(display, new Point((widthCameraCropped/3),0), new Point((widthCameraCropped/3),(int)(heightCameraCropped)), new Scalar(0,0,255), 5);
-        Imgproc.line(display, new Point(2*(widthCameraCropped/3),0), new Point(2*(widthCameraCropped/3),(int)(heightCameraCropped)), new Scalar(0,0,255), 5);
+        int position = 0;
+
+        Imgproc.line(display, new Point((widthCameraCropped / 3), 0), new Point((widthCameraCropped / 3), (int) (heightCameraCropped)), new Scalar(0, 0, 255), 5);
+        Imgproc.line(display, new Point(2 * (widthCameraCropped / 3), 0), new Point(2 * (widthCameraCropped / 3), (int) (heightCameraCropped)), new Scalar(0, 0, 255), 5);
         sendImagesOld();
 
-        int position = 0;
-        if ((gold.x >= 0) && (gold.x < (widthCameraCropped/3))) {
-            position = 2;
-        } else if ((gold.x >= (widthCameraCropped/3)) && (gold.x < (2*(widthCameraCropped/3)))) {
-            position = 1;
-        } else if (gold.x >= (2*(widthCameraCropped/3))) {
-            position = 0;
+        try {
+            Log.d("SahilClass2", "Rectangle Position: (" + gold.x + "," + gold.y + ")");
+
+            if ((gold.x >= 0) && (gold.x < (widthCameraCropped / 3))) {
+                position = 2;
+            } else if ((gold.x >= (widthCameraCropped / 3)) && (gold.x < (2 * (widthCameraCropped / 3)))) {
+                position = 1;
+            } else if (gold.x >= (2 * (widthCameraCropped / 3))) {
+                position = 0;
+            }
+            Log.d("SahilClass2", "Position: " + position);
+        } catch (Exception ex) {
+            position = -1;
+            Log.d("SahilClass2", "Error determining the position");
         }
-        Log.d("SahilClass2", "Position: " + position);
         return position;
     }
     public void getGoldPosition() {

@@ -212,6 +212,18 @@ public class JeffBot {
 
             double output = pidController.getPIDOutput(WatchdogManager.getInstance().getValue("rotation", Double.class));
             double ratio = 1 - MathUtils.clamp(Math.abs(output), 0, 1);
+            output *= MathUtils.sgn(power);
+            if (output < 0) {
+                lf.setPower(power);
+                lb.setPower(power);
+                rf.setPower(power * ratio);
+                rb.setPower(power * ratio);
+            } else {
+                lf.setPower(power * ratio);
+                lb.setPower(power * ratio);
+                rf.setPower(power);
+                rb.setPower(power);
+            }
             try {
                 Thread.sleep(10);
             } catch (InterruptedException ex) {}

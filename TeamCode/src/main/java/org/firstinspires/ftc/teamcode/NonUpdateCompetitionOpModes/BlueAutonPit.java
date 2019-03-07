@@ -228,8 +228,9 @@ public class BlueAutonPit extends LinearOpMode {
         Thread.sleep(500);
         marker.setPosition(0.6);
         mv.rotateTo(136);
-        lf.setPower(0.9);
-        lb.setPower(0.9);
+//        mv.rotateTo(127.5);
+        lf.setPower(1);
+        lb.setPower(1);
         rf.setPower(1);
         rb.setPower(1);
         ElapsedTime killmenow = new ElapsedTime();
