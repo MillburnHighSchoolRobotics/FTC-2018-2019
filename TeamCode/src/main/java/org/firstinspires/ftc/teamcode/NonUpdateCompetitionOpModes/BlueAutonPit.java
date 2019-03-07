@@ -156,7 +156,7 @@ public class BlueAutonPit extends LinearOpMode {
             case 0:
                 reaperFoldLeft.setPosition(0.825);
                 reaperFoldRight.setPosition(0.825);
-                reaperSpin.setPower(0.6);
+                reaperSpin.setPower(-0.6);
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(1);
                 mv.rotateTo(42.5);
@@ -166,23 +166,50 @@ public class BlueAutonPit extends LinearOpMode {
                 while (reaperLeft.isBusy()) {
                     Thread.sleep(5);
                 }
+                Thread.sleep(750);
                 reaperFoldRight.setPosition(0.825);
                 reaperFoldLeft.setPosition(0.825);
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(0.6);
-                Thread.sleep(500);
-                reaperSpin.setPower(0);
-
-//                mv.translateDistance(1,-24);
-//                mv.translateDistance(1,24);
+                while (reaperLeft.isBusy()) {
+                    Thread.sleep(5);
+                }
                 mv.rotateTo(0);
-                mv.translateDistance(1,9);
+                mv.translateDistance(1,12);
+                reaperFoldRight.setPosition(0.45);
+                reaperFoldLeft.setPosition(0.45);
+                reaperSpin.setPower(0);
+                Thread.sleep(1000);
+                reaperFoldRight.setPosition(0.825);
+                reaperFoldLeft.setPosition(0.825);
+                Thread.sleep(100);
+                mv.rotateTo(0);
+                Thread.sleep(500);
+                liftL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                liftR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                liftL.setPower(-1);
+                liftR.setPower(1);
+                liftL.setTargetPosition(2330);
+                liftR.setTargetPosition(2330);
+                while (liftL.isBusy()) {
+                    Thread.sleep(5);
+                }
+                dropper.setPosition(0);
+                Thread.sleep(2000);
+                mv.translateDistance(1,-3);
+                liftL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                liftR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                liftL.setPower(1);
+                liftR.setPower(-1);
+                liftL.setTargetPosition(0);
+                liftR.setTargetPosition(0);
+                dropper.setPosition(1);
 
                 break;
             case 2:
                 reaperFoldLeft.setPosition(0.825);
                 reaperFoldRight.setPosition(0.825);
-                reaperSpin.setPower(0.6);
+                reaperSpin.setPower(-0.6);
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(1);
                 mv.rotateTo(-45);
@@ -192,43 +219,100 @@ public class BlueAutonPit extends LinearOpMode {
                 while (reaperLeft.isBusy()) {
                     Thread.sleep(5);
                 }
+                Thread.sleep(750);
                 reaperFoldRight.setPosition(0.825);
                 reaperFoldLeft.setPosition(0.825);
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(0.6);
-                Thread.sleep(500);
-                reaperSpin.setPower(0);
-
-//                mv.translateDistance(1,-24);
-//                mv.translateDistance(1,24);
-                mv.rotateTo(0);
-                mv.translateDistance(1,9);
-
-                break;
-            default:
-            case 1:
-                reaperFoldRight.setPosition(1);
-                reaperFoldLeft.setPosition(1);
-                Thread.sleep(500);
-                reaperSpin.setPower(-0.6);
-                reaperLeft.setTargetPosition(1450);
-                reaperLeft.setPower(1);
                 while (reaperLeft.isBusy()) {
                     Thread.sleep(5);
                 }
-                reaperFoldLeft.setPosition(0.78);
-                reaperFoldRight.setPosition(0.78);
+                mv.rotateTo(0);
+                mv.translateDistance(1,12);
+                reaperFoldRight.setPosition(0.45);
+                reaperFoldLeft.setPosition(0.45);
+                reaperSpin.setPower(0);
+                Thread.sleep(1000);
+                reaperFoldRight.setPosition(0.825);
+                reaperFoldLeft.setPosition(0.825);
+                Thread.sleep(100);
+                mv.rotateTo(0);
+
+                Thread.sleep(500);
+                liftL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                liftR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                liftL.setPower(-1);
+                liftR.setPower(1);
+                liftL.setTargetPosition(2330);
+                liftR.setTargetPosition(2330);
+                while (liftL.isBusy()) {
+                    Thread.sleep(5);
+                }
+                dropper.setPosition(0);
+                Thread.sleep(2000);
+                mv.translateDistance(1,-3);
+                liftL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                liftR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                liftL.setPower(1);
+                liftR.setPower(-1);
+                liftL.setTargetPosition(0);
+                liftR.setTargetPosition(0);
+                dropper.setPosition(1);
+                break;
+            default:
+            case 1:
+                reaperFoldLeft.setPosition(0.825);
+                reaperFoldRight.setPosition(0.825);
+                reaperSpin.setPower(-0.6);
+                reaperLeft.setTargetPosition(0);
+                reaperLeft.setPower(1);
+                reaperFoldRight.setPosition(1);
+                reaperFoldLeft.setPosition(1);
+                reaperLeft.setTargetPosition(1450);
+                while (reaperLeft.isBusy()) {
+                    Thread.sleep(5);
+                }
+                Thread.sleep(750);
+                reaperFoldRight.setPosition(0.825);
+                reaperFoldLeft.setPosition(0.825);
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(0.6);
-                Thread.sleep(500);
+                while (reaperLeft.isBusy()) {
+                    Thread.sleep(5);
+                }
+                mv.translateDistance(1,12);
+                reaperFoldRight.setPosition(0.45);
+                reaperFoldLeft.setPosition(0.45);
                 reaperSpin.setPower(0);
+                Thread.sleep(1000);
+                reaperFoldRight.setPosition(0.825);
+                reaperFoldLeft.setPosition(0.825);
+                Thread.sleep(100);
+                mv.rotateTo(0);
+                Thread.sleep(500);
+                liftL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                liftR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                liftL.setPower(-1);
+                liftR.setPower(1);
+                liftL.setTargetPosition(2330);
+                liftR.setTargetPosition(2330);
+                while (liftL.isBusy()) {
+                    Thread.sleep(5);
+                }
+                dropper.setPosition(0);
 
-//                mv.translateDistance(1,-16);
-//                mv.translateDistance(1,16);
-                mv.translateDistance(1,9);
-
+                Thread.sleep(2000);
+//                mv.translateDistance(1,-24);
+//                mv.translateDistance(1,24);
+                mv.translateDistance(1,-3);
+                liftL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                liftR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                liftL.setPower(1);
+                liftR.setPower(-1);
+                liftL.setTargetPosition(0);
+                liftR.setTargetPosition(0);
+                dropper.setPosition(1);
                 break;
-
         }
         reaperFoldLeft.setPosition(0.45);
         reaperFoldRight.setPosition(0.45);
