@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import virtualRobot.utils.MathUtils;
 
@@ -54,7 +55,7 @@ public class WosTeleOp extends OpMode {
         rb.setDirection(REVERSE);
         lift.setDirection(REVERSE);
         reaperSpin.setPower(0);
-        reaperFoldLeft.setPosition(foldPositions[foldCount]);
+//        reaperFoldLeft.setPosition(foldPositions[foldCount]);
     }
 
     @Override
@@ -71,15 +72,15 @@ public class WosTeleOp extends OpMode {
             rb.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
 
-        if(gamepad2.dpad_up){
-            hanger.setPower(1);
-        }
-        else if (gamepad2.dpad_down){
-            hanger.setPower(-1);
-        }
-        else{
-            hager.setPower(0);
-        }
+//        if(gamepad2.dpad_up){
+//            hanger.setPower(1);
+//        }
+//        else if (gamepad2.dpad_down){
+//            hanger.setPower(-1);
+//        }
+//        else{
+//            hager.setPower(0);
+//        }
 
         if (gamepad1.left_bumper) {
             reaperSpin.setPower(0.6);

@@ -221,6 +221,7 @@ public class BlueAutonDepot extends LinearOpMode {
                 Thread.sleep(100);
                 mv.rotateTo(0);
                 Thread.sleep(500);
+                dropper.setPosition(0);
                 liftL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 liftR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 liftL.setPower(-1);
@@ -230,7 +231,6 @@ public class BlueAutonDepot extends LinearOpMode {
                 while (liftL.isBusy()) {
                     Thread.sleep(5);
                 }
-                dropper.setPosition(0);
                 Thread.sleep(2000);
                 mv.translateDistance(1,-3);
                 liftL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -275,6 +275,7 @@ public class BlueAutonDepot extends LinearOpMode {
                 mv.rotateTo(0);
 
                 Thread.sleep(500);
+                dropper.setPosition(0);
                 liftL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 liftR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 liftL.setPower(-1);
@@ -284,7 +285,6 @@ public class BlueAutonDepot extends LinearOpMode {
                 while (liftL.isBusy()) {
                     Thread.sleep(5);
                 }
-                dropper.setPosition(0);
                 Thread.sleep(2000);
                 mv.translateDistance(1,-3);
                 liftL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -326,6 +326,7 @@ public class BlueAutonDepot extends LinearOpMode {
                 Thread.sleep(100);
                 mv.rotateTo(0);
                 Thread.sleep(500);
+                dropper.setPosition(0);
                 liftL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 liftR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 liftL.setPower(-1);
@@ -335,11 +336,7 @@ public class BlueAutonDepot extends LinearOpMode {
                 while (liftL.isBusy()) {
                     Thread.sleep(5);
                 }
-                dropper.setPosition(0);
-
                 Thread.sleep(2000);
-//                mv.translateDistance(1,-24);
-//                mv.translateDistance(1,24);
                 mv.translateDistance(1,-3);
                 liftL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 liftR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
