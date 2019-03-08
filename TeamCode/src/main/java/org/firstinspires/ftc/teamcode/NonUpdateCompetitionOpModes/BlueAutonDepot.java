@@ -231,7 +231,7 @@ public class BlueAutonDepot extends LinearOpMode {
                 while (liftL.isBusy()) {
                     Thread.sleep(5);
                 }
-                Thread.sleep(2000);
+                Thread.sleep(750);
                 mv.translateDistance(1,-3);
                 liftL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 liftR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -285,7 +285,7 @@ public class BlueAutonDepot extends LinearOpMode {
                 while (liftL.isBusy()) {
                     Thread.sleep(5);
                 }
-                Thread.sleep(2000);
+                Thread.sleep(750);
                 mv.translateDistance(1,-3);
                 liftL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 liftR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -336,7 +336,7 @@ public class BlueAutonDepot extends LinearOpMode {
                 while (liftL.isBusy()) {
                     Thread.sleep(5);
                 }
-                Thread.sleep(2000);
+                Thread.sleep(750);
                 mv.translateDistance(1,-3);
                 liftL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 liftR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -355,9 +355,9 @@ public class BlueAutonDepot extends LinearOpMode {
         reaperFoldRight.setPosition(0.45);
 //        Thread.sleep(100);
 //        Thread.sleep(100);
-        mv.translateDistance(1, -44);//-36*Math.sqrt(2));//TODO:See above immortal TODO
+        mv.translateDistance(1, -43);//-36*Math.sqrt(2));//TODO:See above immortal TODO
 //        Thread.sleep(100);
-        mv.rotateTo(-42);
+        mv.rotateTo(-44);
 //        Thread.sleep(100);
         telemetry.addData("checkpoint 1", "true");
         telemetry.update();

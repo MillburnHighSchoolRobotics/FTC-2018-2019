@@ -23,7 +23,7 @@ import org.opencv.android.OpenCVLoader;
 
 import virtualRobot.VuforiaLocalizerImplSubclass;
 
-@Autonomous(name = "Blue Auton Pit No Lander Score", group = "competition")
+@Autonomous(name = "Blue Auton Pit", group = "competition")
 public class BlueAutonPitNoLanderScore extends LinearOpMode {
     static {
         OpenCVLoader.initDebug();
@@ -233,14 +233,14 @@ public class BlueAutonPitNoLanderScore extends LinearOpMode {
         reaperFoldRight.setPosition(0.45);
         mv.rotateTo(55);
         mv.translateDistance(1, -44);
-        mv.rotateTo(132);
+        mv.rotateTo(127);
 
         mv.translateDistance(1,-50);
 
         marker.setPosition(0);
         Thread.sleep(500);
         marker.setPosition(0.6);
-        mv.rotateTo(136);
+        mv.rotateTo(137.5);
         lf.setPower(1);
         lb.setPower(1);
         rf.setPower(1);

@@ -274,9 +274,9 @@ public class BlueAutonDepotNoLanderScore extends LinearOpMode {
         reaperFoldRight.setPosition(0.45);
 //        Thread.sleep(100);
 //        Thread.sleep(100);
-        mv.translateDistance(1, -44);//-36*Math.sqrt(2));//TODO:See above immortal TODO
+        mv.translateDistance(1, -43);//-36*Math.sqrt(2));//TODO:See above immortal TODO
 //        Thread.sleep(100);
-        mv.rotateTo(-42);
+        mv.rotateTo(-44);
 //        Thread.sleep(100);
         telemetry.addData("checkpoint 1", "true");
         telemetry.update();
