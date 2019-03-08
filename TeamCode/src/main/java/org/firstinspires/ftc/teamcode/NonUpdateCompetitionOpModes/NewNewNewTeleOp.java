@@ -239,8 +239,8 @@ public class NewNewNewTeleOp extends OpMode {
 //                }
                 liftLeft.setMode(RUN_TO_POSITION);
                 liftRight.setMode(RUN_TO_POSITION);
-                liftLeft.setTargetPosition(3400);
-                liftRight.setTargetPosition(3400);
+                liftLeft.setTargetPosition(2690);
+                liftRight.setTargetPosition(2690);
                 liftLeft.setPower(1);
                 liftRight.setPower(1);
                 descending = false;
@@ -264,11 +264,11 @@ public class NewNewNewTeleOp extends OpMode {
 
         // reaper extension
         if (gamepad1.dpad_left) {
-            reaperLeft.setPower(0.8 * gearing);
-            reaperRight.setPower(0.8 * gearing);
+            reaperLeft.setPower(1 * gearing);
+            reaperRight.setPower(1 * gearing);
         } else if (gamepad1.dpad_right) {
-            reaperLeft.setPower(-0.8 * gearing);
-            reaperRight.setPower(-0.8 * gearing);
+            reaperLeft.setPower(-1 * gearing);
+            reaperRight.setPower(-1 * gearing);
         } else {
             reaperLeft.setPower(0);
             reaperRight.setPower(0);
