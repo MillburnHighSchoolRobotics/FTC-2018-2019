@@ -166,8 +166,8 @@ public class BlueAutonDepot extends LinearOpMode {
 //        mv.moveToPosition(new DcMotor[] {liftL, liftR}, new double[] {-0.8, 0.8}, new int[] {600, 600});
         liftL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         liftR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        liftL.setPower(0.8);
-        liftR.setPower(-0.8);
+        liftL.setPower(1);
+        liftR.setPower(-1);
         liftL.setTargetPosition(0);
         liftR.setTargetPosition(0);
 

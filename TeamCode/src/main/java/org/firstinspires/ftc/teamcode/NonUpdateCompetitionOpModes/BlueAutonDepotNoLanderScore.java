@@ -202,8 +202,8 @@ public class BlueAutonDepotNoLanderScore extends LinearOpMode {
                 while (reaperLeft.isBusy()) {
                     Thread.sleep(5);
                 }
-                reaperFoldRight.setPosition(0.78);
-                reaperFoldLeft.setPosition(0.78);
+                reaperFoldRight.setPosition(0.825);
+                reaperFoldLeft.setPosition(0.825);
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(0.6);
                 Thread.sleep(500);
@@ -228,8 +228,8 @@ public class BlueAutonDepotNoLanderScore extends LinearOpMode {
                 while (reaperLeft.isBusy()) {
                     Thread.sleep(5);
                 }
-                reaperFoldRight.setPosition(0.78);
-                reaperFoldLeft.setPosition(0.78);
+                reaperFoldRight.setPosition(0.825);
+                reaperFoldLeft.setPosition(0.825);
                 reaperLeft.setTargetPosition(0);
                 reaperLeft.setPower(0.6);
                 Thread.sleep(500);
@@ -246,7 +246,7 @@ public class BlueAutonDepotNoLanderScore extends LinearOpMode {
                 reaperFoldRight.setPosition(1);
                 reaperFoldLeft.setPosition(1);
                 Thread.sleep(500);
-                reaperSpin.setPower(0.6);
+                reaperSpin.setPower(-0.6);
                 reaperLeft.setTargetPosition(1450);
                 reaperLeft.setPower(1);
                 while (reaperLeft.isBusy()) {
