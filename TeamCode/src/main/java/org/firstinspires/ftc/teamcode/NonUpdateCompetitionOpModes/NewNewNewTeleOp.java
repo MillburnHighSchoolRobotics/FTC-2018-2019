@@ -57,6 +57,7 @@ public class NewNewNewTeleOp extends OpMode {
 
     double power = 0.9;
     double gearing = 1;
+    double liftGearing = 1;
 
     private ElapsedTime canToggleStopper;
     private ElapsedTime canToggleDropper;
@@ -196,8 +197,8 @@ public class NewNewNewTeleOp extends OpMode {
             if (liftRight.getMode().equals(RUN_TO_POSITION)) {
                 liftRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             }
-            liftLeft.setPower(1 * gearing);
-            liftRight.setPower(1 * gearing);
+            liftLeft.setPower(1 * liftGearing);
+            liftRight.setPower(1 * liftGearing);
         } else if (gamepad1.dpad_down || gamepad2.dpad_down) {
             descending = false;
             if (liftLeft.getMode().equals(RUN_TO_POSITION)) {
@@ -206,8 +207,8 @@ public class NewNewNewTeleOp extends OpMode {
             if (liftRight.getMode().equals(RUN_TO_POSITION)) {
                 liftRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             }
-            liftLeft.setPower(-1 * gearing);
-            liftRight.setPower(-1 * gearing);
+            liftLeft.setPower(-1 * liftGearing);
+            liftRight.setPower(-1 * liftGearing);
         } else {
             if (!descending && (!liftLeft.getMode().equals(RUN_TO_POSITION) || !liftRight.getMode().equals(RUN_TO_POSITION))) {
                 liftLeft.setPower(0);
@@ -215,19 +216,29 @@ public class NewNewNewTeleOp extends OpMode {
             }
         }
 
-        if (gamepad2.x) {
+        if (gamepad2.dpad_left) {
             gearing = 1;
-        } else if (gamepad2.y) {
+        } else if (gamepad2.dpad_right) {
             gearing = 0.8;
-        } else if (gamepad2.b) {
+        } else if (gamepad2.x) {
             gearing = 0.6;
-        } else if (gamepad2.a) {
+        } else if (gamepad2.b) {
             gearing = 0.4;
         }
 
+        if (gamepad2.left_bumper) {
+            liftGearing = 1;
+        } else if (gamepad2.right_bumper) {
+            liftGearing = 0.6;
+        }
+
         //auto lift movement
-        if (gamepad1.x && canToggleTarget.milliseconds() > 250) {
-            targetIsTop = !targetIsTop;
+        if ((gamepad1.x || gamepad2.a) && canToggleTarget.milliseconds() > 250) {
+            if (gamepad2.a) {
+                targetIsTop = false;
+            } else {
+                targetIsTop = !targetIsTop;
+            }
             canToggleTarget.reset();
             if (targetIsTop) {
                 if (foldCount == 2) foldCount = 1;
@@ -264,11 +275,11 @@ public class NewNewNewTeleOp extends OpMode {
 
         // reaper extension
         if (gamepad1.dpad_left) {
-            reaperLeft.setPower(1 * gearing);
-            reaperRight.setPower(1 * gearing);
+            reaperLeft.setPower(1);
+            reaperRight.setPower(1);
         } else if (gamepad1.dpad_right) {
-            reaperLeft.setPower(-1 * gearing);
-            reaperRight.setPower(-1 * gearing);
+            reaperLeft.setPower(-1);
+            reaperRight.setPower(-1);
         } else {
             reaperLeft.setPower(0);
             reaperRight.setPower(0);
@@ -320,7 +331,7 @@ public class NewNewNewTeleOp extends OpMode {
 
 
         // reset pls
-        if (gamepad2.x) {
+        if (gamepad2.y) {
             lf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             lb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             rf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
