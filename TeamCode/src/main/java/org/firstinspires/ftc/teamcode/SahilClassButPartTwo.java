@@ -113,14 +113,13 @@ public class SahilClassButPartTwo {
             }
         }
 
-        Log.d("SahilClass", "minimum - " + min);
-        Log.d("SahilClass", "maximum - " + max);
+        Log.d("SahilClass2", "minimum - " + min);
+        Log.d("SahilClass2", "maximum - " + max);
 
         widthCameraCropped = max - min + 1;
 
         crop = original.clone().submat(0,(int)(heightCameraCropped),min,max);
     }
-
     public int getPosition() {
         getImage();
         display = original.clone();
