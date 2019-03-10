@@ -20,9 +20,9 @@ import virtualRobot.utils.MathUtils;
 public class JeffBot {
     public final double POS_POWER_CONST = 0.7;
     public final double NEG_POWER_CONST = -0.7;
-    final double rotkP = 0.008;//0.0125; //0.0225
-    final double rotkI = 0.0025;//0; //0.0035
-    final double rotkD = 0.005;//0.005; //0.0175
+    final double rotkP = 0.009;//0.0125; //0.0225
+    final double rotkI = 0.003;//0; //0.0035
+    final double rotkD = 0.0075;//0.005; //0.0175
     final double transkP = 0;
     final double transkI = 0;
     final double transkD = 0;

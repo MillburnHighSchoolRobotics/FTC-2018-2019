@@ -36,7 +36,7 @@ public class SahilClassButPartTwo {
     private int widthCameraCropped;
     private int heightCamera;
     private int heightCameraCropped;
-    private final double croppingConstant = 0.3;
+    private final double croppingConstant = 0.25 ;
 
     private final int blackConstant = 25;
     private Mat display = new Mat();
@@ -58,11 +58,12 @@ public class SahilClassButPartTwo {
         widthCamera = vuforiaInstance.rgb.getBufferWidth();
         heightCamera = vuforiaInstance.rgb.getHeight();
         heightCameraCropped = (int) Math.round(croppingConstant*heightCamera);
-        ctel = new Retrofit.Builder()
-            .baseUrl(BuildConfig.CTELEM_SERVER_IP)
-            .addConverterFactory(MatConverterFactory.create())
-            .build()
-            .create(CTelemetry.class);
+//        ctel = new Retrofit.Builder()
+//            .baseUrl(BuildConfig.CTELEM_SERVER_IP)
+//            .addConverterFactory(MatConverterFactory.create())
+//            .build()
+//            .create(CTelemetry.class);
+        ctel = null;
     }
     public void getImage() {
         Mat img = new Mat();
